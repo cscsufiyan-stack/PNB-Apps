@@ -565,24 +565,45 @@ margin: 0;
     }
 
     /* responsive polish */
-    @media (max-width: 480px) {
-      .detail-label {
-        min-width: 55px;
-        font-size: 0.75rem;
-      }
+@media (max-width: 480px) {
 
-      .stat-premium-value {
-        font-size: 1.4rem;
-      }
+  .app-header {
+    padding: 18px;
+  }
 
-      .service-card i {
-        font-size: 24px;
-      }
+  .header-logo {
+    height: 95px;
+  }
 
-      .header-logo {
-        height: 60px;
-      }
-    }
+  .main-title {
+    font-size: 1.8rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .service-card {
+    padding: 18px 8px;
+  }
+
+  .service-card i {
+    font-size: 34px;
+  }
+
+  .service-card span {
+    font-size: 1rem;
+  }
+
+  .search-flex input {
+    font-size: 1.1rem;
+  }
+
+  .bottom-tab {
+    padding-bottom: 28px;
+  }
+}
   </style>
 </head>
 <body>
