@@ -882,11 +882,12 @@ margin: 0;
     document.getElementById('forceLoginBtn')?.addEventListener('click',()=>{ let e=document.getElementById('loginEmail').value, p=document.getElementById('loginPass').value; auth.signInWithEmailAndPassword(e,p).catch(e=>alert(e.message)); });
     document.getElementById('logoutBtnMobile')?.addEventListener('click',()=>auth.signOut());
   })();
-  <script>
+</script>
+
+<script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('./sw.js');
 }
-
 </script>
 </body>
 </html>
