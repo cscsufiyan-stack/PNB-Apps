@@ -765,7 +765,10 @@ margin: 0;
       const label = c.serviceType === 'pnb_account' ? 'PNB' : (c.serviceType || 'Other');
       let appNo = c.applicationNo || c.panNo || c.pfNo || '';
       return `
-<div class="customer-item">
+<div class="customer-item"
+data-id="${c.id}"
+data-type="${c.serviceType || 'pnb_account'}"
+data-collection="${c.collection}">>
   <div style="width:100%;">
     
     <div class="detail-line">
