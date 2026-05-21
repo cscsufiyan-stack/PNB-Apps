@@ -341,6 +341,14 @@
 
 .detail-line {
   margin-bottom: 8px;
+  display:flex;
+  align-items:flex-start;
+  gap:6px;
+  flex-wrap:nowrap;
+}
+
+.detail-line span{
+white-space:nowrap;
 }
 
    
@@ -817,7 +825,7 @@ data-collection="${c.collection}">
 ${account ? `
 <div class="detail-line">
   <i class="fas fa-university"></i>
-  <b>ACCOUNT :</b> ${escapeHtml(account)}
+ <b>ACCOUNT :</b> <span>${escapeHtml(account)}</span>
 </div>` : ''}
 
 ${aadhaar ? `
