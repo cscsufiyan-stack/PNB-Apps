@@ -764,16 +764,36 @@ margin: 0;
       const account = formatAccount(c.account || c.accountNum);
       const label = c.serviceType === 'pnb_account' ? 'PNB' : (c.serviceType || 'Other');
       let appNo = c.applicationNo || c.panNo || c.pfNo || '';
-      return `<div class="customer-item" data-id="${c.id}" data-type="${c.serviceType||'pnb_account'}" data-collection="${c.collection}"><div class="customer-info"><div class="name">${escapeHtml(name)} <span class="service-badge">${escapeHtml(label)}</span></div><div class="details-row">${father?`<div class="detail-line"><i class="fas fa-user-friends"></i><span class="detail-label">Father:</span><span class="number-value">${escapeHtml(father)}</span></div>`:''}${mobile?`<div class="detail-line"><i class="fas fa-phone-alt"></i><span class="detail-label">Mobile:</span><span class="number-value">${escapeHtml(mobile)}</span></div>`:''}${aadhaar?`<div class="detail-line"><i class="fas fa-id-card"></i><span class="detail-label">Aadhaar:</span><span class="number-value">${escapeHtml(aadhaar)}</span></div>`:''}${account?`<div class="detail-line"><i class="fas fa-university"></i><span class="detail-label">Account:</span><span class="number-value">${escapeHtml(account)}</span></div>`:''}${appNo?`<div class="detail-line"><i class="fas fa-hashtag"></i><span class="detail-label">App No:</span><span class="number-value">${escapeHtml(appNo)}</span></div>`:''}</div></div><div><span class="action-btn edit-item"><i class="fas fa-edit"></i></span><span class="action-btn delete-item"><i class="fas fa-trash"></i></span></div></div>`;
-    }
+      return `
+<div class="customer-item">
+  <div style="width:100%;">
+    
+    <div class="detail-line">
+      <b>NAME :</b> ${escapeHtml(name)}
+    </div>
 
-    function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, m => m==='&'?'&amp;':m==='<'?'&lt;':'&gt;'); }
+    <div class="detail-line">
+      <b>FATHER :</b> ${escapeHtml(father)}
+    </div>
 
-    async function editRecord(id, type, collection) {
-      const doc = await db.collection(collection).doc(id).get();
-      if(!doc.exists) return alert("Not found");
-      const data = doc.data();
-      if (type === 'pnb_account') {
+    <div class="detail-line">
+      <b>MOBILE :</b> ${escapeHtml(mobile)}
+    </div>
+
+    ${aadhaar ? `
+    <div class="detail-line">
+      <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
+    </div>` : ''}
+
+    ${account ? `
+    <div class="detail-line">
+      <b>ACCOUNT :</b> ${escapeHtml(account)}
+    </div>` : ''}
+
+ </div>
+</div>
+`;
+}
         document.getElementById('editPnbId').value = id;
         document.getElementById('fullName').value = data.name || '';
         document.getElementById('fatherName').value = data.fatherName || '';
