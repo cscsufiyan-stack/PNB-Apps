@@ -768,7 +768,7 @@ margin: 0;
 <div class="customer-item"
 data-id="${c.id}"
 data-type="${c.serviceType || 'pnb_account'}"
-data-collection="${c.collection}">>
+data-collection="${c.collection}">
   <div style="width:100%;">
     
     <div class="detail-line">
@@ -792,14 +792,31 @@ data-collection="${c.collection}">>
       <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
     </div>` : ''}
 
-   <div style="display:flex; gap:10px; margin-top:10px;">
+  <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+
   <div class="action-btn edit-item">
     <i class="fas fa-pen"></i>
   </div>
 
+  <div class="action-btn"
+       onclick="navigator.clipboard.writeText('${mobile}')">
+    <i class="fas fa-copy"></i>
+  </div>
+
+  <a class="action-btn"
+     href="https://wa.me/91${mobile}">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <a class="action-btn"
+     href="tel:${mobile}">
+    <i class="fas fa-phone"></i>
+  </a>
+
   <div class="action-btn delete-item">
     <i class="fas fa-trash"></i>
   </div>
+
 </div>
 
 </div>
