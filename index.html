@@ -785,12 +785,17 @@ margin: 0;
       <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
     </div>` : ''}
 
-    ${account ? `
-    <div class="detail-line">
-      <b>ACCOUNT :</b> ${escapeHtml(account)}
-    </div>` : ''}
+   <div style="display:flex; gap:10px; margin-top:10px;">
+  <div class="action-btn edit-item">
+    <i class="fas fa-pen"></i>
+  </div>
 
- </div>
+  <div class="action-btn delete-item">
+    <i class="fas fa-trash"></i>
+  </div>
+</div>
+
+</div>
 </div>
 `;
 }
@@ -801,6 +806,15 @@ margin: 0;
     m === '<' ? '&lt;' : '&gt;'
   );
 }
+    async function editRecord(id, type, collection) {
+
+  const doc = await db.collection(collection).doc(id).get();
+
+  if(!doc.exists) return alert("Not found");
+
+  const data = doc.data();
+
+  if (type === 'pnb_account') {
         document.getElementById('editPnbId').value = id;
         document.getElementById('fullName').value = data.name || '';
         document.getElementById('fatherName').value = data.fatherName || '';
