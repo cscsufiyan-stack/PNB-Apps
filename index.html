@@ -782,6 +782,10 @@ data-collection="${c.collection}">>
     <div class="detail-line">
       <b>MOBILE :</b> ${escapeHtml(mobile)}
     </div>
+    ${account ? `
+<div class="detail-line">
+  <b>ACCOUNT :</b> ${escapeHtml(account)}
+</div>` : ''}
 
     ${aadhaar ? `
     <div class="detail-line">
