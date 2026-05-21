@@ -343,16 +343,14 @@
   margin-bottom: 8px;
 }
 
-    .detail-line i {
-      width: 22px;
-      color: #8A1538;
-    }
+   
 
-    .detail-label {
-      font-weight: 700;
-      color: #475569;
-      min-width: 60px;
-    }
+ .detail-line i{
+  color:#8A1538;
+  width:22px;
+  margin-right:8px;
+  font-size:18px;
+}
 
    .number-value {
   font-family: monospace;
@@ -384,21 +382,26 @@
     }
 
    .action-btn {
-width: 40px;
-height: 40px;
+width: 36px;
+height: 36px;
  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
      flex-direction: column;
-gap: 1px;
+gap: 0px;
 
- font-size: 16px;
+font-size: 14px;
   background: #f8f9fc;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  margin-left: 8px;
+  
+margin-left: 5px;
   cursor: pointer;
   text-decoration: none;
+     transition: 0.2s ease;
+}
+    .action-btn:active{
+transform: scale(0.92);
 }
 
 .edit-item {
@@ -796,27 +799,32 @@ data-type="${c.serviceType || 'pnb_account'}"
 data-collection="${c.collection}">
   <div style="width:100%;">
     
-    <div class="detail-line">
-      <b>NAME :</b> ${escapeHtml(name)}
-    </div>
+   <div class="detail-line">
+  <i class="fas fa-user"></i>
+  <b>NAME :</b> ${escapeHtml(name)}
+</div>
 
-    <div class="detail-line">
-      <b>FATHER :</b> ${escapeHtml(father)}
-    </div>
-
-    <div class="detail-line">
-      <b>MOBILE :</b> ${escapeHtml(mobile)}
-    </div>
-    ${account ? `
 <div class="detail-line">
+  <i class="fas fa-users"></i>
+  <b>FATHER :</b> ${escapeHtml(father)}
+</div>
+
+<div class="detail-line">
+  <i class="fas fa-phone"></i>
+  <b>MOBILE :</b> ${escapeHtml(mobile)}
+</div>
+
+${account ? `
+<div class="detail-line">
+  <i class="fas fa-university"></i>
   <b>ACCOUNT :</b> ${escapeHtml(account)}
 </div>` : ''}
 
-    ${aadhaar ? `
-    <div class="detail-line">
-      <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
-    </div>` : ''}
-
+${aadhaar ? `
+<div class="detail-line">
+  <i class="fas fa-id-card"></i>
+  <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
+</div>` : ''}
   <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:nowrap;">
 
   <div class="action-btn edit-item">
