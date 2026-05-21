@@ -383,18 +383,43 @@
       border-radius: 30px;
     }
 
-    .action-btn {
-      background: #f8f9fc;
-      width: 42px;
-      height: 42px;
-      border-radius: 30px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: #8A1538;
-      margin-left: 8px;
-      cursor: pointer;
-    }
+   .action-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+     flex-direction: column;
+gap: 4px;
+
+  font-size: 22px;
+  background: #f8f9fc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin-left: 8px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.edit-item {
+  color: #a0004d;
+}
+
+.copy-item {
+  color: #2196f3;
+}
+
+a[href*="wa.me"] {
+  color: #25D366;
+}
+
+a[href^="tel"] {
+  color: #4CAF50;
+}
+
+.delete-item {
+  color: #ff2d2d;
+}
 
     /* bottom tab */
     .bottom-tab {
