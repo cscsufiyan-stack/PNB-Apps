@@ -794,6 +794,13 @@ margin: 0;
 </div>
 `;
 }
+    function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>]/g, m =>
+    m === '&' ? '&amp;' :
+    m === '<' ? '&lt;' : '&gt;'
+  );
+}
         document.getElementById('editPnbId').value = id;
         document.getElementById('fullName').value = data.name || '';
         document.getElementById('fatherName').value = data.fatherName || '';
