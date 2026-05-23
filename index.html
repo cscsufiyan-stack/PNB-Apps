@@ -838,6 +838,11 @@ ${account ? `
   <i class="fas fa-university"></i>
  <b>ACCOUNT :</b> <span>${escapeHtml(account)}</span>
 </div>` : ''}
+${(c.serviceType === 'esarvish' || c.serviceType === 'license' || c.serviceType === 'passport') && appNo ? `
+<div class="detail-line">
+  <i class="fas fa-id-card"></i>
+  <b>APP NO :</b> <span>${escapeHtml(appNo)}</span>
+</div>` : ''}
 
 ${c.serviceType === 'aadhaar' && aadhaar ? `
 <div class="detail-line">
