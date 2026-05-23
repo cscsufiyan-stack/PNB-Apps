@@ -799,7 +799,7 @@ margin: 0;
       const aadhaar = formatAadhaar(c.aadhar || c.aadNumber || c.aadhaar);
       const account = formatAccount(c.account || c.accountNum);
       const label = c.serviceType === 'pnb_account' ? 'PNB' : (c.serviceType || 'Other');
-      let appNo = c.applicationNo || c.panNo || c.pfNo || '';
+      let appNo = c.applicationNo || c.pfNo || c.panNo || '';
       return `
 <div class="customer-item"
 data-id="${c.id}"
@@ -821,6 +821,11 @@ data-collection="${c.collection}">
   <i class="fas fa-phone"></i>
   <b>MOBILE :</b> ${escapeHtml(mobile)}
 </div>
+${appNo ? `
+<div class="detail-line">
+  <i class="fas fa-id-badge"></i>
+  <b>PF NO :</b> <span>${escapeHtml(appNo)}</span>
+</div>` : ''}
 
 ${account ? `
 <div class="detail-line">
