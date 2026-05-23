@@ -839,10 +839,10 @@ ${account ? `
  <b>ACCOUNT :</b> <span>${escapeHtml(account)}</span>
 </div>` : ''}
 
-${aadhaar ? `
+${c.serviceType === 'aadhaar' && aadhaar ? `
 <div class="detail-line">
   <i class="fas fa-id-card"></i>
-  <b>AADHAAR :</b> ${escapeHtml(aadhaar)}
+  <b>AADHAAR :</b> <span>${escapeHtml(aadhaar)}</span>
 </div>` : ''}
   <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:nowrap;">
 
