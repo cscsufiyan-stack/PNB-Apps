@@ -821,10 +821,16 @@ data-collection="${c.collection}">
   <i class="fas fa-phone"></i>
   <b>MOBILE :</b> ${escapeHtml(mobile)}
 </div>
-${appNo ? `
+${c.serviceType === 'epfo' && appNo ? `
 <div class="detail-line">
   <i class="fas fa-id-badge"></i>
   <b>PF NO :</b> <span>${escapeHtml(appNo)}</span>
+</div>` : ''}
+
+${c.serviceType === 'pan' && appNo ? `
+<div class="detail-line">
+  <i class="fas fa-id-card"></i>
+  <b>APP NO :</b> <span>${escapeHtml(appNo)}</span>
 </div>` : ''}
 
 ${account ? `
