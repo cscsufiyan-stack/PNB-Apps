@@ -836,8 +836,7 @@ ${c.serviceType === 'pan' && appNo ? `
 ${c.serviceType === 'pnb_account' && account ? `
 <div class="detail-line">
   <i class="fas fa-university"></i>
-  <b>ACCOUNT :</b>
-  <span class="number-value">${escapeHtml(account)}</span>
+  <b>ACCOUNT :</b> <span class="number-value">${escapeHtml(account)}</span>
 </div>` : ''}
 ${(c.serviceType === 'esarvish' || c.serviceType === 'license' || c.serviceType === 'passport') && appNo ? `
 <div class="detail-line">
@@ -847,8 +846,7 @@ ${(c.serviceType === 'esarvish' || c.serviceType === 'license' || c.serviceType 
 ${c.serviceType === 'pnb_account' && aadhaar ? `
 <div class="detail-line">
   <i class="fas fa-id-card"></i>
-  <b>AADHAAR :</b>
-  <span class="number-value">${escapeHtml(aadhaar)}</span>
+  <b>AADHAAR :</b> <span class="number-value">${escapeHtml(aadhaar)}</span>
 </div>` : ''}
 
 ${c.serviceType === 'aadhaar' && aadhaar ? `
