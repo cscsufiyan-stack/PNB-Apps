@@ -250,44 +250,95 @@
     }
 
     /* search */
-    .search-card {
-      background: white;
-      margin: 0 16px 20px 16px;
-      border-radius: 28px;
-      padding: 16px;
-    }
+   
 
-    .search-flex {
-      background: #f1f5f9;
-      border-radius: 40px;
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid transparent;
-    }
+    /* PREMIUM SEARCH */
 
-    .search-flex:focus-within {
-      border-color: #8A1538;
-      background: white;
-    }
+.search-card{
+  background:transparent;
+  margin:0 10px 18px;
+  padding:0;
+  position:relative;
+}
 
-    .search-flex input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      outline: none;
-      font-size: 0.9rem;
-    }
+.search-flex{
+  position:relative;
+  background:#fff;
+  border-radius:50px;
+  padding:8px 62px 8px 62px;
+  display:flex;
+  align-items:center;
+  border:2px solid #d7b27a;
+ min-height:64px;
+  box-shadow:
+    0 6px 18px rgba(138,21,56,0.08),
+    inset 0 2px 10px rgba(255,255,255,0.9);
+  overflow:hidden;
+}
 
-    .clear-search {
-      background: none;
-      border: none;
-      color: #8A1538;
-      font-size: 1rem;
-      cursor: pointer;
-      opacity: 0.7;
-    }
+.search-flex::before{
+  content:'';
+  position:absolute;
+  inset:8px;
+  border-radius:40px;
+  border:1px solid #f3d7e2;
+  pointer-events:none;
+}
+
+.search-flex::after{
+  content:'';
+  position:absolute;
+  right:-40px;
+  bottom:-40px;
+  width:140px;
+  height:140px;
+  background:linear-gradient(135deg,#8A1538,#d11c67);
+  border-radius:50%;
+  opacity:.12;
+}
+
+.search-flex i{
+  position:absolute;
+  left:20px;
+  font-size:22px;
+  color:#8A1538;
+  z-index:2;
+}
+
+.search-flex:focus-within{
+  border-color:#8A1538;
+}
+    .search-flex input{
+  flex:1;
+  border:none;
+  background:transparent;
+  outline:none;
+  font-size:1rem;
+  color:#555;
+  z-index:2;
+}
+
+.clear-search{
+  position:absolute;
+  right:18px;
+  width:48px;
+  height:48px;
+  border:none;
+  border-radius:50%;
+  background:linear-gradient(135deg,#8A1538,#c2185b);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  box-shadow:0 4px 12px rgba(138,21,56,0.3);
+  z-index:2;
+}
+
+.clear-search i{
+  color:#fff !important;
+  font-size:18px !important;
+}
 
     /* filters */
     .service-filters {
@@ -754,14 +805,14 @@ margin-left:12px;
       <div class="services-grid" id="servicesGrid"></div>
     </div>
     <div class="search-card">
-      <div class="search-flex"><i class="fas fa-search" style="color:#8A1538;"></i><input type="text" id="homeSearchInput" placeholder="🔍 Search by name, mobile, aadhar..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times-circle"></i></button></div>
+      <div class="search-flex"><i class="fas fa-search" style="color:#8A1538;"></i><input type="text" id="homeSearchInput" placeholder="Search by name, mobile, aadhaar..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times-circle"></i></button></div>
       <div id="customerListContainer" style="max-height: 45vh; overflow-y: auto; margin-top: 12px;"></div>
     </div>
   </div>
 
   <div id="allPage" class="page">
     <div class="search-card">
-      <div class="search-flex"><i class="fas fa-filter"></i><input type="text" id="allSearchInput" placeholder="🔍 Search any record..."><button class="clear-search" id="clearAllSearch"><i class="fas fa-times-circle"></i></button></div>
+      <div class="search-flex"><i class="fas fa-filter"></i><input type="text" id="allSearchInput" placeholder="Search any record..."><button class="clear-search" id="clearAllSearch"><i class="fas fa-times-circle"></i></button></div>
       <div class="service-filters" id="serviceFilterContainer"></div>
       <div id="allCustomersList" style="margin-top: 14px; max-height: 55vh; overflow-y: auto;"></div>
     </div>
