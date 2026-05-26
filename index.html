@@ -172,117 +172,42 @@
     }
 
     /* sections */
-   .services-section {
-  background: #ffffff;
-  margin: 10px;
-  border-radius: 34px;
- padding: 18px 14px 24px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #f1f1f1;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+   .services-section{
+  position:relative;
+  background:#fff;
+  margin:16px;
+  border-radius:30px;
+  padding:18px 14px 20px;
+  overflow:hidden;
+  border:2px solid #f1e3e8;
+  box-shadow:0 8px 20px rgba(0,0,0,0.06);
 }
 
-/* right bottom design */
+/* top dots */
 .services-section::before{
   content:'';
   position:absolute;
-  right:-95px;
-  bottom:-120px;
-  width:260px;
-  height:260px;
-  background:linear-gradient(135deg,#8A1538,#d4145a);
-  border-radius:50%;
+  top:10px;
+  right:14px;
+  width:110px;
+  height:60px;
+  background-image:radial-gradient(#d68aa8 1.5px, transparent 1.5px);
+  background-size:10px 10px;
+  opacity:.5;
 }
 
+/* bottom curve */
 .services-section::after{
   content:'';
   position:absolute;
-  right:-8px;
-  bottom:28px;
-  width:120px;
-  height:120px;
+  right:-30px;
+  bottom:-30px;
+  width:220px;
+  height:220px;
+  background:linear-gradient(135deg,#8A1538,#d10f5a);
   border-radius:50%;
-  border:4px solid #f7b500;
   opacity:.95;
-}
-
-.section-title{
-  position:relative;
-  z-index:2;
-  font-size:1.05rem;
-  font-weight:800;
-  margin-bottom:20px;
-}
-
-.services-grid{
-  position:relative;
-  z-index:2;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-
-.service-card{
-  background:#fff;
-  border-radius:24px;
-  border:1px solid #ededed;
-  min-height:120px;
-
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-
-  box-shadow:0 2px 10px rgba(0,0,0,0.03);
-}
-
-.service-card i{
-  font-size:30px;
-  color:#8A1538;
-  margin-bottom:12px;
-}
-
-.service-card span{
-  font-size:.92rem;
-  font-weight:600;
-  color:#222;
-}
-
-/* MOBILE */
-@media (max-width:480px){
-
-  .services-grid{
-    gap:14px;
-  }
-
-  .service-card{
-    min-height:105px;
-    border-radius:22px;
-  }
-
-  .service-card i{
-    font-size:26px;
-  }
-
-  .service-card span{
-    font-size:.82rem;
-  }
-
-  .services-section::before{
-    width:240px;
-    height:240px;
-    right:-120px;
-    bottom:-135px;
-  }
-
-  .services-section::after{
-    right:-12px;
-    bottom:22px;
-    width:110px;
-    height:110px;
-  }
-
+  box-shadow:inset 0 0 0 6px rgba(255,255,255,0.15);
 }
     /* search */
    
@@ -320,6 +245,8 @@
   pointer-events:none;
 }
 
+/* YAHA NICHE PASTE KARO */
+
 .search-flex::after{
   content:'';
   position:absolute;
@@ -332,76 +259,34 @@
   opacity:.12;
 }
 
-.search-flex i{
-  position:absolute;
-  left:20px;
-  font-size:22px;
-  color:#8A1538;
+.services-grid{
+  position:relative;
   z-index:2;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
 }
 
-.search-flex:focus-within{
-  border-color:#8A1538;
-}
-    .search-flex input{
-  flex:1;
-  border:none;
-  background:transparent;
-  outline:none;
-  font-size:1rem;
-  color:#555;
+.service-card{
+  background:#fff;
+  border-radius:24px;
+  padding:20px 8px;
+  text-align:center;
+  border:1px solid #ececec;
+  box-shadow:0 3px 10px rgba(0,0,0,0.04);
+  transition:0.25s ease;
+  position:relative;
   z-index:2;
-}
 
-.clear-search{
-  position:absolute;
-  right:18px;
-  width:48px;
-  height:48px;
-  border:none;
-  border-radius:50%;
-  background:linear-gradient(135deg,#8A1538,#c2185b);
-  color:#fff;
+  min-height:115px;
   display:flex;
-  align-items:center;
+  flex-direction:column;
   justify-content:center;
-  font-size:22px;
-  box-shadow:0 4px 12px rgba(138,21,56,0.3);
-  z-index:2;
+  align-items:center;
 }
-
-.clear-search i{
-  color:#fff !important;
-  font-size:18px !important;
+.service-card:active{
+  transform:scale(0.96);
 }
-
-    /* filters */
-    .service-filters {
-      display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding: 12px 0;
-      margin-top: 8px;
-      scrollbar-width: thin;
-    }
-
-    .service-filter-chip {
-      background: #f1f5f9;
-      border-radius: 30px;
-      padding: 6px 16px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: #475569;
-      white-space: nowrap;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .service-filter-chip.active {
-      background: #8A1538;
-      color: white;
-    }
-
     /* customer card */
    .customer-item{
   position:relative;
