@@ -1124,7 +1124,7 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
     function updateStatsChips() {
       let stats = { passport:0, epfo:0, aadhaar:0, pan:0, esarvish:0, license:0, pnb_account:0 };
       allData.forEach(c => { if(stats[c.serviceType]!==undefined) stats[c.serviceType]++; else stats.pnb_account++; });
-      document.getElementById('statsChips').innerHTML = Object.entries(stats).map(([k,v])=>`<div class="stat-chip"><i class="fas ${getIcon(k)}"></i> ${k==='pnb_account'?'PNB':k}: ${v}</div>`).join('');
+   document.getElementById('statsChips').innerHTML = '';
     }
     function getIcon(s) { const m={passport:'fa-passport',epfo:'fa-file-invoice',aadhaar:'fa-id-card',pan:'fa-credit-card',esarvish:'fa-globe',license:'fa-id-card-alt',pnb_account:'fa-university'}; return m[s]||'fa-chart-simple'; }
 
