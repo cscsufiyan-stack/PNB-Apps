@@ -224,7 +224,7 @@
 .search-flex{
   position:relative;
   background:#fff;
-  border-radius:50px;
+    border-radius:60px;
 padding:10px 72px 10px 72px;
   display:flex;
   align-items:center;
@@ -542,7 +542,7 @@ a[href^="tel"] {
 }
 
 .tab-btn i{
-  font-size:1.7rem;
+ font-size:1.3rem;
 }
 
 .tab-btn.active{
@@ -739,7 +739,8 @@ a[href^="tel"] {
 }
 
 .section-title{
-  font-size:0.95rem;
+ font-size:0.8rem;
+  font-weight:700;
 }
   .services-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -857,14 +858,14 @@ margin-left:12px;
       <div class="services-grid" id="servicesGrid"></div>
     </div>
     <div class="search-card">
-      <div class="search-flex"><i class="fas fa-search" style="color:#8A1538;"></i><input type="text" id="homeSearchInput" placeholder="Search by name, mobile, aadhaar..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times-circle"></i></button></div>
+      <div class="search-flex"><i class="fas fa-search" style="color:#8A1538;"></i><input type="text" id="homeSearchInput" placeholder="Search by name, mobile, aadhaar..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times"></i></button></div>
       <div id="customerListContainer" style="max-height: 45vh; overflow-y: auto; margin-top: 12px;"></div>
     </div>
   </div>
 
   <div id="allPage" class="page">
     <div class="search-card">
-      <div class="search-flex"><i class="fas fa-filter"></i><input type="text" id="allSearchInput" placeholder="Search any record..."><button class="clear-search" id="clearAllSearch"><i class="fas fa-times-circle"></i></button></div>
+      <div class="search-flex"><i class="fas fa-filter"></i><input type="text" id="allSearchInput" placeholder="Search any record..."><button class="clear-search" id="clearAllSearch"><i class="fas fa-times"></i></button></div>
       <div class="service-filters" id="serviceFilterContainer"></div>
       <div id="allCustomersList" style="margin-top: 14px; max-height: 55vh; overflow-y: auto;"></div>
     </div>
