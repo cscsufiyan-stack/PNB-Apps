@@ -287,6 +287,48 @@
 .service-card:active{
   transform:scale(0.96);
 }
+    .service-filters{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:8px 2px 14px;
+  padding-bottom:4px;
+  scrollbar-width:none;
+}
+
+.service-filters::-webkit-scrollbar{
+  display:none;
+}
+
+.service-filter-chip{
+  min-width:120px;
+  height:56px;
+  border-radius:30px;
+  background:#f3f5f9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:0 18px;
+  font-size:0.95rem;
+  font-weight:700;
+  color:#4b5563;
+  border:none;
+  flex-shrink:0;
+  transition:.25s ease;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+  white-space:nowrap;
+}
+
+.service-filter-chip i{
+  font-size:1.1rem;
+}
+
+.service-filter-chip.active{
+  background:linear-gradient(135deg,#8A1538,#b01252);
+  color:#fff;
+  box-shadow:0 8px 18px rgba(138,21,56,0.25);
+}
     /* customer card */
    .customer-item{
   position:relative;
