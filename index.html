@@ -225,11 +225,11 @@
   position:relative;
   background:#fff;
   border-radius:50px;
-  padding:8px 62px 8px 62px;
+padding:10px 72px 10px 72px;
   display:flex;
   align-items:center;
-  border:2px solid #d7b27a;
- min-height:64px;
+ border:3px solid #d7b27a;
+min-height:78px;
   box-shadow:
     0 6px 18px rgba(138,21,56,0.08),
     inset 0 2px 10px rgba(255,255,255,0.9);
@@ -250,13 +250,13 @@
 .search-flex::after{
   content:'';
   position:absolute;
-  right:-40px;
-  bottom:-40px;
-  width:140px;
-  height:140px;
+ right:-70px;
+bottom:-70px;
+width:120px;
+height:120px;
   background:linear-gradient(135deg,#8A1538,#d11c67);
   border-radius:50%;
-  opacity:.12;
+ opacity:.08;
 }
 
 .services-grid{
@@ -718,7 +718,29 @@ a[href^="tel"] {
   .main-title {
   font-size: 1.2rem;
   }
+.search-flex{
+  min-height:68px;
+  padding:8px 62px 8px 58px;
+}
 
+.search-flex i{
+  font-size:1.7rem;
+}
+
+.search-flex input{
+  font-size:1rem;
+}
+
+.clear-search{
+  width:58px;
+  height:58px;
+  right:10px;
+  font-size:1.4rem;
+}
+
+.section-title{
+  font-size:0.95rem;
+}
   .services-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
