@@ -264,7 +264,7 @@ height:120px;
   z-index:2;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:16px;
+gap:12px;
 }
 
 .service-card{
@@ -277,6 +277,7 @@ height:120px;
   transition:0.25s ease;
   position:relative;
   z-index:2;
+  gap:8px;
 
   min-height:115px;
   display:flex;
@@ -724,20 +725,41 @@ a[href^="tel"] {
 }
 
 .search-flex i{
-  font-size:1.7rem;
+  font-size:1.3rem;
+  position:absolute;
+  left:22px;
+  top:50%;
+transform:translateY(-50%);
+  z-index:2;
 }
 
 .search-flex input{
+  border:none;
+  background:transparent;
+  outline:none;
+  width:100%;
+  min-width:0;
   font-size:1rem;
+  color:#444;
+  font-weight:600;
 }
 
 .clear-search{
+  position:absolute;
+  right:10px;
   width:58px;
   height:58px;
-  right:10px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,#8A1538,#d10f5a);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   font-size:1.4rem;
+  z-index:3;
+  box-shadow:0 6px 16px rgba(138,21,56,0.25);
 }
-
 .section-title{
  font-size:0.8rem;
   font-weight:700;
@@ -754,17 +776,19 @@ a[href^="tel"] {
   }
 
   .service-card i {
-    font-size: 26px;
-  }
+  font-size: 26px;
+  color:#8A1538;
+  margin-bottom:10px;
+}
 
   .service-card span {
     font-size: 0.82rem;
     font-weight: 600;
+    display:block;
+line-height:1.1;
   }
 
-  .bottom-tab {
-    padding-bottom: 28px;
-  }
+  
   .detail-line{
   min-height:50px;
 }
@@ -805,8 +829,11 @@ margin-left:12px;
   left:8px;
   right:8px;
   bottom:8px;
-  padding:8px 6px 20px;
+padding:8px 6px 14px;
   border-radius:26px;
+
+  max-width:500px;
+margin:auto;
 }
 
 .tab-btn{
