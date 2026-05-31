@@ -1259,40 +1259,89 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
       if(ctx) growthChart = new Chart(ctx, { type: 'line', data: { labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets: [{ label: 'Registrations', data: weekData, borderColor: '#8A1538', backgroundColor: 'rgba(138,21,56,0.1)', fill: true, tension: 0.3 }] }, options: { responsive: true, maintainAspectRatio: true } });
     }
 
-    async function saveGeneric(col, type, fields, modalId) {
+   async function saveGeneric(col, type, fields, modalId) {
 
-  await db.collection(col).add({
-    ...fields
-  });
-      bootstrap.Modal.getInstance(
-  document.getElementById(modalId)
-)?.hide();
+  try {
+
+    await db.collection(col).add({
+  ...fields,
+  serviceType: type,
+  createdAt: firebase.firestore.FieldValue.serverTimestamp()
+});
+
+    console.log("SAVE SUCCESS");
+
+    bootstrap.Modal.getInstance(
+      document.getElementById(modalId)
+    )?.hide();
+
+    fetchAll();
+
+    Swal.fire({
+      icon:'success',
+      title:'Data save successful!',
+      text:'Your data has been saved successfully.',
+      confirmButtonText:'OK',
+      confirmButtonColor:'#8A1538',
+      customClass:{
+        popup:'swal-premium'
+      }
+    });
+
+  } catch(err) {
+
+    console.error("FIREBASE ERROR:", err);
+
+    Swal.fire({
+      icon:'error',
+      title:'Save Failed!',
+      text: err.message
+    });
+
+  }
+
+}
+    document.getElementById('pnbFullForm').addEventListener('submit', async (e) => {
+
+  e.preventDefault();
+
+  let id = document.getElementById('editPnbId').value;
+
+  let data = {
+    name: document.getElementById('fullName').value.trim().toUpperCase(),
+    fatherName: document.getElementById('fatherName').value.trim().toUpperCase(),
+    mobile: document.getElementById('mobileNum').value.trim(),
+    aadhar: document.getElementById('aadharNum').value.trim(),
+    account: document.getElementById('accountNum').value.trim(),
+    password: document.getElementById('accPassword').value,
+    serviceType:'pnb_account'
+  };
+
+  if(id){
+    await db.collection("customers").doc(id).update(data);
+  } else {
+    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+    await db.collection("customers").add(data);
+  }
+
+  bootstrap.Modal.getInstance(
+    document.getElementById('pnbAccountFullModal')
+  ).hide();
 
   fetchAll();
 
   Swal.fire({
-  icon:'success',
-  title:'Data save successful!',
-  text:'Your data has been saved successfully.',
-  confirmButtonText:'OK',
-  confirmButtonColor:'#8A1538',
-  customClass:{
-    popup:'swal-premium'
-  }
-});
+    icon:'success',
+    title:'Data save successful!',
+    text:'Customer saved successfully.',
+    confirmButtonText:'OK',
+    confirmButtonColor:'#8A1538',
+    customClass:{
+      popup:'swal-premium'
+    }
+  });
 
-}
-    document.getElementById('pnbFullForm').addEventListener('submit', async (e) => { e.preventDefault(); let id = document.getElementById('editPnbId').value; let data = { name: document.getElementById('fullName').value.trim().toUpperCase(), fatherName: document.getElementById('fatherName').value.trim().toUpperCase(), mobile: document.getElementById('mobileNum').value.trim(), aadhar: document.getElementById('aadharNum').value.trim(), account: document.getElementById('accountNum').value.trim(), password: document.getElementById('accPassword').value, serviceType: 'pnb_account' }; if(id) await db.collection("customers").doc(id).update(data); else { data.createdAt = firebase.firestore.FieldValue.serverTimestamp(); await db.collection("customers").add(data); } bootstrap.Modal.getInstance(document.getElementById('pnbAccountFullModal')).hide(); fetchAll();Swal.fire({
-  icon:'success',
-  title:'Data save successful!',
-  text:'Customer saved successfully.',
-  confirmButtonText:'OK',
-  confirmButtonColor:'#8A1538',
-  customClass:{
-    popup:'swal-premium'
-  }
-});
-   });                                                                                
+});                                                                               
     document.getElementById('passportFormModal').addEventListener('submit', (e)=>{e.preventDefault(); saveGeneric('applications','passport',{name:document.getElementById('passName').value,fatherName:document.getElementById('passFather').value,mobile:document.getElementById('passMobile').value,applicationNo:document.getElementById('passAppNo').value,password:document.getElementById('passPassword').value},'passportModal');});
     document.getElementById('epfoFormModal').addEventListener('submit', (e)=>{e.preventDefault(); saveGeneric('applications','epfo',{name:document.getElementById('epfoName').value,fatherName:document.getElementById('epfoFather').value,mobile:document.getElementById('epfoMobile').value,pfNo:document.getElementById('epfoPfNo').value,password:document.getElementById('epfoPassword').value},'epfoModal');});
     document.getElementById('aadhaarFormModal').addEventListener('submit', (e)=>{e.preventDefault(); saveGeneric('applications','aadhaar',{name:document.getElementById('aadName').value,fatherName:document.getElementById('aadFather').value,mobile:document.getElementById('aadMobile').value,aadhar:document.getElementById('aadNumber').value,password:document.getElementById('aadPassword').value},'aadhaarModal');});
