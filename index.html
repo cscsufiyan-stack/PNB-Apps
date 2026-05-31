@@ -1056,6 +1056,12 @@ ${c.serviceType === 'epfo' && appNo ? `
   <b>PF NO :</b> <span>${escapeHtml(appNo)}</span>
 </div>` : ''}
 
+${c.serviceType === 'epfo' && c.password ? `
+<div class="detail-line">
+  <i class="fas fa-lock"></i>
+  <b>PASSWORD :</b> <span>${escapeHtml(c.password)}</span>
+</div>` : ''}
+
 ${c.serviceType === 'pan' && appNo ? `
 <div class="detail-line">
   <i class="fas fa-id-card"></i>
