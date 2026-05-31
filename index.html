@@ -1187,7 +1187,24 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
       });
 
     function attachActions() {
-      document.querySelectorAll('.edit-item').forEach(el => { el.onclick = (e) => { e.stopPropagation(); const row = el.closest('.customer-item'); editRecord(row.dataset.id, row.dataset.type, row.dataset.collection); }; });
+     document.querySelectorAll('.edit-item').forEach(el => {
+  el.addEventListener('click', async (e) => {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    alert('Edit Click Working');
+
+    const row = el.closest('.customer-item');
+
+    await editRecord(
+      row.dataset.id,
+      row.dataset.type,
+      row.dataset.collection
+    );
+
+  });
+});
      document.querySelectorAll('.delete-item').forEach(el => {
   el.onclick = (e) => {
     e.stopPropagation();
