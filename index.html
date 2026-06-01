@@ -354,6 +354,7 @@ gap:12px;
   background:linear-gradient(135deg,#8A1538,#c2185b);
   border-radius:50%;
   opacity:.08;
+  pointer-events:none;
 }
 
 .customer-item::after{
@@ -366,6 +367,17 @@ gap:12px;
   background:linear-gradient(135deg,#8A1538,#c2185b);
   border-radius:50%;
   opacity:.08;
+  pointer-events:none;
+}
+    .action-btn{
+  position:relative;
+  z-index:9999 !important;
+  pointer-events:auto !important;
+}
+
+.edit-item{
+  position:relative;
+  z-index:10000 !important;
 }
 
     .customer-info {
@@ -1186,75 +1198,84 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
 });
       });
 
-    function attachActions() {
-     document.querySelectorAll('.edit-item').forEach(el => {
-  el.addEventListener('click', async (e) => {
+  function attachActions() {
+  // Edit बटन के लिए
+  document.querySelectorAll('.edit-item').forEach(el => {
+    el.removeEventListener('click', el._listener);
+    
+   const handler = async (e) => {
 
-    e.preventDefault();
-    e.stopPropagation();
+  e.preventDefault();
+  e.stopPropagation();
 
-    alert('Edit Click Working');
+  alert("EDIT BUTTON CLICKED");
 
-    const row = el.closest('.customer-item');
+  const row = el.closest('.customer-item');
+  if (!row) return;
 
-    await editRecord(
-      row.dataset.id,
-      row.dataset.type,
-      row.dataset.collection
-    );
-
-  });
-});
-     document.querySelectorAll('.delete-item').forEach(el => {
-  el.onclick = (e) => {
-    e.stopPropagation();
-
-    const row = el.closest('.customer-item');
-
-    Swal.fire({
-      icon: 'warning',
-      title: 'Delete permanently?',
-      text: 'This record will be permanently deleted and cannot be recovered.',
-      showCancelButton: true,
-      confirmButtonText: 'OK',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#8A1538',
-      customClass:{
-        popup:'swal-premium'
-      }
-    }).then(async(result)=>{
-
-      if(result.isConfirmed){
-
-        const col =
-          row.dataset.collection ||
-          (row.dataset.type === 'pnb_account'
-            ? 'customers'
-            : 'applications');
-
-        await db.collection(col)
-          .doc(row.dataset.id)
-          .delete();
-
-        fetchAll();
-
+  const id = row.dataset.id;
+  const type = row.dataset.type;
+  const collection = row.dataset.collection;
+      
+      if (!id || !type) {
         Swal.fire({
-  icon:'success',
-  title:'Delete permanently successful!',
-  text:'The record has been permanently deleted and cannot be recovered.',
-  confirmButtonText:'OK',
-  confirmButtonColor:'#8A1538',
-  customClass:{
-    popup:'swal-premium'
-  }
-});
+          icon: 'error',
+          title: 'Error',
+          text: 'Record की जानकारी नहीं मिल पाई',
+          confirmButtonColor: '#8A1538'
+        });
+        return;
       }
-
-    });
-
-  };
-});
-      }
+      
+      await editRecord(id, type, collection);
+    };
+    
+    el._listener = handler;
+    el.addEventListener('click', handler);
+  });
+  
+  // Delete बटन के लिए
+  document.querySelectorAll('.delete-item').forEach(el => {
+    el.removeEventListener('click', el._deleteListener);
+    
+    const deleteHandler = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const row = el.closest('.customer-item');
+      if (!row) return;
+      
+      Swal.fire({
+        icon: 'warning',
+        title: 'Delete permanently?',
+        text: 'यह Record permanently delete हो जाएगा!',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#8A1538',
+        customClass: { popup: 'swal-premium' }
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const collection = row.dataset.collection || 
+            (row.dataset.type === 'pnb_account' ? 'customers' : 'applications');
+          
+          await db.collection(collection).doc(row.dataset.id).delete();
+          fetchAll();
+          
+          Swal.fire({
+            icon: 'success',
+            title: 'Deleted successfully!',
+            text: 'Record delete हो गया',
+            confirmButtonColor: '#8A1538'
+          });
+        }
+      });
+    };
+    
+    el._deleteListener = deleteHandler;
+    el.addEventListener('click', deleteHandler);
+  });
+}
 
     function updateStatsChips() {
       let stats = { passport:0, epfo:0, aadhaar:0, pan:0, esarvish:0, license:0, pnb_account:0 };
