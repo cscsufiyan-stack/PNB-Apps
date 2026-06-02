@@ -882,6 +882,9 @@ margin:auto;
   border-radius:28px !important;
 }
 
+.modal.show .customer-actions{
+  display:none !important;
+}
 }
   </style>
 </head>
@@ -1101,7 +1104,7 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
   <i class="fas fa-id-card"></i>
   <b>AADHAAR :</b> <span>${escapeHtml(aadhaar)}</span>
 </div>` : ''}
-  <div style="display:flex; gap:8px; margin-top:10px; flex-wrap:nowrap;">
+  <div class="customer-actions" style="display:flex; gap:8px; margin-top:10px; flex-wrap:nowrap;">
 
   <div class="action-btn edit-item">
     <i class="fas fa-pen"></i>
@@ -1127,7 +1130,6 @@ ${c.serviceType === 'aadhaar' && aadhaar ? `
   </div>
 
 </div>
-
 </div>
 </div>
 `;
