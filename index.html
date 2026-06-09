@@ -29,15 +29,74 @@
       display: none; 
     }
     body.dark-mode .app-container { background: #1e1e2f; }
-    body.dark-mode .services-section, body.dark-mode .search-card, body.dark-mode .customer-item, 
-    body.dark-mode .stat-premium-card, body.dark-mode .modal-content, body.dark-mode .service-filter-chip, 
-    body.dark-mode .service-card, body.dark-mode .detail-line { background: #2a2a3a; border-color: #5a5a6e; }
-    body.dark-mode .section-title, body.dark-mode .detail-line span, body.dark-mode .stat-premium-value, 
-    body.dark-mode .customer-item span, body.dark-mode .detail-line b, body.dark-mode .no-results { color: #f0f0f0 !important; }
-    body.dark-mode .search-flex { background: #3a3a4a; border-color: #8A1538; }
-    body.dark-mode .search-flex input { color: white; }
-    body.dark-mode .action-btn { background: #3a3a4a; }
-    body.dark-mode .bottom-tab { background: rgba(30, 30, 47, 0.96); }
+    
+    /* Dark Mode Styles */
+    body.dark-mode .services-section { 
+      background: #1e1e2f; 
+      border-color: #3a3a4a; 
+    }
+    body.dark-mode .section-title { 
+      color: #e91e63 !important; 
+    }
+    body.dark-mode .service-card { 
+      background: #2a2a3a !important; 
+      border-color: #3a3a4a !important; 
+    }
+    body.dark-mode .service-card i { 
+      color: #e91e63 !important; 
+    }
+    body.dark-mode .service-card span { 
+      color: #ffffff !important; 
+    }
+    body.dark-mode .search-card .search-flex { 
+      background: #2a2a3a !important; 
+      border-color: #e91e63 !important; 
+    }
+    body.dark-mode .search-flex input { 
+      color: white !important; 
+    }
+    body.dark-mode .customer-item { 
+      background: #2a2a3a !important; 
+      border-color: #e91e63 !important; 
+    }
+    body.dark-mode .detail-line { 
+      background: #1e1e2f !important; 
+      border-color: #3a3a4a !important; 
+    }
+    body.dark-mode .detail-line b { 
+      color: #e91e63 !important; 
+    }
+    body.dark-mode .detail-line span { 
+      color: #ffffff !important; 
+    }
+    body.dark-mode .stat-premium-card { 
+      background: #2a2a3a !important; 
+      color: white !important;
+    }
+    body.dark-mode .service-filter-chip { 
+      background: #2a2a3a !important; 
+      color: #ddd !important; 
+    }
+    body.dark-mode .service-filter-chip.active { 
+      background: linear-gradient(135deg, #e91e63, #8A1538) !important; 
+      color: white !important; 
+    }
+    body.dark-mode .bottom-tab { 
+      background: rgba(30, 30, 47, 0.96) !important; 
+    }
+    body.dark-mode .tab-btn { 
+      color: #aaa !important; 
+    }
+    body.dark-mode .tab-btn.active { 
+      color: #e91e63 !important; 
+      background: rgba(233, 30, 99, 0.2) !important; 
+    }
+    body.dark-mode .fab-tab { 
+      background: linear-gradient(135deg, #e91e63, #8A1538) !important; 
+    }
+    body.dark-mode .action-btn { 
+      background: #3a3a4a !important; 
+    }
     
     .app-header { background: linear-gradient(135deg, #8A1538 0%, #5e0e2a 100%); padding: 18px; position: sticky; top: 0; z-index: 100; border-bottom-left-radius: 24px; border-bottom-right-radius: 24px; }
     .header-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -46,12 +105,12 @@
     .dark-mode-toggle { background: rgba(255,255,255,0.2); width: 42px; height: 42px; border-radius: 30px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.3rem; cursor: pointer; border: none; }
     
     .services-section { background: #fff; margin: 12px 16px; border-radius: 28px; padding: 10px 12px 12px; border: 2px solid #f1e3e8; }
-    .section-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; color: #8A1538; }
+    .section-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; color: #8A1538; }
     .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
     .service-card { background: #fff; border-radius: 20px; padding: 8px 4px; text-align: center; border: 1px solid #ececec; display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 80px; cursor: pointer; transition: all 0.2s ease; }
     .service-card:active { transform: scale(0.96); }
     .service-card i { font-size: 22px; color: #8A1538; }
-    .service-card span { font-size: 0.7rem; font-weight: 600; }
+    .service-card span { font-size: 0.7rem; font-weight: 600; color: #333; }
     
     .search-card { background: transparent; margin: 0 10px 18px; }
     .search-flex { position: relative; background: #fff; border-radius: 60px; padding: 10px 72px 10px 58px; display: flex; align-items: center; border: 3px solid #d7b27a; min-height: 70px; }
@@ -59,9 +118,59 @@
     .search-flex input { border: none; background: transparent; outline: none; width: 100%; font-size: 1rem; color: #444; font-weight: 600; padding: 8px 0; }
     .clear-search { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%; border: none; background: linear-gradient(135deg,#8A1538,#d10f5a); color:#fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     
-    .service-filters { display: flex; gap: 10px; overflow-x: auto; padding: 6px 2px 12px; }
-    .service-filter-chip { min-width: 110px; height: 48px; border-radius: 30px; background: #f3f5f9; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 0 14px; font-size: 0.85rem; font-weight: 700; color: #4b5563; border: none; cursor: pointer; }
-    .service-filter-chip.active { background: linear-gradient(135deg,#8A1538,#b01252); color:#fff; }
+    /* Service Filters - Horizontal Scroll */
+    .service-filters {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 6px 2px 12px;
+      scrollbar-width: thin;
+      white-space: nowrap;
+    }
+    .service-filters::-webkit-scrollbar {
+      height: 3px;
+    }
+    .service-filters::-webkit-scrollbar-track {
+      background: #e0e0e0;
+      border-radius: 10px;
+    }
+    .service-filters::-webkit-scrollbar-thumb {
+      background: #8A1538;
+      border-radius: 10px;
+    }
+    .service-filter-chip {
+      min-width: 100px;
+      height: 44px;
+      border-radius: 30px;
+      background: #f3f5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 14px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #4b5563;
+      border: none;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .service-filter-chip i {
+      font-size: 14px;
+    }
+    .service-filter-chip.active {
+      background: linear-gradient(135deg,#8A1538,#b01252);
+      color: #fff;
+    }
+    body.dark-mode .service-filter-chip {
+      background: #3a3a4a;
+      color: #ddd;
+    }
+    body.dark-mode .service-filter-chip.active {
+      background: linear-gradient(135deg,#e91e63,#8A1538);
+      color: white;
+    }
     
     .customer-item { background: #fff; margin: 12px 0; border-radius: 28px; padding: 14px; border: 2px solid #8A1538; box-shadow: 0 6px 14px rgba(0,0,0,0.06); }
     .detail-line { display: flex; align-items: center; background: #fff; border: 1px solid #e5c48d; border-radius: 14px; margin-bottom: 10px; overflow: hidden; min-height: 48px; }
@@ -96,7 +205,6 @@
     .version-text { font-size: 0.7rem; color: #64748b; margin-top: 20px; text-align: center; }
     
     .toggle-switch { display: flex; align-items: center; justify-content: space-between; background: #f0f2f5; padding: 12px; border-radius: 24px; margin: 10px 0; }
-    body.dark-mode .toggle-switch { background: #3a3a4a; }
     .switch { position: relative; display: inline-block; width: 52px; height: 26px; }
     .switch input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; border-radius: 34px; transition: 0.3s; }
@@ -106,7 +214,7 @@
     
     .no-results { text-align: center; padding: 30px; color: #94a3b8; }
 
-    /* ========== AUTH SCREEN ========== */
+    /* Auth Screen */
     .auth-overlay {
       position: fixed;
       top: 0;
@@ -121,10 +229,7 @@
       flex-direction: column;
       padding: 20px;
     }
-    
-    body.dark-mode .auth-overlay {
-      background: #121212;
-    }
+    body.dark-mode .auth-overlay { background: #121212; }
     
     .secure-card {
       width: 90%;
@@ -134,14 +239,10 @@
       background: #ffffff;
       border-radius: 32px;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
       border: 1px solid #f0e6ea;
     }
-    
-    body.dark-mode .secure-card {
-      background: #2a2a3a;
-      border-color: #4a4a5a;
-    }
+    body.dark-mode .secure-card { background: #2a2a3a; border-color: #4a4a5a; }
     
     .finger-icon {
       width: 80px;
@@ -154,31 +255,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 20px rgba(194, 24, 91, 0.3);
+      box-shadow: 0 8px 20px rgba(194,24,91,0.3);
     }
-    
     .secure-card h1 {
       margin: 0 0 8px;
       font-size: 28px;
       font-weight: 700;
       color: #1a1a2e;
     }
-    
-    body.dark-mode .secure-card h1 {
-      color: #ffffff;
-    }
-    
+    body.dark-mode .secure-card h1 { color: #ffffff; }
     .secure-card p {
       color: #888;
       font-size: 16px;
       font-weight: 500;
       margin-bottom: 32px;
     }
-    
-    .pin-box {
-      margin-bottom: 24px;
-    }
-    
+    .pin-box { margin-bottom: 24px; }
     .pin-box input {
       width: 100%;
       height: 60px;
@@ -192,18 +284,15 @@
       background: #ffffff;
       caret-color: #8A1538;
     }
-    
     .pin-box input:focus {
       border-color: #8A1538;
-      box-shadow: 0 0 0 3px rgba(138, 21, 56, 0.1);
+      box-shadow: 0 0 0 3px rgba(138,21,56,0.1);
     }
-    
     body.dark-mode .pin-box input {
       background: #3a3a4a;
       border-color: #5a5a6e;
       color: white;
     }
-    
     .unlock-btn {
       width: 100%;
       height: 56px;
@@ -214,18 +303,14 @@
       font-size: 18px;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 6px 16px rgba(194, 24, 91, 0.3);
+      box-shadow: 0 6px 16px rgba(194,24,91,0.3);
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
       transition: transform 0.2s ease;
     }
-    
-    .unlock-btn:active {
-      transform: scale(0.97);
-    }
-    
+    .unlock-btn:active { transform: scale(0.97); }
     .forgot-link {
       display: block;
       margin-top: 20px;
@@ -239,58 +324,24 @@
       width: 100%;
       text-align: center;
     }
-    
-    .forgot-link:hover {
-      text-decoration: underline;
-    }
-    
-    body.dark-mode .forgot-link {
-      color: #e91e63;
-    }
-    
-    .auth-status {
-      margin-top: 16px;
-      font-size: 13px;
-      font-weight: 500;
-      min-height: 36px;
-    }
+    .forgot-link:hover { text-decoration: underline; }
+    body.dark-mode .forgot-link { color: #e91e63; }
+    .auth-status { margin-top: 16px; font-size: 13px; font-weight: 500; min-height: 36px; }
 
-    /* SweetAlert custom styles */
-    .swal2-popup {
-      border-radius: 32px !important;
-    }
-    .swal2-confirm {
-      background: linear-gradient(135deg, #8b0038, #c2185b) !important;
-      border-radius: 40px !important;
-      padding: 12px 24px !important;
-    }
+    /* SweetAlert */
+    .swal2-popup { border-radius: 32px !important; }
+    .swal2-confirm { background: linear-gradient(135deg, #8b0038, #c2185b) !important; border-radius: 40px !important; }
     .question-option {
       background: #f8f9fc;
       border-radius: 16px;
       padding: 15px;
       margin: 10px 0;
       cursor: pointer;
-      transition: all 0.2s ease;
       border: 2px solid transparent;
     }
-    .question-option:hover {
-      background: #e8eaef;
-      transform: scale(1.02);
-    }
-    .question-option.selected {
-      border-color: #8A1538;
-      background: #fff0f3;
-    }
-    body.dark-mode .question-option {
-      background: #3a3a4a;
-    }
-    body.dark-mode .question-option:hover {
-      background: #4a4a5a;
-    }
-    body.dark-mode .question-option.selected {
-      border-color: #e91e63;
-      background: #4a2a3a;
-    }
+    .question-option.selected { border-color: #8A1538; background: #fff0f3; }
+    body.dark-mode .question-option { background: #3a3a4a; }
+    body.dark-mode .question-option.selected { border-color: #e91e63; background: #4a2a3a; }
   </style>
 </head>
 <body>
@@ -301,6 +352,14 @@
       <div class="title-area"><div class="main-title">PNB Shoaib CSC</div></div>
       <button class="dark-mode-toggle" id="darkModeToggleBtn"><i class="fas fa-moon"></i></button>
     </div>
+  </div>
+  
+  <!-- Banner -->
+  <div style="background: linear-gradient(135deg, #8A1538, #c2185b); margin: 10px 16px; border-radius: 24px; padding: 12px; text-align: center; color: white;">
+    <div style="font-size: 12px; opacity: 0.8;">SHOAIB</div>
+    <div style="font-weight: 800; font-size: 18px;">CSC CENTER</div>
+    <div style="font-size: 10px; letter-spacing: 1px;">DIGITAL BANKING | CORE SERVICES</div>
+    <div style="font-size: 9px; margin-top: 4px;">FAST, RELIABLE, TRUSTED</div>
   </div>
   
   <div id="homePage" class="page active-page">
@@ -353,9 +412,7 @@
   
   <!-- MODALS -->
   <div class="modal fade" id="pnbAccountFullModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-university"></i> PNB Account</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="pnbFullForm"><input type="hidden" id="editPnbId"><input type="text" class="form-control" placeholder="Full Name" id="fullName" required><input type="text" class="form-control" placeholder="Father's Name" id="fatherName"><input type="tel" class="form-control" placeholder="Mobile Number" id="mobileNum" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number" id="aadharNum"><input type="text" class="form-control" placeholder="Account Number" id="accountNum" required><input type="text" class="form-control" placeholder="Password" id="accPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  
   <div class="modal fade" id="editCustomerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-edit"></i> Edit Customer</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="editCustomerForm"><input type="hidden" id="editId"><input type="hidden" id="editCollection"><input type="text" class="form-control" placeholder="Full Name" id="editName" required><input type="text" class="form-control" placeholder="Father's Name" id="editFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="editMobile" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number" id="editAadhar"><input type="text" class="form-control" placeholder="Account Number" id="editAccount"><input type="text" class="form-control" placeholder="Password" id="editPassword"><button type="submit" class="btn btn-pnb mt-3">Update</button></form></div></div></div></div>
-  
   <div class="modal fade" id="passportModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📘 Passport</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="passportFormModal"><input type="text" class="form-control" placeholder="Name" id="passName" required><input type="text" class="form-control" placeholder="Father" id="passFather"><input type="tel" class="form-control" placeholder="Mobile" id="passMobile" required><input type="text" class="form-control" placeholder="App no" id="passAppNo"><input type="text" class="form-control" placeholder="Password" id="passPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
   <div class="modal fade" id="epfoModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📂 EPFO</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="epfoFormModal"><input type="text" class="form-control" placeholder="Name" id="epfoName" required><input type="text" class="form-control" placeholder="Father" id="epfoFather"><input type="tel" class="form-control" placeholder="Mobile" id="epfoMobile" required><input type="text" class="form-control" placeholder="EPFO Number" id="epfoPfNo" required><input type="text" class="form-control" placeholder="Password" id="epfoPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
   <div class="modal fade" id="aadhaarModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🆔 Aadhaar</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="aadhaarFormModal"><input type="text" class="form-control" placeholder="Name" id="aadName" required><input type="text" class="form-control" placeholder="Father" id="aadFather"><input type="tel" class="form-control" placeholder="Mobile" id="aadMobile" required><input type="text" class="form-control" placeholder="Aadhar Number" id="aadNumber" required><input type="text" class="form-control" placeholder="Password" id="aadPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
@@ -363,7 +420,6 @@
   <div class="modal fade" id="esarvishModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🌐 eSarvish</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="esarvishFormModal"><input type="text" class="form-control" placeholder="Name" id="esName" required><input type="text" class="form-control" placeholder="Father" id="esFather"><input type="tel" class="form-control" placeholder="Mobile" id="esMobile" required><input type="text" class="form-control" placeholder="Application No" id="esAppNo" required><input type="text" class="form-control" placeholder="Password" id="esPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
   <div class="modal fade" id="licenseModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🚗 Driving License</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="licenseFormModal"><input type="text" class="form-control" placeholder="Name" id="licName" required><input type="text" class="form-control" placeholder="Father" id="licFather"><input type="tel" class="form-control" placeholder="Mobile" id="licMobile" required><input type="text" class="form-control" placeholder="Application No" id="licAppNo" required><input type="text" class="form-control" placeholder="Password" id="licPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
   <div class="modal fade" id="tpinChangeModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-key"></i> Change TPIN</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="tpinChangeForm"><input type="password" class="form-control" id="oldTpin" placeholder="Current TPIN (4 digits)" maxlength="4" required><input type="password" class="form-control" id="newTpin" placeholder="New TPIN (4 digits)" maxlength="4" required><input type="password" class="form-control" id="confirmTpin" placeholder="Confirm New TPIN" maxlength="4" required><button type="submit" class="btn btn-pnb mt-3">Update</button></form></div></div></div></div>
-  
   <div class="modal fade" id="backupModalGlobal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>Backup & Restore</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><button class="btn btn-pnb w-100 mb-2" id="createBackupNow">📥 Create Backup</button><input type="file" id="restoreFile" class="form-control mb-2" accept=".json"><button class="btn btn-outline-danger w-100" id="restoreBackupNow">📤 Restore</button></div></div></div></div>
   <div class="modal fade" id="serviceBottomSheetQuick" tabindex="-1"><div class="modal-dialog modal-dialog-bottom" style="margin:0; margin-top:auto;"><div class="modal-content" style="border-radius:32px 32px 0 0;"><div class="modal-header"><h6>✨ All CSC Services</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="services-grid" id="bottomSheetServices"></div></div></div></div></div>
 </div>
@@ -374,15 +430,9 @@
     <div class="finger-icon">🔒</div>
     <h1>Secure Access</h1>
     <p>Enter 4-digit TPIN</p>
-    
-    <div class="pin-box">
-      <input type="password" id="authTpinInput" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="••••" autofocus>
-    </div>
-    
+    <div class="pin-box"><input type="password" id="authTpinInput" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="••••" autofocus></div>
     <button class="unlock-btn" id="fingerprintAuthBtn">🔐 Fingerprint Unlock</button>
-    
     <button type="button" class="forgot-link" id="forgotTpinBtn">Forgot TPIN?</button>
-    
     <div id="authStatusMsg" class="auth-status"></div>
   </div>
 </div>
@@ -399,7 +449,7 @@
   let CORRECT_TPIN = localStorage.getItem("pnb_tpin") || "1234";
   let fingerprintEnabled = localStorage.getItem("fingerprintEnabled") === "true";
   
-  // Security Questions and Answers (Multiple)
+  // Security Questions
   const securityQuestions = [
     { question: "What is your favorite color?", answer: "black" },
     { question: "What is your father's name?", answer: "akhlak" },
@@ -429,142 +479,60 @@
   authTpinInput.addEventListener('input', validateTpin);
   authTpinInput.focus();
   
-  // ========== FINGERPRINT AUTHENTICATION - FIXED ==========
+  // Fingerprint Authentication
   async function authenticateWithFingerprint() {
-    // Check if fingerprint is enabled
     if(!fingerprintEnabled) {
-      Swal.fire({
-        icon: 'info',
-        title: 'Fingerprint Disabled',
-        text: 'Please enable fingerprint login from Profile settings',
-        confirmButtonColor: '#8A1538'
-      });
+      Swal.fire({ icon: 'info', title: 'Fingerprint Disabled', text: 'Please enable fingerprint login from Profile settings', confirmButtonColor: '#8A1538' });
       return false;
     }
-    
-    // Check if device supports fingerprint
     if(!window.PublicKeyCredential) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Not Supported',
-        text: 'Your device does not support fingerprint authentication',
-        confirmButtonColor: '#8A1538'
-      });
+      Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Your browser does not support fingerprint authentication.\nPlease use TPIN instead.', confirmButtonColor: '#8A1538' });
       return false;
     }
-    
+    if(authStatusMsg) { authStatusMsg.innerText = "🔐 Please scan your fingerprint..."; authStatusMsg.style.color = "#f39c12"; }
     try {
-      // Check if device has fingerprint sensor
       const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
       if(!available) {
-        Swal.fire({
-          icon: 'error',
-          title: 'No Fingerprint Setup',
-          text: 'Please setup fingerprint in your device settings first',
-          confirmButtonColor: '#8A1538'
-        });
+        Swal.fire({ icon: 'error', title: 'No Biometric Setup', text: 'Please setup fingerprint/face unlock in your device settings first', confirmButtonColor: '#8A1538' });
+        if(authStatusMsg) authStatusMsg.innerText = "";
         return false;
       }
-      
-      if(authStatusMsg) {
-        authStatusMsg.innerText = "🔐 Scanning fingerprint...";
-        authStatusMsg.style.color = "#f39c12";
-      }
-      
-      // Create a random challenge
       const challenge = new Uint8Array(32);
-      crypto.getRandomValues(challenge);
-      
-      // Try to get fingerprint credential
+      window.crypto.getRandomValues(challenge);
       const credential = await navigator.credentials.get({
-        publicKey: {
-          challenge: challenge,
-          rpId: window.location.hostname || "localhost",
-          timeout: 30000,
-          userVerification: "required"
-        }
+        publicKey: { challenge: challenge, rpId: window.location.hostname, userVerification: "required", timeout: 30000, allowCredentials: [] }
       });
-      
       if(credential) {
-        if(authStatusMsg) {
-          authStatusMsg.innerText = "✓ Fingerprint verified! Unlocking...";
-          authStatusMsg.style.color = "#2ecc71";
-        }
-        
-        setTimeout(() => {
-          authOverlay.style.display = "none";
-          mainApp.style.display = "block";
-          if(typeof initFirebaseApp === 'function') initFirebaseApp();
-        }, 500);
+        if(authStatusMsg) { authStatusMsg.innerText = "✓ Fingerprint verified! Unlocking..."; authStatusMsg.style.color = "#2ecc71"; }
+        setTimeout(() => { authOverlay.style.display = "none"; mainApp.style.display = "block"; if(typeof initFirebaseApp === 'function') initFirebaseApp(); }, 500);
         return true;
       }
       return false;
-      
     } catch(error) {
       console.error("Fingerprint error:", error);
-      
-      let errorMessage = "Fingerprint authentication failed";
-      if(error.name === "NotAllowedError") {
-        errorMessage = "Fingerprint authentication cancelled or not allowed";
-      } else if(error.name === "NotSupportedError") {
-        errorMessage = "Fingerprint not supported on this device";
-      } else if(error.name === "SecurityError") {
-        errorMessage = "Please use HTTPS connection for fingerprint";
-      }
-      
-      if(authStatusMsg) {
-        authStatusMsg.innerText = `❌ ${errorMessage}. Use TPIN`;
-        authStatusMsg.style.color = "#e74c3c";
-        setTimeout(() => {
-          if(authStatusMsg) authStatusMsg.innerText = "";
-        }, 3000);
-      }
-      
-      Swal.fire({
-        icon: 'error',
-        title: 'Fingerprint Failed',
-        text: errorMessage,
-        confirmButtonColor: '#8A1538'
-      });
+      let errorMsg = "Fingerprint authentication failed";
+      if(error.name === "NotAllowedError") errorMsg = "Fingerprint cancelled or not allowed";
+      else if(error.name === "NotFoundError") errorMsg = "No fingerprint saved on this device.\nPlease setup fingerprint first.";
+      if(authStatusMsg) { authStatusMsg.innerText = `❌ ${errorMsg}. Use TPIN`; authStatusMsg.style.color = "#e74c3c"; setTimeout(() => { if(authStatusMsg) authStatusMsg.innerText = ""; }, 4000); }
+      Swal.fire({ icon: 'error', title: 'Fingerprint Failed', text: errorMsg + '\nPlease use TPIN to login', confirmButtonColor: '#8A1538' });
       return false;
     }
   }
   
-  // Fingerprint button click handler
-  fingerprintBtn?.addEventListener("click", function(e) {
-    e.preventDefault();
-    authenticateWithFingerprint();
-  });
+  fingerprintBtn?.addEventListener("click", function(e) { e.preventDefault(); authenticateWithFingerprint(); });
   
-  // ========== FORGOT TPIN - MULTIPLE SECURITY QUESTIONS ==========
+  // Forgot TPIN
   async function forgotTPIN() {
-    // Step 1: Select a security question
     const { value: selected } = await Swal.fire({
       title: '🔐 Forgot TPIN?',
-      html: `
-        <div style="text-align: center;">
-          <p style="margin-bottom: 15px;">Select a security question and answer correctly to reset TPIN</p>
-          <div id="questionsContainer" style="text-align: left;">
-            ${securityQuestions.map((q, idx) => `
-              <div class="question-option" data-idx="${idx}">
-                <i class="fas fa-question-circle" style="color: #8A1538; margin-right: 10px;"></i>
-                <strong>${q.question}</strong>
-              </div>
-            `).join('')}
-          </div>
-          <input type="text" id="securityAnswerInput" class="swal2-input" placeholder="Enter your answer" style="width: 80%; text-align: center; margin-top: 15px; display: none;">
-        </div>
-      `,
-      showCancelButton: true,
-      confirmButtonText: 'Verify & Continue',
-      cancelButtonText: 'Cancel',
-      confirmButtonColor: '#8A1538',
-      cancelButtonColor: '#666',
+      html: `<div style="text-align:center;"><p>Select a security question and answer correctly</p><div id="questionsContainer" style="text-align:left;">
+        ${securityQuestions.map((q, idx) => `<div class="question-option" data-idx="${idx}"><i class="fas fa-question-circle" style="color:#8A1538; margin-right:10px;"></i><strong>${q.question}</strong></div>`).join('')}
+      </div><input type="text" id="securityAnswerInput" class="swal2-input" placeholder="Enter your answer" style="width:80%; text-align:center; margin-top:15px; display:none;"></div>`,
+      showCancelButton: true, confirmButtonText: 'Verify & Continue', cancelButtonText: 'Cancel', confirmButtonColor: '#8A1538', cancelButtonColor: '#666',
       didOpen: () => {
         const questions = document.querySelectorAll('.question-option');
         let selectedIdx = null;
         const answerInput = document.getElementById('securityAnswerInput');
-        
         questions.forEach(q => {
           q.addEventListener('click', () => {
             questions.forEach(qq => qq.classList.remove('selected'));
@@ -576,88 +544,43 @@
       },
       preConfirm: () => {
         const selected = document.querySelector('.question-option.selected');
-        if(!selected) {
-          Swal.showValidationMessage('Please select a security question');
-          return false;
-        }
+        if(!selected) { Swal.showValidationMessage('Please select a security question'); return false; }
         const selectedIdx = parseInt(selected.dataset.idx);
         const answer = document.getElementById('securityAnswerInput').value.trim().toLowerCase();
-        if(!answer) {
-          Swal.showValidationMessage('Please enter your answer');
-          return false;
-        }
-        const correctAnswer = securityQuestions[selectedIdx].answer.toLowerCase();
-        if(answer !== correctAnswer) {
-          Swal.showValidationMessage(`Wrong answer! Correct answer is: ${securityQuestions[selectedIdx].answer}`);
-          return false;
-        }
+        if(!answer) { Swal.showValidationMessage('Please enter your answer'); return false; }
+        if(answer !== securityQuestions[selectedIdx].answer.toLowerCase()) { Swal.showValidationMessage('Wrong answer!'); return false; }
         return true;
       }
     });
-    
     if(selected !== undefined) {
-      // Step 2: Ask for new TPIN
       const { value: tpinResult } = await Swal.fire({
         title: 'Set New TPIN',
-        html: `
-          <div style="text-align: center;">
-            <i class="fas fa-key" style="font-size: 48px; color: #8A1538; margin-bottom: 10px;"></i>
-            <p>Enter your new 4-digit TPIN</p>
-            <input type="password" id="newTpinInput" class="swal2-input" placeholder="New TPIN" maxlength="4" style="width: 80%; text-align: center; font-size: 24px; letter-spacing: 8px;">
-            <input type="password" id="confirmTpinInput" class="swal2-input" placeholder="Confirm New TPIN" maxlength="4" style="width: 80%; text-align: center; font-size: 24px; letter-spacing: 8px; margin-top: 10px;">
-          </div>
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Reset TPIN',
-        cancelButtonText: 'Cancel',
-        confirmButtonColor: '#8A1538',
-        cancelButtonColor: '#666',
+        html: `<div style="text-align:center;"><i class="fas fa-key" style="font-size:48px; color:#8A1538; margin-bottom:10px;"></i><p>Enter your new 4-digit TPIN</p>
+          <input type="password" id="newTpinInput" class="swal2-input" placeholder="New TPIN" maxlength="4" style="width:80%; text-align:center; font-size:24px; letter-spacing:8px;">
+          <input type="password" id="confirmTpinInput" class="swal2-input" placeholder="Confirm New TPIN" maxlength="4" style="width:80%; text-align:center; font-size:24px; letter-spacing:8px; margin-top:10px;"></div>`,
+        showCancelButton: true, confirmButtonText: 'Reset TPIN', cancelButtonText: 'Cancel', confirmButtonColor: '#8A1538', cancelButtonColor: '#666',
         preConfirm: () => {
           const newPin = document.getElementById('newTpinInput').value;
           const confirmPin = document.getElementById('confirmTpinInput').value;
-          if(!newPin || newPin.length !== 4 || !/^\d{4}$/.test(newPin)) {
-            Swal.showValidationMessage('TPIN must be exactly 4 digits');
-            return false;
-          }
-          if(newPin !== confirmPin) {
-            Swal.showValidationMessage('New TPIN and confirmation do not match');
-            return false;
-          }
+          if(!newPin || newPin.length !== 4 || !/^\d{4}$/.test(newPin)) { Swal.showValidationMessage('TPIN must be exactly 4 digits'); return false; }
+          if(newPin !== confirmPin) { Swal.showValidationMessage('New TPIN and confirmation do not match'); return false; }
           return { newPin };
         }
       });
-      
       if(tpinResult) {
         CORRECT_TPIN = tpinResult.newPin;
         localStorage.setItem("pnb_tpin", CORRECT_TPIN);
-        
-        await Swal.fire({
-          icon: 'success',
-          title: 'TPIN Reset Successfully!',
-          text: `Your new TPIN is ${CORRECT_TPIN}`,
-          confirmButtonColor: '#8A1538'
-        });
-        
-        authTpinInput.value = "";
-        authTpinInput.focus();
+        await Swal.fire({ icon: 'success', title: 'TPIN Reset Successfully!', text: `Your new TPIN is ${CORRECT_TPIN}`, confirmButtonColor: '#8A1538' });
+        authTpinInput.value = ""; authTpinInput.focus();
       }
     }
   }
   
-  // Forgot TPIN button click handler
-  document.getElementById("forgotTpinBtn").addEventListener("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    forgotTPIN();
-  });
+  document.getElementById("forgotTpinBtn").addEventListener("click", function(e) { e.preventDefault(); forgotTPIN(); });
   
-  // Update fingerprint button visibility based on setting
   function updateFingerprintButton() {
-    if(fingerprintEnabled) {
-      fingerprintBtn.style.display = "flex";
-    } else {
-      fingerprintBtn.style.display = "none";
-    }
+    if(fingerprintEnabled) fingerprintBtn.style.display = "flex";
+    else fingerprintBtn.style.display = "none";
   }
   updateFingerprintButton();
   
@@ -674,7 +597,17 @@
     const mobile = c.mobile || '';
     const aadhaar = formatAadhaar(c.aadhar || c.aadNumber);
     const account = formatAccount(c.account || c.accountNum);
+    let serviceTypeDisplay = '';
+    if(c.serviceType === 'passport') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-passport"></i><b>SERVICE :</b><span>Passport</span></div>';
+    else if(c.serviceType === 'epfo') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-file-invoice"></i><b>SERVICE :</b><span>EPFO</span></div>';
+    else if(c.serviceType === 'aadhaar') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-id-card"></i><b>SERVICE :</b><span>Aadhaar</span></div>';
+    else if(c.serviceType === 'pan') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-credit-card"></i><b>SERVICE :</b><span>PAN Card</span></div>';
+    else if(c.serviceType === 'esarvish') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-globe"></i><b>SERVICE :</b><span>eSarvish</span></div>';
+    else if(c.serviceType === 'license') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-id-card-alt"></i><b>SERVICE :</b><span>Driving License</span></div>';
+    else if(c.serviceType === 'pnb_account') serviceTypeDisplay = '<div class="detail-line"><i class="fas fa-university"></i><b>SERVICE :</b><span>PNB Account</span></div>';
+    
     return `<div class="customer-item" data-id="${c.id}" data-collection="${c.collection}">
+      ${serviceTypeDisplay}
       <div class="detail-line"><i class="fas fa-user"></i><b>NAME :</b><span>${escapeHtml(name)}</span></div>
       <div class="detail-line"><i class="fas fa-users"></i><b>FATHER :</b><span>${escapeHtml(father)}</span></div>
       <div class="detail-line"><i class="fas fa-phone"></i><b>MOBILE :</b><span>${escapeHtml(mobile)}</span></div>
@@ -726,14 +659,43 @@
     if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore(); authFirebase = firebase.auth();
     
-    const servicesList = [{id:'passport',icon:'fa-passport',name:'Passport'},{id:'epfo',icon:'fa-file-invoice',name:'EPFO'},{id:'aadhaar',icon:'fa-id-card',name:'Aadhaar'},{id:'pan',icon:'fa-credit-card',name:'PAN'},{id:'esarvish',icon:'fa-globe',name:'eSarvish'},{id:'license',icon:'fa-id-card-alt',name:'License'},{id:'pnb_account',icon:'fa-university',name:'Account'}];
+    const servicesList = [
+      {id:'passport',icon:'fa-passport',name:'Passport'},
+      {id:'epfo',icon:'fa-file-invoice',name:'ePFO'},
+      {id:'aadhaar',icon:'fa-id-card',name:'Aadhaar'},
+      {id:'pan',icon:'fa-credit-card',name:'PAN'},
+      {id:'esarvish',icon:'fa-globe',name:'e-Savings'},
+      {id:'license',icon:'fa-id-card-alt',name:'License'},
+      {id:'pnb_account',icon:'fa-university',name:'Account'}
+    ];
     document.getElementById('servicesGrid').innerHTML = servicesList.map(s => `<div class="service-card" data-svc="${s.id}"><i class="fas ${s.icon}"></i><span>${s.name}</span></div>`).join('');
     document.getElementById('bottomSheetServices').innerHTML = servicesList.map(s => `<div class="service-card" data-svc="${s.id}"><i class="fas ${s.icon}"></i><span>${s.name}</span></div>`).join('');
     function openServiceModal(svc) { const modals = { pnb_account:'pnbAccountFullModal', passport:'passportModal', epfo:'epfoModal', aadhaar:'aadhaarModal', pan:'panModal', esarvish:'esarvishModal', license:'licenseModal' }; if(modals[svc]) new bootstrap.Modal(document.getElementById(modals[svc])).show(); }
     document.querySelectorAll('.service-card').forEach(el => { el.onclick = () => { openServiceModal(el.dataset.svc); const bsModal = bootstrap.Modal.getInstance(document.getElementById('serviceBottomSheetQuick')); if(bsModal) bsModal.hide(); }; });
     
-    const filterArr = [{id:'all',name:'All'},{id:'pnb_account',name:'PNB'},{id:'passport',name:'Passport'},{id:'epfo',name:'EPFO'},{id:'aadhaar',name:'Aadhaar'}];
-    const filterCont = document.getElementById('serviceFilterContainer'); if(filterCont) { filterCont.innerHTML = filterArr.map(f => `<div class="service-filter-chip ${currentServiceFilter===f.id?'active':''}" data-filter="${f.id}">${f.name}</div>`).join(''); document.querySelectorAll('.service-filter-chip').forEach(chip => { chip.onclick = () => { currentServiceFilter = chip.dataset.filter; document.querySelectorAll('.service-filter-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); renderAllList(); }; }); }
+    // All Filters - Passport, EPFO, Aadhaar, PAN, eSarvish, License, Account
+    const filterArr = [
+      {id:'all', name:'All', icon:'fa-globe'},
+      {id:'passport', name:'Passport', icon:'fa-passport'},
+      {id:'epfo', name:'EPFO', icon:'fa-file-invoice'},
+      {id:'aadhaar', name:'Aadhaar', icon:'fa-id-card'},
+      {id:'pan', name:'PAN', icon:'fa-credit-card'},
+      {id:'esarvish', name:'eSarvish', icon:'fa-globe'},
+      {id:'license', name:'License', icon:'fa-id-card-alt'},
+      {id:'pnb_account', name:'Account', icon:'fa-university'}
+    ];
+    const filterCont = document.getElementById('serviceFilterContainer');
+    if(filterCont) {
+      filterCont.innerHTML = filterArr.map(f => `<div class="service-filter-chip ${currentServiceFilter===f.id?'active':''}" data-filter="${f.id}"><i class="fas ${f.icon}"></i> ${f.name}</div>`).join('');
+      document.querySelectorAll('.service-filter-chip').forEach(chip => {
+        chip.onclick = () => {
+          currentServiceFilter = chip.dataset.filter;
+          document.querySelectorAll('.service-filter-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          renderAllList();
+        };
+      });
+    }
     
     document.getElementById('homeSearchInput').addEventListener('input', () => renderHomeList());
     document.getElementById('allSearchInput').addEventListener('input', () => renderAllList());
@@ -766,13 +728,7 @@
         fingerprintEnabled = e.target.checked;
         localStorage.setItem("fingerprintEnabled", fingerprintEnabled);
         updateFingerprintButton();
-        Swal.fire({
-          icon: 'success',
-          title: fingerprintEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled',
-          text: fingerprintEnabled ? 'You can now use fingerprint to login' : 'Fingerprint login has been disabled',
-          confirmButtonColor: '#8A1538',
-          timer: 2000
-        });
+        Swal.fire({ icon: 'success', title: fingerprintEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled', text: fingerprintEnabled ? 'You can now use fingerprint to login' : 'Fingerprint login has been disabled', confirmButtonColor: '#8A1538', timer: 2000 });
       };
     }
   }
