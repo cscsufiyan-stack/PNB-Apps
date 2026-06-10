@@ -95,6 +95,7 @@
     .whatsapp-item { background: linear-gradient(135deg, #25D366, #128C7E); color: white; }
     .call-item { background: linear-gradient(135deg, #00BCD4, #0097A7); color: white; }
     .delete-item { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; }
+    .register-fp-item { background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; }
     
     .bottom-tab { position: fixed; bottom: 12px; left: 10px; right: 10px; background: rgba(255,255,255,0.95); backdrop-filter: blur(18px); border-radius: 34px; padding: 8px 12px; display: flex; justify-content: space-around; align-items: center; z-index: 9999; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
     .tab-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #7b8190; font-size: 0.75rem; font-weight: 600; flex: 1; cursor: pointer; padding: 6px 0; border-radius: 30px; }
@@ -157,8 +158,6 @@
     </div>
   </div>
   
-  <!-- BANNER REMOVED -->
-  
   <div id="homePage" class="page active-page">
     <div class="services-section">
       <div class="section-title"><i class="fas fa-bolt"></i> CSC Express Services</div>
@@ -192,6 +191,7 @@
         <span><i class="fas fa-fingerprint"></i> Fingerprint Login</span>
         <label class="switch"><input type="checkbox" id="fingerprintToggle"><span class="slider"></span></label>
       </div>
+      <button class="btn btn-outline-primary w-100 mt-2 rounded-pill" id="registerFingerprintBtn"><i class="fas fa-fingerprint"></i> Register Fingerprint</button>
       <button class="btn btn-outline-danger w-100 mt-2 rounded-pill" id="logoutBtnMobile"><i class="fas fa-sign-out-alt"></i> Logout</button>
       <button class="btn btn-pnb mt-2" id="backupOpenBtn"><i class="fas fa-database"></i> Backup / Restore</button>
       <button class="btn btn-pnb mt-2" id="changeTpinBtn" style="background: #c0392b;"><i class="fas fa-key"></i> Change TPIN</button>
@@ -246,6 +246,94 @@
   let CORRECT_TPIN = localStorage.getItem("pnb_tpin") || "1234";
   let fingerprintEnabled = localStorage.getItem("fingerprintEnabled") === "true";
   
+  // Register Fingerprint Function
+  async function registerFingerprint() {
+    if (!window.PublicKeyCredential) {
+      await Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Fingerprint authentication is not supported on this device/browser.' });
+      return false;
+    }
+
+    try {
+      const challenge = new Uint8Array(32);
+      window.crypto.getRandomValues(challenge);
+
+      const credential = await navigator.credentials.create({
+        publicKey: {
+          challenge: challenge,
+          rp: {
+            name: "PNB Shoaib CSC",
+            id: window.location.hostname || "localhost"
+          },
+          user: {
+            id: new Uint8Array(16),
+            name: "pnb_user",
+            displayName: "PNB User"
+          },
+          pubKeyCredParams: [
+            { type: "public-key", alg: -7 },
+            { type: "public-key", alg: -257 }
+          ],
+          authenticatorSelection: {
+            authenticatorAttachment: "platform",
+            userVerification: "required",
+            requireResidentKey: false
+          },
+          timeout: 60000,
+          attestation: "none"
+        }
+      });
+
+      if (credential && credential.rawId) {
+        const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+        localStorage.setItem("pnb_fingerprint_id", credId);
+        await Swal.fire({ icon: 'success', title: 'Fingerprint Registered!', text: 'You can now use fingerprint to login.', confirmButtonColor: '#8A1538' });
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error("Registration error:", err);
+      let errorMsg = "Fingerprint registration failed";
+      if (err.name === "NotAllowedError") errorMsg = "Registration was cancelled or not allowed";
+      else if (err.name === "InvalidStateError") errorMsg = "A credential already exists for this device";
+      await Swal.fire({ icon: 'error', title: 'Registration Failed', text: errorMsg, confirmButtonColor: '#8A1538' });
+      return false;
+    }
+  }
+
+  // Authenticate Fingerprint Function
+  async function authenticateFingerprint() {
+    const savedId = localStorage.getItem("pnb_fingerprint_id");
+
+    if (!savedId) {
+      return false;
+    }
+
+    try {
+      const challenge = new Uint8Array(32);
+      window.crypto.getRandomValues(challenge);
+
+      const allowCredential = {
+        id: Uint8Array.from(atob(savedId), c => c.charCodeAt(0)),
+        type: "public-key"
+      };
+
+      const assertion = await navigator.credentials.get({
+        publicKey: {
+          challenge: challenge,
+          allowCredentials: [allowCredential],
+          userVerification: "required",
+          timeout: 60000,
+          rpId: window.location.hostname || "localhost"
+        }
+      });
+
+      return !!assertion;
+    } catch (err) {
+      console.error("Authentication error:", err);
+      return false;
+    }
+  }
+
   const securityQuestions = [
     { question: "What is your favorite color?", answer: "black" },
     { question: "What is your father's name?", answer: "akhlak" },
@@ -285,75 +373,45 @@
   authTpinInput.addEventListener('input', validateTpin);
   authTpinInput.focus();
   
-  // FIXED: Simpler fingerprint that works without complex WebAuthn requirements
-  async function authenticateWithFingerprint() {
+  // Updated fingerprint authentication with registration check
+  async function handleFingerprintAuth() {
     if(!fingerprintEnabled) {
       Swal.fire({ icon: 'info', title: 'Fingerprint Disabled', text: 'Please enable fingerprint login from Profile settings', confirmButtonColor: '#8A1538' });
       return false;
     }
     
-    // Check if device supports fingerprint/face recognition
-    if(!window.PublicKeyCredential) {
-      Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Your browser does not support WebAuthn.\nPlease use TPIN instead.', confirmButtonColor: '#8A1538' });
+    const registeredId = localStorage.getItem("pnb_fingerprint_id");
+    if (!registeredId) {
+      Swal.fire({ 
+        icon: 'info', 
+        title: 'No Fingerprint Registered', 
+        text: 'Please register your fingerprint first from Profile page.', 
+        confirmButtonColor: '#8A1538' 
+      });
       return false;
     }
     
-    authStatusMsg.innerText = "🔐 Please scan your fingerprint/face...";
+    authStatusMsg.innerText = "🔐 Please scan your fingerprint...";
     authStatusMsg.style.color = "#f39c12";
     
-    try {
-      // Check if platform authenticator is available
-      const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
-      if(!available) {
-        throw new Error("Biometric not available on this device");
-      }
-      
-      // Create a random challenge
-      const challenge = new Uint8Array(32);
-      window.crypto.getRandomValues(challenge);
-      
-      // Try to get credential - this will trigger biometric prompt
-      const credential = await navigator.credentials.get({
-        publicKey: {
-          challenge: challenge,
-          rpId: window.location.hostname || "localhost",
-          userVerification: "required",
-          timeout: 60000,
-          allowCredentials: []
-        }
-      });
-      
-      if(credential) {
-        authStatusMsg.innerText = "✓ Fingerprint verified! Unlocking...";
-        authStatusMsg.style.color = "#2ecc71";
-        setTimeout(() => { unlockApp(); }, 500);
-        return true;
-      }
-      return false;
-    } catch(error) {
-      console.error("Fingerprint error:", error);
-      let errorMsg = "Fingerprint authentication failed";
-      if(error.name === "NotAllowedError") errorMsg = "Authentication cancelled or not allowed";
-      else if(error.name === "NotFoundError") errorMsg = "No fingerprint/face registered on this device";
-      else if(error.name === "NotSupportedError") errorMsg = "Biometric not supported on this device/browser";
-      
-      authStatusMsg.innerText = `❌ ${errorMsg}`;
+    const success = await authenticateFingerprint();
+    
+    if(success) {
+      authStatusMsg.innerText = "✓ Fingerprint verified! Unlocking...";
+      authStatusMsg.style.color = "#2ecc71";
+      setTimeout(() => { unlockApp(); }, 500);
+      return true;
+    } else {
+      authStatusMsg.innerText = "❌ Fingerprint verification failed";
       authStatusMsg.style.color = "#e74c3c";
-      setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 4000);
-      
-      Swal.fire({ 
-        icon: 'error', 
-        title: 'Fingerprint Failed', 
-        text: errorMsg + '\nPlease use TPIN to login', 
-        confirmButtonColor: '#8A1538' 
-      });
+      setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 3000);
       return false;
     }
   }
   
   fingerprintBtn?.addEventListener("click", function(e) { 
     e.preventDefault(); 
-    authenticateWithFingerprint(); 
+    handleFingerprintAuth(); 
   });
   
   async function forgotTPIN() {
@@ -517,6 +575,7 @@
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page')); document.getElementById(btn.dataset.tab + 'Page').classList.add('active-page'); if(btn.dataset.tab === 'stats') renderAnalyticsDashboard(); if(btn.dataset.tab === 'all') renderAllList(); }; });
     document.getElementById('fabCenterAdd').onclick = () => new bootstrap.Modal(document.getElementById('serviceBottomSheetQuick')).show();
     document.getElementById('changeTpinBtn').onclick = () => new bootstrap.Modal(document.getElementById('tpinChangeModal')).show();
+    document.getElementById('registerFingerprintBtn').onclick = () => registerFingerprint();
     document.getElementById('tpinChangeForm').addEventListener('submit', (e) => { e.preventDefault(); const oldPin = document.getElementById('oldTpin').value; const newPin = document.getElementById('newTpin').value; const confirmPin = document.getElementById('confirmTpin').value; if(oldPin !== CORRECT_TPIN) Swal.fire({ icon:'error', title:'Wrong TPIN' }); else if(newPin.length!==4) Swal.fire({ icon:'error', title:'4 digits required' }); else if(newPin!==confirmPin) Swal.fire({ icon:'error', title:'Mismatch' }); else { CORRECT_TPIN = newPin; localStorage.setItem("pnb_tpin", CORRECT_TPIN); Swal.fire({ icon:'success', title:'TPIN Changed!', text:`New TPIN: ${CORRECT_TPIN}` }); bootstrap.Modal.getInstance(document.getElementById('tpinChangeModal')).hide(); document.getElementById('tpinChangeForm').reset(); } });
     
     const fpToggle = document.getElementById('fingerprintToggle');
