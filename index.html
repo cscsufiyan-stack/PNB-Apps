@@ -181,20 +181,52 @@
     .pin-box { margin-bottom: 22px; }
     .pin-box input { width: 100%; height: 52px; border: 2px solid #e8eef2; border-radius: 30px; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: 10px; outline: none; background: #ffffff; color: #8A1538; }
     .pin-box input:focus { border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
-    .biometric-buttons { display: flex; gap: 12px; margin-bottom: 16px; flex-direction: column; }
-    .biometric-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 50px; padding: 11px 16px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
-    .biometric-btn:active { transform: scale(0.97); }
-    .biometric-btn i { font-size: 20px; }
-    .face-btn { background: linear-gradient(135deg, #667eea, #764ba2); border: none; color: white; box-shadow: 0 5px 15px rgba(102,126,234,0.25); }
-    .finger-btn { background: linear-gradient(135deg, #8A1538, #c2185b); border: none; color: white; box-shadow: 0 5px 15px rgba(138,21,56,0.3); }
-    .forgot-link { display: block; margin-top: 12px; color: #8A1538; font-size: 12px; font-weight: 600; cursor: pointer; background: none; border: none; width: 100%; text-align: center; }
+    
+    /* Single Fingerprint Button */
+    .fingerprint-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #8A1538, #c2185b);
+      border: none;
+      border-radius: 50px;
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 20px rgba(138,21,56,0.35);
+      margin-bottom: 12px;
+    }
+    .fingerprint-btn:active { transform: scale(0.97); }
+    .fingerprint-btn i { font-size: 22px; }
+    
+    .forgot-link { 
+      display: block; 
+      margin-top: 12px; 
+      color: #8A1538; 
+      font-size: 12px; 
+      font-weight: 600;
+      cursor: pointer; 
+      background: none; 
+      border: none; 
+      width: 100%; 
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
     .forgot-link:hover { color: #e91e63; text-decoration: underline; }
+    body.dark-mode .forgot-link { color: #e91e63; }
+    
     .auth-status { margin-top: 14px; font-size: 12px; min-height: 32px; font-weight: 500; }
     .question-option { background: #f8f9fc; border-radius: 16px; padding: 12px; margin: 8px 0; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; font-size: 13px; }
     .question-option.selected { border-color: #8A1538; background: #fff0f3; }
     .register-fp-btn { background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important; color: white !important; }
     
-    /* Custom Stylish Exit Dialog - No Bootstrap Modal, Pure CSS */
+    /* Custom Stylish Exit Dialog */
     .exit-dialog-overlay {
       position: fixed;
       top: 0;
@@ -202,7 +234,7 @@
       width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.6);
- backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
       z-index: 10000;
       display: flex;
       align-items: center;
@@ -303,9 +335,6 @@
       color: white;
       box-shadow: 0 5px 15px rgba(138,21,56,0.3);
     }
-    .exit-ok:hover {
-      background: linear-gradient(135deg, #6b0e2c, #a01548);
-    }
   </style>
 </head>
 <body>
@@ -346,10 +375,10 @@
       <i class="fas fa-user-shield" style="font-size: 60px; color:#8A1538;"></i>
       <h5 id="userEmailProfile" class="mt-2">admin@pnb.com</h5>
       <div class="toggle-switch">
-        <span><i class="fas fa-fingerprint"></i> Biometric Login (Face/Fingerprint)</span>
-        <label class="switch"><input type="checkbox" id="biometricToggle"><span class="slider"></span></label>
+        <span><i class="fas fa-fingerprint"></i> Fingerprint Login</span>
+        <label class="switch"><input type="checkbox" id="fingerprintToggle"><span class="slider"></span></label>
       </div>
-      <button class="btn btn-outline-primary w-100 mt-2 rounded-pill register-fp-btn" id="registerBiometricBtn"><i class="fas fa-id-card"></i> Register Face / Fingerprint</button>
+      <button class="btn btn-outline-primary w-100 mt-2 rounded-pill register-fp-btn" id="registerFingerprintBtn"><i class="fas fa-fingerprint"></i> Register Fingerprint</button>
       <button class="btn btn-outline-danger w-100 mt-2 rounded-pill" id="logoutBtnMobile"><i class="fas fa-sign-out-alt"></i> Logout</button>
       <button class="btn btn-pnb mt-2" id="backupOpenBtn"><i class="fas fa-database"></i> Backup / Restore</button>
       <button class="btn btn-pnb mt-2" id="changeTpinBtn" style="background: #c0392b;"><i class="fas fa-key"></i> Change TPIN</button>
@@ -402,16 +431,14 @@
   </div>
 </div>
 
+<!-- AUTH SCREEN - Only TPIN and Fingerprint (No Face ID) -->
 <div id="authOverlay" class="auth-overlay">
   <div class="secure-card">
     <div class="finger-icon">🔒</div>
     <h1>PNB Secure Access</h1>
-    <p>Enter 4-digit TPIN or use Biometric</p>
+    <p>Enter 4-digit TPIN</p>
     <div class="pin-box"><input type="password" id="authTpinInput" maxlength="4" inputmode="numeric" pattern="\d*" placeholder="••••" autofocus></div>
-    <div class="biometric-buttons">
-      <button class="biometric-btn face-btn" id="faceAuthBtn"><i class="fas fa-face-smile"></i> Face ID Unlock</button>
-      <button class="biometric-btn finger-btn" id="fingerprintAuthBtn"><i class="fas fa-fingerprint"></i> Fingerprint Unlock</button>
-    </div>
+    <button class="fingerprint-btn" id="fingerprintAuthBtn"><i class="fas fa-fingerprint"></i> Fingerprint Unlock</button>
     <button type="button" class="forgot-link" id="forgotTpinBtn">🔐 Forgot TPIN? Reset with Security Questions</button>
     <div id="authStatusMsg" class="auth-status"></div>
   </div>
@@ -427,7 +454,7 @@
 <script>
 (function() {
   let CORRECT_TPIN = localStorage.getItem("pnb_tpin") || "1234";
-  let biometricEnabled = localStorage.getItem("biometricEnabled") === "true";
+  let fingerprintEnabled = localStorage.getItem("fingerprintEnabled") === "true";
   const pageOrder = ['home', 'all', 'stats', 'profile'];
   let currentPageIndex = 0;
   
@@ -446,7 +473,6 @@
   
   function exitApp() {
     window.close();
-    // Fallback for browsers that don't allow window.close()
     setTimeout(() => {
       window.location.href = 'about:blank';
     }, 100);
@@ -458,9 +484,10 @@
     exitApp();
   });
   
-  async function registerBiometric() {
+  // Register Fingerprint Function
+  async function registerFingerprint() {
     if (!window.PublicKeyCredential) {
-      await Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Face/Fingerprint not supported.', confirmButtonColor: '#8A1538' });
+      await Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Fingerprint authentication is not supported on this device/browser.', confirmButtonColor: '#8A1538' });
       return false;
     }
     try {
@@ -479,19 +506,21 @@
       });
       if (credential && credential.rawId) {
         const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
-        localStorage.setItem("pnb_biometric_id", credId);
-        await Swal.fire({ icon: 'success', title: '✅ Biometric Registered!', text: 'Face ID / Fingerprint is ready.', confirmButtonColor: '#8A1538' });
+        localStorage.setItem("pnb_fingerprint_id", credId);
+        await Swal.fire({ icon: 'success', title: 'Fingerprint Registered!', text: 'You can now use fingerprint to login.', confirmButtonColor: '#8A1538' });
         return true;
       }
       return false;
     } catch (err) {
+      console.error("Registration error:", err);
       await Swal.fire({ icon: 'error', title: 'Registration Failed', text: err.message || 'Please try again', confirmButtonColor: '#8A1538' });
       return false;
     }
   }
 
-  async function authenticateBiometric() {
-    const savedId = localStorage.getItem("pnb_biometric_id");
+  // Authenticate Fingerprint Function
+  async function authenticateFingerprint() {
+    const savedId = localStorage.getItem("pnb_fingerprint_id");
     if (!savedId) return false;
     try {
       const challenge = new Uint8Array(32);
@@ -506,7 +535,10 @@
         }
       });
       return !!assertion;
-    } catch (err) { return false; }
+    } catch (err) {
+      console.error("Auth error:", err);
+      return false;
+    }
   }
 
   const securityQuestions = [
@@ -520,7 +552,6 @@
   const mainApp = document.getElementById("mainAppContainer");
   const authTpinInput = document.getElementById("authTpinInput");
   const authStatusMsg = document.getElementById("authStatusMsg");
-  const faceAuthBtn = document.getElementById("faceAuthBtn");
   const fingerprintAuthBtn = document.getElementById("fingerprintAuthBtn");
   let chartInstance = null;
   
@@ -541,9 +572,7 @@
     if(currentPageIndex > 0) {
       switchToPage(pageOrder[currentPageIndex - 1]);
     } else {
-      // Show stylish exit dialog instead of confirm
       showExitDialog();
-      // Push state again to prevent immediate exit on back
       history.pushState({ page: 'home' }, '', window.location.href);
     }
   }
@@ -569,18 +598,33 @@
   authTpinInput.addEventListener('input', validateTpin);
   authTpinInput.focus();
   
-  async function handleBiometricAuth(methodName) {
-    if(!biometricEnabled) { Swal.fire({ icon: 'info', title: 'Biometric Disabled', text: 'Enable from Profile settings', confirmButtonColor: '#8A1538' }); return false; }
-    const registeredId = localStorage.getItem("pnb_biometric_id");
-    if (!registeredId) { Swal.fire({ icon: 'info', title: 'No Biometric Registered', text: 'Go to Profile and Register first.', confirmButtonColor: '#8A1538' }); return false; }
-    authStatusMsg.innerText = `🔐 Scanning ${methodName}...`; authStatusMsg.style.color = "#f39c12";
-    const success = await authenticateBiometric();
-    if(success) { authStatusMsg.innerText = "✓ Verified! Unlocking..."; authStatusMsg.style.color = "#2ecc71"; setTimeout(() => { unlockApp(); }, 500); return true; }
-    else { authStatusMsg.innerText = `❌ ${methodName} verification failed`; authStatusMsg.style.color = "#e74c3c"; setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 3000); return false; }
+  async function handleFingerprintAuth() {
+    if(!fingerprintEnabled) {
+      Swal.fire({ icon: 'info', title: 'Fingerprint Disabled', text: 'Please enable fingerprint login from Profile settings', confirmButtonColor: '#8A1538' });
+      return false;
+    }
+    const registeredId = localStorage.getItem("pnb_fingerprint_id");
+    if (!registeredId) {
+      Swal.fire({ icon: 'info', title: 'No Fingerprint Registered', text: 'Please register your fingerprint first from Profile page.', confirmButtonColor: '#8A1538' });
+      return false;
+    }
+    authStatusMsg.innerText = "🔐 Please scan your fingerprint...";
+    authStatusMsg.style.color = "#f39c12";
+    const success = await authenticateFingerprint();
+    if(success) {
+      authStatusMsg.innerText = "✓ Fingerprint verified! Unlocking...";
+      authStatusMsg.style.color = "#2ecc71";
+      setTimeout(() => { unlockApp(); }, 500);
+      return true;
+    } else {
+      authStatusMsg.innerText = "❌ Fingerprint verification failed";
+      authStatusMsg.style.color = "#e74c3c";
+      setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 3000);
+      return false;
+    }
   }
   
-  faceAuthBtn?.addEventListener("click", (e) => { e.preventDefault(); handleBiometricAuth("Face ID"); });
-  fingerprintAuthBtn?.addEventListener("click", (e) => { e.preventDefault(); handleBiometricAuth("Fingerprint"); });
+  fingerprintAuthBtn?.addEventListener("click", (e) => { e.preventDefault(); handleFingerprintAuth(); });
   
   async function forgotTPIN() {
     const { value: selected } = await Swal.fire({
@@ -709,7 +753,6 @@
     if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore(); authFirebase = firebase.auth();
     
-    // Create custom 3x3 grid with Passport centered at bottom - Using eSarvish name
     const servicesContainer = document.getElementById('servicesGrid');
     const bottomSheetContainer = document.getElementById('bottomSheetServices');
     
@@ -798,10 +841,10 @@
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.onclick = () => { switchToPage(btn.dataset.tab); }; });
     document.getElementById('fabCenterAdd').onclick = () => new bootstrap.Modal(document.getElementById('serviceBottomSheetQuick')).show();
     document.getElementById('changeTpinBtn').onclick = () => new bootstrap.Modal(document.getElementById('tpinChangeModal')).show();
-    document.getElementById('registerBiometricBtn').onclick = () => registerBiometric();
+    document.getElementById('registerFingerprintBtn').onclick = () => registerFingerprint();
     document.getElementById('tpinChangeForm').addEventListener('submit', (e) => { e.preventDefault(); const oldPin = document.getElementById('oldTpin').value; const newPin = document.getElementById('newTpin').value; const confirmPin = document.getElementById('confirmTpin').value; if(oldPin !== CORRECT_TPIN) Swal.fire({ icon:'error', title:'Wrong TPIN' }); else if(newPin.length!==4) Swal.fire({ icon:'error', title:'4 digits required' }); else if(newPin!==confirmPin) Swal.fire({ icon:'error', title:'Mismatch' }); else { CORRECT_TPIN = newPin; localStorage.setItem("pnb_tpin", CORRECT_TPIN); Swal.fire({ icon:'success', title:'TPIN Changed!', text:`New TPIN: ${CORRECT_TPIN}` }); bootstrap.Modal.getInstance(document.getElementById('tpinChangeModal')).hide(); document.getElementById('tpinChangeForm').reset(); } });
-    const bioToggle = document.getElementById('biometricToggle');
-    if(bioToggle) { bioToggle.checked = biometricEnabled; bioToggle.onchange = (e) => { biometricEnabled = e.target.checked; localStorage.setItem("biometricEnabled", biometricEnabled); Swal.fire({ icon: 'success', title: biometricEnabled ? 'Biometric Enabled' : 'Biometric Disabled', confirmButtonColor: '#8A1538', timer: 2000 }); }; }
+    const fpToggle = document.getElementById('fingerprintToggle');
+    if(fpToggle) { fpToggle.checked = fingerprintEnabled; fpToggle.onchange = (e) => { fingerprintEnabled = e.target.checked; localStorage.setItem("fingerprintEnabled", fingerprintEnabled); Swal.fire({ icon: 'success', title: fingerprintEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled', confirmButtonColor: '#8A1538', timer: 2000 }); }; }
   }
   
   const darkToggle = document.getElementById('darkModeToggleBtn');
