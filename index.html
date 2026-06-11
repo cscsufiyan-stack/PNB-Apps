@@ -60,11 +60,51 @@
     
     .services-section { background: #fff; margin: 12px 16px; border-radius: 28px; padding: 10px 12px 12px; border: 2px solid #f1e3e8; }
     .section-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; color: #8A1538; }
-    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-    .service-card { background: #fff; border-radius: 20px; padding: 8px 4px; text-align: center; border: 1px solid #ececec; display: flex; flex-direction: column; align-items: center; gap: 4px; min-height: 80px; cursor: pointer; transition: all 0.2s ease; }
+    
+    /* 3x3 Grid with centered Passport at bottom */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+    .service-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 12px 4px;
+      text-align: center;
+      border: 1px solid #ececec;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-height: 85px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
     .service-card:active { transform: scale(0.96); }
-    .service-card i { font-size: 22px; color: #8A1538; }
-    .service-card span { font-size: 0.7rem; font-weight: 600; color: #333; }
+    .service-card i { font-size: 24px; color: #8A1538; }
+    .service-card span { font-size: 0.75rem; font-weight: 600; color: #333; }
+    
+    /* Special full-width card for Passport at bottom */
+    .full-width-card {
+      grid-column: span 3;
+      background: linear-gradient(135deg, #8A1538, #c2185b);
+      border-radius: 20px;
+      padding: 12px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 5px;
+    }
+    .full-width-card:active { transform: scale(0.98); }
+    .full-width-card i { font-size: 24px; color: white; }
+    .full-width-card span { font-size: 0.85rem; font-weight: 700; color: white; letter-spacing: 0.5px; }
+    body.dark-mode .full-width-card { background: linear-gradient(135deg, #e91e63, #8A1538); }
     
     .search-card { background: transparent; margin: 0 10px 18px; }
     .search-flex { position: relative; background: #fff; border-radius: 60px; padding: 10px 72px 10px 58px; display: flex; align-items: center; border: 3px solid #d7b27a; min-height: 70px; }
@@ -84,8 +124,8 @@
     .detail-line { display: flex; align-items: center; background: #fff; border: 1px solid #e5c48d; border-radius: 14px; margin-bottom: 10px; overflow: hidden; min-height: 48px; }
     .detail-line i { width: 40px; height: 40px; background: linear-gradient(135deg,#8A1538,#b01252); color:#fff; display: flex; align-items: center; justify-content: center; font-size: 16px; position: relative; }
     .detail-line i::after { content: ''; position: absolute; right: -7px; top: 0; border-top: 20px solid transparent; border-bottom: 20px solid transparent; border-left: 7px solid #8A1538; }
-    .detail-line b { color:#8A1538; min-width:78px; font-size:11px; font-weight:800; margin-left:14px; }
-    .detail-line span { font-weight:700; font-size:0.85rem; padding:0 6px; color:#111; flex:1; }
+    .detail-line b { color:#8A1538; min-width:100px; font-size:11px; font-weight:800; margin-left:14px; }
+    .detail-line span { font-weight:700; font-size:0.85rem; padding:0 6px; color:#111; flex:1; word-break:break-word; }
     
     .customer-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
     .action-btn { width: 44px; height: 44px; border-radius: 16px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s ease; text-decoration: none; font-size: 1.2rem; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
@@ -108,7 +148,7 @@
     
     .modal-content { border-radius: 32px; border: none; }
     .modal-header { background: #8A1538; color: white; border-radius: 32px 32px 0 0; padding: 16px; }
-    .btn-pnb { background: #8A1538; color: white; border-radius: 40px; padding: 12px; font-weight: 700; width: 100%; border: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .btn-pnb { background: #8A1538; color: white; border-radius: 40px; padding: 12px; font-weight: 700; width: 100%; border: none; transition: transform 0.2s ease; }
     .btn-pnb:active { transform: scale(0.97); }
     .form-control { border-radius: 20px; padding: 12px; border: 1px solid #e2e8f0; margin-bottom: 12px; }
     .version-text { font-size: 0.7rem; color: #64748b; margin-top: 20px; text-align: center; }
@@ -129,167 +169,143 @@
     .chart-container { background: white; border-radius: 24px; padding: 16px; margin-bottom: 16px; border: 1px solid #f0e6ea; }
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
     
-    /* Compact Stylish Auth Overlay */
-    .auth-overlay { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: linear-gradient(145deg, #f5f7fc 0%, #eef2f7 100%);
-      z-index: 1000; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      flex-direction: column; 
-      padding: 20px; 
-    }
+    .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(145deg, #f5f7fc 0%, #eef2f7 100%); z-index: 1000; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; }
     body.dark-mode .auth-overlay { background: linear-gradient(145deg, #1a1a2e 0%, #12121c 100%); }
     
-    /* Smaller, more compact card */
-    .secure-card { 
-      width: 92%; 
-      max-width: 340px; 
-      margin: 0 auto; 
-      padding: 28px 22px 32px;
-      background: rgba(255,255,255,0.98);
-      border-radius: 44px;
-      text-align: center; 
-      box-shadow: 0 20px 35px rgba(0,0,0,0.12), 0 0 0 1px rgba(138,21,56,0.08);
-      backdrop-filter: blur(10px);
-    }
-    body.dark-mode .secure-card { background: rgba(30,30,47,0.98); box-shadow: 0 20px 35px rgba(0,0,0,0.4), 0 0 0 1px rgba(233,30,99,0.2); }
+    .secure-card { width: 92%; max-width: 340px; margin: 0 auto; padding: 28px 22px 32px; background: rgba(255,255,255,0.98); border-radius: 44px; text-align: center; box-shadow: 0 20px 35px rgba(0,0,0,0.12); backdrop-filter: blur(10px); }
+    body.dark-mode .secure-card { background: rgba(30,30,47,0.98); }
+    .finger-icon { width: 70px; height: 70px; margin: 0 auto 15px; border-radius: 50%; background: linear-gradient(135deg, #8A1538, #c2185b, #e91e63); color: #fff; font-size: 34px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(138,21,56,0.25); animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(138,21,56,0.3); } 70% { box-shadow: 0 0 0 10px rgba(138,21,56,0); } 100% { box-shadow: 0 0 0 0 rgba(138,21,56,0); } }
+    .secure-card h1 { margin: 0 0 5px; font-size: 22px; font-weight: 800; background: linear-gradient(135deg, #8A1538, #e91e63); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .secure-card p { color: #888; font-size: 12px; margin-bottom: 20px; font-weight: 500; }
+    .pin-box { margin-bottom: 22px; }
+    .pin-box input { width: 100%; height: 52px; border: 2px solid #e8eef2; border-radius: 30px; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: 10px; outline: none; background: #ffffff; color: #8A1538; }
+    .pin-box input:focus { border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
+    .biometric-buttons { display: flex; gap: 12px; margin-bottom: 16px; flex-direction: column; }
+    .biometric-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 50px; padding: 11px 16px; font-weight: 700; font-size: 14px; cursor: pointer; transition: all 0.2s ease; }
+    .biometric-btn:active { transform: scale(0.97); }
+    .biometric-btn i { font-size: 20px; }
+    .face-btn { background: linear-gradient(135deg, #667eea, #764ba2); border: none; color: white; box-shadow: 0 5px 15px rgba(102,126,234,0.25); }
+    .finger-btn { background: linear-gradient(135deg, #8A1538, #c2185b); border: none; color: white; box-shadow: 0 5px 15px rgba(138,21,56,0.3); }
+    .forgot-link { display: block; margin-top: 12px; color: #8A1538; font-size: 12px; font-weight: 600; cursor: pointer; background: none; border: none; width: 100%; text-align: center; }
+    .forgot-link:hover { color: #e91e63; text-decoration: underline; }
+    .auth-status { margin-top: 14px; font-size: 12px; min-height: 32px; font-weight: 500; }
+    .question-option { background: #f8f9fc; border-radius: 16px; padding: 12px; margin: 8px 0; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; font-size: 13px; }
+    .question-option.selected { border-color: #8A1538; background: #fff0f3; }
+    .register-fp-btn { background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important; color: white !important; }
     
-    /* Smaller icon */
-    .finger-icon { 
-      width: 70px; 
-      height: 70px; 
-      margin: 0 auto 15px; 
-      border-radius: 50%; 
-      background: linear-gradient(135deg, #8A1538, #c2185b, #e91e63);
-      color: #fff; 
-      font-size: 34px; 
-      display: flex; 
-      align-items: center; 
+    /* Custom Stylish Exit Dialog - No Bootstrap Modal, Pure CSS */
+    .exit-dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+ backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 20px rgba(138,21,56,0.25);
-      animation: pulse 2s infinite;
+      visibility: hidden;
+      opacity: 0;
+      transition: all 0.3s ease;
     }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(138,21,56,0.3); }
-      70% { box-shadow: 0 0 0 10px rgba(138,21,56,0); }
-      100% { box-shadow: 0 0 0 0 rgba(138,21,56,0); }
+    .exit-dialog-overlay.active {
+      visibility: visible;
+      opacity: 1;
     }
-    
-    .secure-card h1 { 
-      margin: 0 0 5px; 
-      font-size: 22px; 
-      font-weight: 800; 
+    .exit-dialog {
+      background: linear-gradient(145deg, #ffffff, #f8f9fc);
+      border-radius: 48px;
+      width: 85%;
+      max-width: 320px;
+      padding: 32px 24px 28px;
+      text-align: center;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.2), 0 0 0 1px rgba(138,21,56,0.1);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+    .exit-dialog-overlay.active .exit-dialog {
+      transform: scale(1);
+    }
+    body.dark-mode .exit-dialog {
+      background: linear-gradient(145deg, #2a2a3a, #1e1e2f);
+      box-shadow: 0 30px 50px rgba(0,0,0,0.4);
+    }
+    .exit-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #8A1538, #c2185b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(138,21,56,0.3);
+    }
+    .exit-icon i {
+      font-size: 40px;
+      color: white;
+    }
+    .exit-dialog h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
       background: linear-gradient(135deg, #8A1538, #e91e63);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      letter-spacing: -0.3px;
     }
-    body.dark-mode .secure-card h1 { background: linear-gradient(135deg, #e91e63, #ff6b9d); -webkit-background-clip: text; background-clip: text; }
-    
-    .secure-card p { color: #888; font-size: 12px; margin-bottom: 20px; font-weight: 500; }
-    
-    /* Smaller PIN input */
-    .pin-box { margin-bottom: 22px; }
-    .pin-box input { 
-      width: 100%; 
-      height: 52px; 
-      border: 2px solid #e8eef2; 
-      border-radius: 30px; 
-      text-align: center; 
-      font-size: 26px; 
-      font-weight: 700; 
-      letter-spacing: 10px; 
-      outline: none; 
-      background: #ffffff;
-      color: #8A1538;
-      transition: all 0.2s ease;
-      font-family: monospace;
+    body.dark-mode .exit-dialog h3 {
+      background: linear-gradient(135deg, #e91e63, #ff6b9d);
+      -webkit-background-clip: text;
+      background-clip: text;
     }
-    .pin-box input:focus { border-color: #e91e63; box-shadow: 0 0 0 3px rgba(233,30,99,0.15); }
-    body.dark-mode .pin-box input { background: #2a2a3a; border-color: #4a4a5a; color: #e91e63; }
-    
-    /* Compact Biometric Buttons */
-    .biometric-buttons { 
-      display: flex; 
-      gap: 12px; 
-      margin-bottom: 16px;
-      flex-direction: column;
-    }
-    .biometric-btn { 
-      width: 100%;
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px; 
-      background: linear-gradient(135deg, #f8f9fc, #ffffff);
-      border: 1px solid rgba(138,21,56,0.15);
-      border-radius: 50px; 
-      padding: 11px 16px; 
-      font-weight: 700; 
+    .exit-dialog p {
+      color: #666;
       font-size: 14px;
-      color: #333;
+      margin-bottom: 28px;
+      font-weight: 500;
+    }
+    body.dark-mode .exit-dialog p {
+      color: #aaa;
+    }
+    .exit-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+    .exit-btn {
+      flex: 1;
+      padding: 12px 0;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 16px;
+      border: none;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
     }
-    .biometric-btn:active { transform: scale(0.97); background: #f0f2f8; }
-    .biometric-btn i { font-size: 20px; transition: transform 0.2s ease; }
-    .biometric-btn:hover i { transform: scale(1.08); }
-    
-    .face-btn { 
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      border: none;
-      color: white;
-      box-shadow: 0 5px 15px rgba(102,126,234,0.25);
+    .exit-btn:active {
+      transform: scale(0.96);
     }
-    .face-btn i { color: white; }
-    .face-btn:active { background: linear-gradient(135deg, #5a67d8, #6b46a0); }
-    
-    .finger-btn { 
+    .exit-cancel {
+      background: #f0f2f5;
+      color: #666;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    body.dark-mode .exit-cancel {
+      background: #3a3a4a;
+      color: #ddd;
+    }
+    .exit-ok {
       background: linear-gradient(135deg, #8A1538, #c2185b);
-      border: none;
       color: white;
       box-shadow: 0 5px 15px rgba(138,21,56,0.3);
     }
-    .finger-btn i { color: white; }
-    .finger-btn:active { background: linear-gradient(135deg, #6b0e2c, #a01548); }
-    
-    body.dark-mode .biometric-btn { background: linear-gradient(135deg, #2a2a3a, #1e1e2f); border-color: #e91e63; color: #fff; }
-    body.dark-mode .face-btn { background: linear-gradient(135deg, #667eea, #764ba2); }
-    body.dark-mode .finger-btn { background: linear-gradient(135deg, #8A1538, #c2185b); }
-    
-    /* Smaller forgot link */
-    .forgot-link { 
-      display: block; 
-      margin-top: 12px; 
-      color: #8A1538; 
-      font-size: 12px; 
-      font-weight: 600;
-      cursor: pointer; 
-      background: none; 
-      border: none; 
-      width: 100%; 
-      text-align: center;
-      text-decoration: none;
-      transition: all 0.2s ease;
+    .exit-ok:hover {
+      background: linear-gradient(135deg, #6b0e2c, #a01548);
     }
-    .forgot-link:hover { color: #e91e63; text-decoration: underline; }
-    body.dark-mode .forgot-link { color: #e91e63; }
-    
-    .auth-status { margin-top: 14px; font-size: 12px; min-height: 32px; font-weight: 500; }
-    
-    .question-option { background: #f8f9fc; border-radius: 16px; padding: 12px; margin: 8px 0; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; font-size: 13px; }
-    .question-option.selected { border-color: #8A1538; background: #fff0f3; transform: scale(1.01); }
-    body.dark-mode .question-option { background: #3a3a4a; color: white; }
-    
-    .register-fp-btn { background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important; color: white !important; }
   </style>
 </head>
 <body>
@@ -305,10 +321,10 @@
   <div id="homePage" class="page active-page">
     <div class="services-section">
       <div class="section-title"><i class="fas fa-bolt"></i> CSC Express Services</div>
-      <div class="services-grid" id="servicesGrid"></div>
+      <div id="servicesGrid"></div>
     </div>
     <div class="search-card">
-      <div class="search-flex"><i class="fas fa-search"></i><input type="text" id="homeSearchInput" placeholder="Search by name, mobile..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times"></i></button></div>
+      <div class="search-flex"><i class="fas fa-search"></i><input type="text" id="homeSearchInput" placeholder="Search by name, mobile, aadhar, account..."><button class="clear-search" id="clearHomeSearch"><i class="fas fa-times"></i></button></div>
       <div id="customerListContainer"></div>
     </div>
   </div>
@@ -322,9 +338,7 @@
   </div>
   
   <div id="statsPage" class="page">
-    <div class="services-section" style="background: transparent; box-shadow: none;">
-      <div id="analyticsDashboard"></div>
-    </div>
+    <div class="services-section" style="background: transparent; box-shadow: none;"><div id="analyticsDashboard"></div></div>
   </div>
   
   <div id="profilePage" class="page">
@@ -351,21 +365,43 @@
     <button class="tab-btn" data-tab="profile"><i class="fas fa-user"></i><span>Profile</span></button>
   </div>
   
-  <!-- MODALS (keeping same functional content) -->
-  <div class="modal fade" id="pnbAccountFullModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-university"></i> PNB Account</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="pnbFullForm"><input type="text" class="form-control" placeholder="Full Name" id="fullName" required><input type="text" class="form-control" placeholder="Father's Name" id="fatherName"><input type="tel" class="form-control" placeholder="Mobile Number" id="mobileNum" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number" id="aadharNum"><input type="text" class="form-control" placeholder="Account Number" id="accountNum" required><input type="text" class="form-control" placeholder="Password" id="accPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="editCustomerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-edit"></i> Edit Customer</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="editCustomerForm"><input type="hidden" id="editId"><input type="hidden" id="editCollection"><input type="text" class="form-control" placeholder="Full Name" id="editName" required><input type="text" class="form-control" placeholder="Father's Name" id="editFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="editMobile" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number" id="editAadhar"><input type="text" class="form-control" placeholder="Account Number" id="editAccount"><input type="text" class="form-control" placeholder="Password" id="editPassword"><button type="submit" class="btn btn-pnb mt-3">Update</button></form></div></div></div></div>
-  <div class="modal fade" id="passportModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📘 Passport</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="passportFormModal"><input type="text" class="form-control" placeholder="Name" id="passName" required><input type="text" class="form-control" placeholder="Father" id="passFather"><input type="tel" class="form-control" placeholder="Mobile" id="passMobile" required><input type="text" class="form-control" placeholder="App no" id="passAppNo"><input type="text" class="form-control" placeholder="Password" id="passPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="epfoModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📂 EPFO</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="epfoFormModal"><input type="text" class="form-control" placeholder="Name" id="epfoName" required><input type="text" class="form-control" placeholder="Father" id="epfoFather"><input type="tel" class="form-control" placeholder="Mobile" id="epfoMobile" required><input type="text" class="form-control" placeholder="EPFO Number" id="epfoPfNo" required><input type="text" class="form-control" placeholder="Password" id="epfoPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="aadhaarModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🆔 Aadhaar</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="aadhaarFormModal"><input type="text" class="form-control" placeholder="Name" id="aadName" required><input type="text" class="form-control" placeholder="Father" id="aadFather"><input type="tel" class="form-control" placeholder="Mobile" id="aadMobile" required><input type="text" class="form-control" placeholder="Aadhar Number" id="aadNumber" required><input type="text" class="form-control" placeholder="Password" id="aadPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="panModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>💳 PAN</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="panFormModal"><input type="text" class="form-control" placeholder="Name" id="panName" required><input type="text" class="form-control" placeholder="Father" id="panFather"><input type="tel" class="form-control" placeholder="Mobile" id="panMobile" required><input type="text" class="form-control" placeholder="Application No" id="panNumber" required><input type="text" class="form-control" placeholder="Password" id="panPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="esarvishModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🌐 eSarvish</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="esarvishFormModal"><input type="text" class="form-control" placeholder="Name" id="esName" required><input type="text" class="form-control" placeholder="Father" id="esFather"><input type="tel" class="form-control" placeholder="Mobile" id="esMobile" required><input type="text" class="form-control" placeholder="Application No" id="esAppNo" required><input type="text" class="form-control" placeholder="Password" id="esPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
-  <div class="modal fade" id="licenseModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🚗 Driving License</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="licenseFormModal"><input type="text" class="form-control" placeholder="Name" id="licName" required><input type="text" class="form-control" placeholder="Father" id="licFather"><input type="tel" class="form-control" placeholder="Mobile" id="licMobile" required><input type="text" class="form-control" placeholder="Application No" id="licAppNo" required><input type="text" class="form-control" placeholder="Password" id="licPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  <!-- MODALS -->
+  <div class="modal fade" id="pnbAccountFullModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-university"></i> PNB Account</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="pnbFullForm"><input type="text" class="form-control" placeholder="Full Name" id="fullName" required><input type="text" class="form-control" placeholder="Father's Name" id="fatherName"><input type="tel" class="form-control" placeholder="Mobile Number" id="mobileNum" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number (12 digits)" id="aadharNum"><input type="text" class="form-control" placeholder="Account Number" id="accountNum" required><input type="text" class="form-control" placeholder="Password" id="accPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="passportModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📘 Passport</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="passportFormModal"><input type="text" class="form-control" placeholder="Full Name" id="passName" required><input type="text" class="form-control" placeholder="Father's Name" id="passFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="passMobile" required><input type="text" class="form-control" placeholder="Application No / File No" id="passAppNo" required><input type="text" class="form-control" placeholder="Password" id="passPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="epfoModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>📂 EPFO</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="epfoFormModal"><input type="text" class="form-control" placeholder="Full Name" id="epfoName" required><input type="text" class="form-control" placeholder="Father's Name" id="epfoFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="epfoMobile" required><input type="text" class="form-control" placeholder="EPF Number / UAN" id="epfoPfNo" required><input type="text" class="form-control" placeholder="Password" id="epfoPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="aadhaarModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🆔 Aadhaar</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="aadhaarFormModal"><input type="text" class="form-control" placeholder="Full Name" id="aadName" required><input type="text" class="form-control" placeholder="Father's Name" id="aadFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="aadMobile" required><input type="text" class="form-control" placeholder="Aadhar Number (12 digits)" id="aadNumber" required><input type="text" class="form-control" placeholder="Password" id="aadPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="panModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>💳 PAN Card</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="panFormModal"><input type="text" class="form-control" placeholder="Full Name" id="panName" required><input type="text" class="form-control" placeholder="Father's Name" id="panFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="panMobile" required><input type="text" class="form-control" placeholder="Application Number / PAN No" id="panNumber" required><input type="text" class="form-control" placeholder="Password" id="panPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="esarvishModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🌐 eSarvish</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="esarvishFormModal"><input type="text" class="form-control" placeholder="Full Name" id="esName" required><input type="text" class="form-control" placeholder="Father's Name" id="esFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="esMobile" required><input type="text" class="form-control" placeholder="Application Number" id="esAppNo" required><input type="text" class="form-control" placeholder="Password" id="esPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="licenseModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>🚗 Driving License</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="licenseFormModal"><input type="text" class="form-control" placeholder="Full Name" id="licName" required><input type="text" class="form-control" placeholder="Father's Name" id="licFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="licMobile" required><input type="text" class="form-control" placeholder="Application Number / DL No" id="licAppNo" required><input type="text" class="form-control" placeholder="Password" id="licPassword"><button type="submit" class="btn btn-pnb mt-3">Save</button></form></div></div></div></div>
+  
+  <div class="modal fade" id="editCustomerModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-edit"></i> Edit Customer</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="editCustomerForm"><input type="hidden" id="editId"><input type="hidden" id="editCollection"><input type="hidden" id="editServiceType"><input type="text" class="form-control" placeholder="Full Name" id="editName" required><input type="text" class="form-control" placeholder="Father's Name" id="editFather"><input type="tel" class="form-control" placeholder="Mobile Number" id="editMobile" maxlength="10" required><input type="text" class="form-control" placeholder="Aadhar Number / Account / Service Number" id="editServiceNumber"><input type="text" class="form-control" placeholder="Additional Number (Account/Aadhar)" id="editExtraNumber"><input type="text" class="form-control" placeholder="Password" id="editPassword"><button type="submit" class="btn btn-pnb mt-3">Update</button></form></div></div></div></div>
+  
   <div class="modal fade" id="tpinChangeModal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6><i class="fas fa-key"></i> Change TPIN</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form id="tpinChangeForm"><input type="password" class="form-control" id="oldTpin" placeholder="Current TPIN (4 digits)" maxlength="4" required><input type="password" class="form-control" id="newTpin" placeholder="New TPIN (4 digits)" maxlength="4" required><input type="password" class="form-control" id="confirmTpin" placeholder="Confirm New TPIN" maxlength="4" required><button type="submit" class="btn btn-pnb mt-3">Update</button></form></div></div></div></div>
   <div class="modal fade" id="backupModalGlobal" tabindex="-1"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h6>Backup & Restore</h6><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><button class="btn btn-pnb w-100 mb-2" id="createBackupNow">📥 Create Backup</button><input type="file" id="restoreFile" class="form-control mb-2" accept=".json"><button class="btn btn-outline-danger w-100" id="restoreBackupNow">📤 Restore</button></div></div></div></div>
-  <div class="modal fade" id="serviceBottomSheetQuick" tabindex="-1"><div class="modal-dialog modal-dialog-bottom" style="margin:0; margin-top:auto;"><div class="modal-content" style="border-radius:32px 32px 0 0;"><div class="modal-header"><h6>✨ All CSC Services</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="services-grid" id="bottomSheetServices"></div></div></div></div></div>
+  <div class="modal fade" id="serviceBottomSheetQuick" tabindex="-1"><div class="modal-dialog modal-dialog-bottom" style="margin:0; margin-top:auto;"><div class="modal-content" style="border-radius:32px 32px 0 0;"><div class="modal-header"><h6>✨ All CSC Services</h6><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div id="bottomSheetServices"></div></div></div></div></div>
 </div>
 
-<!-- COMPACT STYLISH AUTH SCREEN -->
+<!-- Custom Stylish Exit Dialog -->
+<div id="exitDialog" class="exit-dialog-overlay">
+  <div class="exit-dialog">
+    <div class="exit-icon">
+      <i class="fas fa-sign-out-alt"></i>
+    </div>
+    <h3>Exit Application?</h3>
+    <p>Are you sure you want to close the app?</p>
+    <div class="exit-buttons">
+      <button class="exit-btn exit-cancel" id="exitCancelBtn">Cancel</button>
+      <button class="exit-btn exit-ok" id="exitOkBtn">OK</button>
+    </div>
+  </div>
+</div>
+
 <div id="authOverlay" class="auth-overlay">
   <div class="secure-card">
     <div class="finger-icon">🔒</div>
@@ -392,13 +428,39 @@
 (function() {
   let CORRECT_TPIN = localStorage.getItem("pnb_tpin") || "1234";
   let biometricEnabled = localStorage.getItem("biometricEnabled") === "true";
-  
   const pageOrder = ['home', 'all', 'stats', 'profile'];
   let currentPageIndex = 0;
   
+  // Exit dialog elements
+  const exitDialog = document.getElementById('exitDialog');
+  const exitCancelBtn = document.getElementById('exitCancelBtn');
+  const exitOkBtn = document.getElementById('exitOkBtn');
+  
+  function showExitDialog() {
+    exitDialog.classList.add('active');
+  }
+  
+  function hideExitDialog() {
+    exitDialog.classList.remove('active');
+  }
+  
+  function exitApp() {
+    window.close();
+    // Fallback for browsers that don't allow window.close()
+    setTimeout(() => {
+      window.location.href = 'about:blank';
+    }, 100);
+  }
+  
+  exitCancelBtn?.addEventListener('click', hideExitDialog);
+  exitOkBtn?.addEventListener('click', () => {
+    hideExitDialog();
+    exitApp();
+  });
+  
   async function registerBiometric() {
     if (!window.PublicKeyCredential) {
-      await Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Face/Fingerprint is not supported on this device.', confirmButtonColor: '#8A1538' });
+      await Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Face/Fingerprint not supported.', confirmButtonColor: '#8A1538' });
       return false;
     }
     try {
@@ -418,7 +480,7 @@
       if (credential && credential.rawId) {
         const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
         localStorage.setItem("pnb_biometric_id", credId);
-        await Swal.fire({ icon: 'success', title: '✅ Biometric Registered!', text: 'Face ID / Fingerprint is now ready.', confirmButtonColor: '#8A1538' });
+        await Swal.fire({ icon: 'success', title: '✅ Biometric Registered!', text: 'Face ID / Fingerprint is ready.', confirmButtonColor: '#8A1538' });
         return true;
       }
       return false;
@@ -444,9 +506,7 @@
         }
       });
       return !!assertion;
-    } catch (err) {
-      return false;
-    }
+    } catch (err) { return false; }
   }
 
   const securityQuestions = [
@@ -481,8 +541,10 @@
     if(currentPageIndex > 0) {
       switchToPage(pageOrder[currentPageIndex - 1]);
     } else {
-      if(confirm('Press OK to exit the app')) window.close();
-      else history.pushState({ page: 'home' }, '', window.location.href);
+      // Show stylish exit dialog instead of confirm
+      showExitDialog();
+      // Push state again to prevent immediate exit on back
+      history.pushState({ page: 'home' }, '', window.location.href);
     }
   }
   
@@ -500,42 +562,21 @@
   
   function validateTpin() {
     if(authTpinInput.value.length === 4) {
-      if(authTpinInput.value === CORRECT_TPIN) { unlockApp(); } 
-      else { 
-        authStatusMsg.innerText = "❌ Wrong TPIN! (Default: 1234)"; 
-        authStatusMsg.style.color = "#e74c3c"; 
-        authTpinInput.value = ""; 
-        setTimeout(() => { if(authStatusMsg) authStatusMsg.innerText = ""; }, 2000); 
-      }
+      if(authTpinInput.value === CORRECT_TPIN) unlockApp();
+      else { authStatusMsg.innerText = "❌ Wrong TPIN! (Default: 1234)"; authStatusMsg.style.color = "#e74c3c"; authTpinInput.value = ""; setTimeout(() => { if(authStatusMsg) authStatusMsg.innerText = ""; }, 2000); }
     }
   }
   authTpinInput.addEventListener('input', validateTpin);
   authTpinInput.focus();
   
-  async function handleBiometricAuth(buttonName) {
-    if(!biometricEnabled) {
-      Swal.fire({ icon: 'info', title: 'Biometric Disabled', text: 'Enable from Profile settings', confirmButtonColor: '#8A1538' });
-      return false;
-    }
+  async function handleBiometricAuth(methodName) {
+    if(!biometricEnabled) { Swal.fire({ icon: 'info', title: 'Biometric Disabled', text: 'Enable from Profile settings', confirmButtonColor: '#8A1538' }); return false; }
     const registeredId = localStorage.getItem("pnb_biometric_id");
-    if (!registeredId) {
-      Swal.fire({ icon: 'info', title: 'No Biometric Registered', text: 'Register from Profile page first.', confirmButtonColor: '#8A1538' });
-      return false;
-    }
-    authStatusMsg.innerText = `🔐 Scanning ${buttonName}...`;
-    authStatusMsg.style.color = "#f39c12";
+    if (!registeredId) { Swal.fire({ icon: 'info', title: 'No Biometric Registered', text: 'Go to Profile and Register first.', confirmButtonColor: '#8A1538' }); return false; }
+    authStatusMsg.innerText = `🔐 Scanning ${methodName}...`; authStatusMsg.style.color = "#f39c12";
     const success = await authenticateBiometric();
-    if(success) {
-      authStatusMsg.innerText = "✓ Verified! Unlocking...";
-      authStatusMsg.style.color = "#2ecc71";
-      setTimeout(() => { unlockApp(); }, 500);
-      return true;
-    } else {
-      authStatusMsg.innerText = `❌ ${buttonName} verification failed`;
-      authStatusMsg.style.color = "#e74c3c";
-      setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 3000);
-      return false;
-    }
+    if(success) { authStatusMsg.innerText = "✓ Verified! Unlocking..."; authStatusMsg.style.color = "#2ecc71"; setTimeout(() => { unlockApp(); }, 500); return true; }
+    else { authStatusMsg.innerText = `❌ ${methodName} verification failed`; authStatusMsg.style.color = "#e74c3c"; setTimeout(() => { if(authStatusMsg && authStatusMsg.innerText.includes("❌")) authStatusMsg.innerText = ""; }, 3000); return false; }
   }
   
   faceAuthBtn?.addEventListener("click", (e) => { e.preventDefault(); handleBiometricAuth("Face ID"); });
@@ -548,13 +589,7 @@
       showCancelButton: true, confirmButtonText: 'Verify', cancelButtonText: 'Cancel', confirmButtonColor: '#8A1538',
       didOpen: () => {
         const answerInput = document.getElementById('securityAnswerInput');
-        document.querySelectorAll('.question-option').forEach(q => {
-          q.onclick = () => {
-            document.querySelectorAll('.question-option').forEach(qq => qq.classList.remove('selected'));
-            q.classList.add('selected');
-            if(answerInput) answerInput.style.display = 'block';
-          };
-        });
+        document.querySelectorAll('.question-option').forEach(q => { q.onclick = () => { document.querySelectorAll('.question-option').forEach(qq => qq.classList.remove('selected')); q.classList.add('selected'); if(answerInput) answerInput.style.display = 'block'; }; });
       },
       preConfirm: () => {
         const selectedQ = document.querySelector('.question-option.selected');
@@ -579,34 +614,58 @@
           return np;
         }
       });
-      if(tpinResult) {
-        CORRECT_TPIN = tpinResult;
-        localStorage.setItem("pnb_tpin", CORRECT_TPIN);
-        Swal.fire({ icon: 'success', title: 'TPIN Reset!', text: `New TPIN: ${CORRECT_TPIN}`, confirmButtonColor: '#8A1538' });
-        authTpinInput.value = "";
-        authTpinInput.focus();
-      }
+      if(tpinResult) { CORRECT_TPIN = tpinResult; localStorage.setItem("pnb_tpin", CORRECT_TPIN); Swal.fire({ icon: 'success', title: 'TPIN Reset!', text: `New TPIN: ${CORRECT_TPIN}`, confirmButtonColor: '#8A1538' }); authTpinInput.value = ""; authTpinInput.focus(); }
     }
   }
-  
   document.getElementById("forgotTpinBtn").addEventListener("click", (e) => { e.preventDefault(); forgotTPIN(); });
   
   let db, authFirebase, allData = [], currentServiceFilter = 'all';
   function escapeHtml(str) { if(!str) return ''; return String(str).replace(/[&<>]/g, m => m==='&'?'&amp;': m==='<'?'&lt;':'&gt;'); }
   function formatAadhaar(a) { if(!a) return ''; const c=String(a).replace(/\s/g,''); if(c.length===12) return `${c.slice(0,4)} ${c.slice(4,8)} ${c.slice(8,12)}`; return c; }
   function formatAccount(acc) { if(!acc) return ''; const c=String(acc).replace(/\s/g,''); const g=c.match(/.{1,4}/g); return g?g.join(' '):c; }
-  function matchesSearch(item, term) { if(!term) return false; const s = term.toLowerCase(); const fields = [item.name, item.fatherName, item.father, item.mobile, item.aadhar, item.aadNumber, item.account, item.accountNum]; return fields.some(f => f && String(f).toLowerCase().includes(s)); }
+  function matchesSearch(item, term) { if(!term) return false; const s = term.toLowerCase(); const fields = [item.name, item.fatherName, item.father, item.mobile, item.aadhar, item.aadNumber, item.account, item.accountNum, item.applicationNo, item.pfNo, item.panNo, item.serviceNumber]; return fields.some(f => f && String(f).toLowerCase().includes(s)); }
+  
+  function getServiceDetails(c) {
+    if(c.serviceType === 'passport') return { label: 'APPLICATION NO', value: c.applicationNo || '' };
+    if(c.serviceType === 'epfo') return { label: 'EPF NO / UAN', value: c.pfNo || '' };
+    if(c.serviceType === 'aadhaar') return { label: 'AADHAAR', value: formatAadhaar(c.aadhar || c.aadNumber || '') };
+    if(c.serviceType === 'pan') return { label: 'APPLICATION NO', value: c.panNo || '' };
+    if(c.serviceType === 'esarvish') return { label: 'APPLICATION NO', value: c.applicationNo || '' };
+    if(c.serviceType === 'license') return { label: 'APPLICATION NO', value: c.applicationNo || '' };
+    if(c.serviceType === 'pnb_account') {
+      return { 
+        aadhar: { label: 'AADHAAR', value: formatAadhaar(c.aadhar || c.aadNumber || '') },
+        account: { label: 'ACCOUNT NO', value: formatAccount(c.account || c.accountNum || '') }
+      };
+    }
+    return null;
+  }
   
   function customerCard(c) {
     const name = c.name ? c.name.toUpperCase() : 'Unknown';
     const father = c.fatherName || c.father || '';
     const mobile = c.mobile || '';
-    const aadhaar = formatAadhaar(c.aadhar || c.aadNumber);
-    const account = formatAccount(c.account || c.accountNum);
     let serviceTypeDisplay = '';
     const svcMap = { passport:'<i class="fas fa-passport"></i><b>SERVICE :</b><span>Passport</span>', epfo:'<i class="fas fa-file-invoice"></i><b>SERVICE :</b><span>EPFO</span>', aadhaar:'<i class="fas fa-id-card"></i><b>SERVICE :</b><span>Aadhaar</span>', pan:'<i class="fas fa-credit-card"></i><b>SERVICE :</b><span>PAN</span>', esarvish:'<i class="fas fa-globe"></i><b>SERVICE :</b><span>eSarvish</span>', license:'<i class="fas fa-id-card-alt"></i><b>SERVICE :</b><span>Driving License</span>', pnb_account:'<i class="fas fa-university"></i><b>SERVICE :</b><span>PNB Account</span>' };
     if(svcMap[c.serviceType]) serviceTypeDisplay = `<div class="detail-line">${svcMap[c.serviceType]}</div>`;
-    return `<div class="customer-item" data-id="${c.id}" data-collection="${c.collection}">${serviceTypeDisplay}<div class="detail-line"><i class="fas fa-user"></i><b>NAME :</b><span>${escapeHtml(name)}</span></div><div class="detail-line"><i class="fas fa-users"></i><b>FATHER :</b><span>${escapeHtml(father)}</span></div><div class="detail-line"><i class="fas fa-phone"></i><b>MOBILE :</b><span>${escapeHtml(mobile)}</span></div>${c.serviceType === 'pnb_account' && account ? `<div class="detail-line"><i class="fas fa-university"></i><b>ACCOUNT :</b><span>${escapeHtml(account)}</span></div>` : ''}${c.serviceType === 'pnb_account' && aadhaar ? `<div class="detail-line"><i class="fas fa-id-card"></i><b>AADHAAR :</b><span>${escapeHtml(aadhaar)}</span></div>` : ''}<div class="customer-actions"><div class="action-btn edit-item" data-id="${c.id}" data-collection="${c.collection}" data-name="${escapeHtml(name)}" data-father="${escapeHtml(father)}" data-mobile="${escapeHtml(mobile)}" data-aadhaar="${escapeHtml(aadhaar)}" data-account="${escapeHtml(account)}"><i class="fas fa-pen"></i></div><div class="action-btn copy-item" data-copy="${mobile}"><i class="fas fa-copy"></i></div><a class="action-btn whatsapp-item" href="https://wa.me/91${mobile}"><i class="fab fa-whatsapp"></i></a><a class="action-btn call-item" href="tel:${mobile}"><i class="fas fa-phone"></i></a><div class="action-btn delete-item" data-id="${c.id}" data-collection="${c.collection}"><i class="fas fa-trash"></i></div></div></div>`;
+    
+    let extraFieldsHtml = '';
+    if(c.serviceType === 'pnb_account') {
+      const details = getServiceDetails(c);
+      if(details && details.aadhar.value) {
+        extraFieldsHtml += `<div class="detail-line"><i class="fas fa-id-card"></i><b>${details.aadhar.label} :</b><span>${escapeHtml(details.aadhar.value)}</span></div>`;
+      }
+      if(details && details.account.value) {
+        extraFieldsHtml += `<div class="detail-line"><i class="fas fa-university"></i><b>${details.account.label} :</b><span>${escapeHtml(details.account.value)}</span></div>`;
+      }
+    } else {
+      const details = getServiceDetails(c);
+      if(details && details.value) {
+        extraFieldsHtml += `<div class="detail-line"><i class="fas fa-hashtag"></i><b>${details.label} :</b><span>${escapeHtml(details.value)}</span></div>`;
+      }
+    }
+    
+    return `<div class="customer-item" data-id="${c.id}" data-collection="${c.collection}">${serviceTypeDisplay}<div class="detail-line"><i class="fas fa-user"></i><b>NAME :</b><span>${escapeHtml(name)}</span></div><div class="detail-line"><i class="fas fa-users"></i><b>FATHER :</b><span>${escapeHtml(father)}</span></div><div class="detail-line"><i class="fas fa-phone"></i><b>MOBILE :</b><span>${escapeHtml(mobile)}</span></div>${extraFieldsHtml}<div class="customer-actions"><div class="action-btn edit-item" data-id="${c.id}" data-collection="${c.collection}" data-servicetype="${c.serviceType}" data-name="${escapeHtml(name)}" data-father="${escapeHtml(father)}" data-mobile="${escapeHtml(mobile)}" data-aadhar="${escapeHtml(c.aadhar || c.aadNumber || '')}" data-account="${escapeHtml(c.account || c.accountNum || '')}" data-servicenumber="${escapeHtml(c.applicationNo || c.pfNo || c.panNo || '')}"><i class="fas fa-pen"></i></div><div class="action-btn copy-item" data-copy="${mobile}"><i class="fas fa-copy"></i></div><a class="action-btn whatsapp-item" href="https://wa.me/91${mobile}"><i class="fab fa-whatsapp"></i></a><a class="action-btn call-item" href="tel:${mobile}"><i class="fas fa-phone"></i></a><div class="action-btn delete-item" data-id="${c.id}" data-collection="${c.collection}"><i class="fas fa-trash"></i></div></div></div>`;
   }
   
   async function fetchAllData() { if(!db) return; const [custSnap, appSnap] = await Promise.all([db.collection("customers").get(), db.collection("applications").get()]); allData = []; custSnap.forEach(d => allData.push({ id: d.id, serviceType: 'pnb_account', collection: 'customers', ...d.data() })); appSnap.forEach(d => allData.push({ id: d.id, collection: 'applications', ...d.data() })); renderAll(); }
@@ -615,7 +674,17 @@
   function renderAllList() { const term = document.getElementById('allSearchInput')?.value || ''; let filtered = allData; if(term.trim()) filtered = filtered.filter(c => matchesSearch(c, term)); if(currentServiceFilter !== 'all') filtered = filtered.filter(c => c.serviceType === currentServiceFilter); const container = document.getElementById('allCustomersList'); if(!container) return; if(filtered.length === 0) container.innerHTML = '<div class="no-results"><i class="fas fa-database fa-2x mb-2"></i><br/>No records</div>'; else container.innerHTML = filtered.map(c => customerCard(c)).join(''); attachActions(); }
   
   function attachActions() {
-    document.querySelectorAll('.edit-item').forEach(el => { el.onclick = () => { document.getElementById('editId').value = el.dataset.id; document.getElementById('editCollection').value = el.dataset.collection; document.getElementById('editName').value = el.dataset.name || ''; document.getElementById('editFather').value = el.dataset.father || ''; document.getElementById('editMobile').value = el.dataset.mobile || ''; document.getElementById('editAadhar').value = el.dataset.aadhaar ? el.dataset.aadhaar.replace(/ /g, '') : ''; document.getElementById('editAccount').value = el.dataset.account ? el.dataset.account.replace(/ /g, '') : ''; new bootstrap.Modal(document.getElementById('editCustomerModal')).show(); }; });
+    document.querySelectorAll('.edit-item').forEach(el => { el.onclick = () => { 
+      document.getElementById('editId').value = el.dataset.id; 
+      document.getElementById('editCollection').value = el.dataset.collection; 
+      document.getElementById('editServiceType').value = el.dataset.servicetype; 
+      document.getElementById('editName').value = el.dataset.name || ''; 
+      document.getElementById('editFather').value = el.dataset.father || ''; 
+      document.getElementById('editMobile').value = el.dataset.mobile || ''; 
+      document.getElementById('editServiceNumber').value = el.dataset.servicenumber || ''; 
+      document.getElementById('editExtraNumber').value = (el.dataset.aadhar || el.dataset.account || '');
+      new bootstrap.Modal(document.getElementById('editCustomerModal')).show(); 
+    }; });
     document.querySelectorAll('.delete-item').forEach(el => { el.onclick = async () => { const result = await Swal.fire({ title: 'Delete?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#8A1538' }); if(result.isConfirmed) { await db.collection(el.dataset.collection).doc(el.dataset.id).delete(); fetchAllData(); Swal.fire({ icon: 'success', title: 'Deleted!' }); } }; });
     document.querySelectorAll('.copy-item').forEach(el => { el.onclick = () => { navigator.clipboard.writeText(el.dataset.copy); Swal.fire({ toast: true, icon: 'success', title: 'Copied!', timer: 1500, showConfirmButton: false }); }; });
   }
@@ -639,14 +708,72 @@
     const firebaseConfig = { apiKey: "AIzaSyBQAJym4PgqblkfMY7VKRWEMURG8GJ9vU4", authDomain: "custumermanagement.firebaseapp.com", projectId: "custumermanagement", storageBucket: "custumermanagement.appspot.com", messagingSenderId: "520929530997", appId: "1:520929530997:web:46bb12e02c0d4bc2e9143c" };
     if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     db = firebase.firestore(); authFirebase = firebase.auth();
-    const servicesList = [{id:'passport',icon:'fa-passport',name:'Passport'},{id:'epfo',icon:'fa-file-invoice',name:'ePFO'},{id:'aadhaar',icon:'fa-id-card',name:'Aadhaar'},{id:'pan',icon:'fa-credit-card',name:'PAN'},{id:'esarvish',icon:'fa-globe',name:'e-Savings'},{id:'license',icon:'fa-id-card-alt',name:'License'},{id:'pnb_account',icon:'fa-university',name:'Account'}];
-    document.getElementById('servicesGrid').innerHTML = servicesList.map(s => `<div class="service-card" data-svc="${s.id}"><i class="fas ${s.icon}"></i><span>${s.name}</span></div>`).join('');
-    document.getElementById('bottomSheetServices').innerHTML = servicesList.map(s => `<div class="service-card" data-svc="${s.id}"><i class="fas ${s.icon}"></i><span>${s.name}</span></div>`).join('');
-    function openServiceModal(svc) { const modals = { pnb_account:'pnbAccountFullModal', passport:'passportModal', epfo:'epfoModal', aadhaar:'aadhaarModal', pan:'panModal', esarvish:'esarvishModal', license:'licenseModal' }; if(modals[svc]) new bootstrap.Modal(document.getElementById(modals[svc])).show(); }
-    document.querySelectorAll('.service-card').forEach(el => { el.onclick = () => { openServiceModal(el.dataset.svc); const bsModal = bootstrap.Modal.getInstance(document.getElementById('serviceBottomSheetQuick')); if(bsModal) bsModal.hide(); }; });
-    const filterArr = [{id:'all',name:'All',icon:'fa-globe'},{id:'passport',name:'Passport',icon:'fa-passport'},{id:'epfo',name:'EPFO',icon:'fa-file-invoice'},{id:'aadhaar',name:'Aadhaar',icon:'fa-id-card'},{id:'pan',name:'PAN',icon:'fa-credit-card'},{id:'esarvish',name:'eSarvish',icon:'fa-globe'},{id:'license',name:'License',icon:'fa-id-card-alt'},{id:'pnb_account',name:'Account',icon:'fa-university'}];
+    
+    // Create custom 3x3 grid with Passport centered at bottom - Using eSarvish name
+    const servicesContainer = document.getElementById('servicesGrid');
+    const bottomSheetContainer = document.getElementById('bottomSheetServices');
+    
+    const topServices = [
+      {id:'pnb_account', icon:'fa-university', name:'Account'},
+      {id:'epfo', icon:'fa-file-invoice', name:'ePFO'},
+      {id:'aadhaar', icon:'fa-id-card', name:'Aadhaar'},
+      {id:'pan', icon:'fa-credit-card', name:'PAN'},
+      {id:'esarvish', icon:'fa-globe', name:'eSarvish'},
+      {id:'license', icon:'fa-id-card-alt', name:'License'}
+    ];
+    
+    let gridHtml = `<div class="services-grid">`;
+    topServices.forEach(svc => {
+      gridHtml += `<div class="service-card" data-svc="${svc.id}"><i class="fas ${svc.icon}"></i><span>${svc.name}</span></div>`;
+    });
+    gridHtml += `</div>`;
+    gridHtml += `<div class="full-width-card" data-svc="passport"><i class="fas fa-passport"></i><span>Passport</span></div>`;
+    servicesContainer.innerHTML = gridHtml;
+    
+    let bottomSheetHtml = `<div class="services-grid">`;
+    topServices.forEach(svc => {
+      bottomSheetHtml += `<div class="service-card" data-svc="${svc.id}"><i class="fas ${svc.icon}"></i><span>${svc.name}</span></div>`;
+    });
+    bottomSheetHtml += `</div>`;
+    bottomSheetHtml += `<div class="full-width-card" data-svc="passport"><i class="fas fa-passport"></i><span>Passport</span></div>`;
+    bottomSheetContainer.innerHTML = bottomSheetHtml;
+    
+    function openServiceModal(svc) { 
+      const modals = { pnb_account:'pnbAccountFullModal', passport:'passportModal', epfo:'epfoModal', aadhaar:'aadhaarModal', pan:'panModal', esarvish:'esarvishModal', license:'licenseModal' }; 
+      if(modals[svc]) new bootstrap.Modal(document.getElementById(modals[svc])).show(); 
+    }
+    
+    document.querySelectorAll('.service-card, .full-width-card').forEach(el => { 
+      el.onclick = () => { 
+        openServiceModal(el.dataset.svc); 
+        const bsModal = bootstrap.Modal.getInstance(document.getElementById('serviceBottomSheetQuick')); 
+        if(bsModal) bsModal.hide(); 
+      }; 
+    });
+    
+    const filterArr = [
+      {id:'all',name:'All',icon:'fa-globe'},
+      {id:'pnb_account',name:'Account',icon:'fa-university'},
+      {id:'passport',name:'Passport',icon:'fa-passport'},
+      {id:'epfo',name:'EPFO',icon:'fa-file-invoice'},
+      {id:'aadhaar',name:'Aadhaar',icon:'fa-id-card'},
+      {id:'pan',name:'PAN',icon:'fa-credit-card'},
+      {id:'esarvish',name:'eSarvish',icon:'fa-globe'},
+      {id:'license',name:'License',icon:'fa-id-card-alt'}
+    ];
     const filterCont = document.getElementById('serviceFilterContainer');
-    if(filterCont) { filterCont.innerHTML = filterArr.map(f => `<div class="service-filter-chip ${currentServiceFilter===f.id?'active':''}" data-filter="${f.id}"><i class="fas ${f.icon}"></i> ${f.name}</div>`).join(''); document.querySelectorAll('.service-filter-chip').forEach(chip => { chip.onclick = () => { currentServiceFilter = chip.dataset.filter; document.querySelectorAll('.service-filter-chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); renderAllList(); }; }); }
+    if(filterCont) { 
+      filterCont.innerHTML = filterArr.map(f => `<div class="service-filter-chip ${currentServiceFilter===f.id?'active':''}" data-filter="${f.id}"><i class="fas ${f.icon}"></i> ${f.name}</div>`).join(''); 
+      document.querySelectorAll('.service-filter-chip').forEach(chip => { 
+        chip.onclick = () => { 
+          currentServiceFilter = chip.dataset.filter; 
+          document.querySelectorAll('.service-filter-chip').forEach(c => c.classList.remove('active')); 
+          chip.classList.add('active'); 
+          renderAllList(); 
+        }; 
+      }); 
+    }
+    
     document.getElementById('homeSearchInput').addEventListener('input', () => renderHomeList());
     document.getElementById('allSearchInput').addEventListener('input', () => renderAllList());
     document.getElementById('clearHomeSearch').onclick = () => { document.getElementById('homeSearchInput').value = ''; renderHomeList(); };
@@ -656,8 +783,15 @@
     document.getElementById('createBackupNow').onclick = async () => { const [c,a] = await Promise.all([db.collection("customers").get(), db.collection("applications").get()]); const backup = [...c.docs.map(d=>({id:d.id,collection:'customers',...d.data()})), ...a.docs.map(d=>({id:d.id,collection:'applications',...d.data()}))]; saveAs(new Blob([JSON.stringify(backup)], {type:'application/json'}), `backup_${Date.now()}.json`); Swal.fire({ icon:'success', title:'Backup created' }); };
     document.getElementById('restoreBackupNow').onclick = () => { const file = document.getElementById('restoreFile').files[0]; if(!file) return; const r = new FileReader(); r.onload = async (e) => { const items = JSON.parse(e.target.result); for(let it of items) { const col = it.collection==='customers'?'customers':'applications'; delete it.collection; await db.collection(col).doc(it.id).set(it); } Swal.fire({ icon:'success', title:'Restored' }); fetchAllData(); }; r.readAsText(file); };
     document.getElementById('pnbFullForm').addEventListener('submit', async(e) => { e.preventDefault(); const data = { name: document.getElementById('fullName').value.trim().toUpperCase(), fatherName: document.getElementById('fatherName').value.trim().toUpperCase(), mobile: document.getElementById('mobileNum').value.trim(), aadhar: document.getElementById('aadharNum').value.trim(), account: document.getElementById('accountNum').value.trim(), password: document.getElementById('accPassword').value, serviceType: 'pnb_account', createdAt: firebase.firestore.FieldValue.serverTimestamp() }; await db.collection("customers").add(data); bootstrap.Modal.getInstance(document.getElementById('pnbAccountFullModal')).hide(); fetchAllData(); Swal.fire({ icon:'success', title:'Saved!' }); document.getElementById('pnbFullForm').reset(); });
-    document.getElementById('editCustomerForm').addEventListener('submit', async(e) => { e.preventDefault(); const id = document.getElementById('editId').value; const collection = document.getElementById('editCollection').value; const data = { name: document.getElementById('editName').value.trim().toUpperCase(), fatherName: document.getElementById('editFather').value.trim().toUpperCase(), mobile: document.getElementById('editMobile').value.trim(), aadhar: document.getElementById('editAadhar').value.trim(), account: document.getElementById('editAccount').value.trim(), password: document.getElementById('editPassword').value }; await db.collection(collection).doc(id).update(data); bootstrap.Modal.getInstance(document.getElementById('editCustomerModal')).hide(); fetchAllData(); Swal.fire({ icon:'success', title:'Updated!' }); });
-    const forms = [{id:'passportFormModal',col:'applications',type:'passport',fields:()=>({name:document.getElementById('passName')?.value,fatherName:document.getElementById('passFather')?.value,mobile:document.getElementById('passMobile')?.value,applicationNo:document.getElementById('passAppNo')?.value,password:document.getElementById('passPassword')?.value})},{id:'epfoFormModal',col:'applications',type:'epfo',fields:()=>({name:document.getElementById('epfoName')?.value,fatherName:document.getElementById('epfoFather')?.value,mobile:document.getElementById('epfoMobile')?.value,pfNo:document.getElementById('epfoPfNo')?.value,password:document.getElementById('epfoPassword')?.value})},{id:'aadhaarFormModal',col:'applications',type:'aadhaar',fields:()=>({name:document.getElementById('aadName')?.value,fatherName:document.getElementById('aadFather')?.value,mobile:document.getElementById('aadMobile')?.value,aadhar:document.getElementById('aadNumber')?.value,password:document.getElementById('aadPassword')?.value})},{id:'panFormModal',col:'applications',type:'pan',fields:()=>({name:document.getElementById('panName')?.value,fatherName:document.getElementById('panFather')?.value,mobile:document.getElementById('panMobile')?.value,panNo:document.getElementById('panNumber')?.value,password:document.getElementById('panPassword')?.value})},{id:'esarvishFormModal',col:'applications',type:'esarvish',fields:()=>({name:document.getElementById('esName')?.value,fatherName:document.getElementById('esFather')?.value,mobile:document.getElementById('esMobile')?.value,applicationNo:document.getElementById('esAppNo')?.value,password:document.getElementById('esPassword')?.value})},{id:'licenseFormModal',col:'applications',type:'license',fields:()=>({name:document.getElementById('licName')?.value,fatherName:document.getElementById('licFather')?.value,mobile:document.getElementById('licMobile')?.value,applicationNo:document.getElementById('licAppNo')?.value,password:document.getElementById('licPassword')?.value})}];
+    document.getElementById('editCustomerForm').addEventListener('submit', async(e) => { e.preventDefault(); const id = document.getElementById('editId').value; const collection = document.getElementById('editCollection').value; const serviceType = document.getElementById('editServiceType').value; let updateData = { name: document.getElementById('editName').value.trim().toUpperCase(), fatherName: document.getElementById('editFather').value.trim().toUpperCase(), mobile: document.getElementById('editMobile').value.trim(), password: document.getElementById('editPassword').value }; const serviceNumber = document.getElementById('editServiceNumber').value.trim(); const extraNumber = document.getElementById('editExtraNumber').value.trim(); if(serviceType === 'passport') updateData.applicationNo = serviceNumber; else if(serviceType === 'epfo') updateData.pfNo = serviceNumber; else if(serviceType === 'aadhaar') updateData.aadhar = serviceNumber; else if(serviceType === 'pan') updateData.panNo = serviceNumber; else if(serviceType === 'esarvish') updateData.applicationNo = serviceNumber; else if(serviceType === 'license') updateData.applicationNo = serviceNumber; else if(serviceType === 'pnb_account') { updateData.account = serviceNumber; updateData.aadhar = extraNumber; } await db.collection(collection).doc(id).update(updateData); bootstrap.Modal.getInstance(document.getElementById('editCustomerModal')).hide(); fetchAllData(); Swal.fire({ icon:'success', title:'Updated!' }); });
+    const forms = [
+      {id:'passportFormModal',col:'applications',type:'passport',fields:()=>({name:document.getElementById('passName')?.value.trim().toUpperCase(),fatherName:document.getElementById('passFather')?.value.trim().toUpperCase(),mobile:document.getElementById('passMobile')?.value.trim(),applicationNo:document.getElementById('passAppNo')?.value.trim(),password:document.getElementById('passPassword')?.value})},
+      {id:'epfoFormModal',col:'applications',type:'epfo',fields:()=>({name:document.getElementById('epfoName')?.value.trim().toUpperCase(),fatherName:document.getElementById('epfoFather')?.value.trim().toUpperCase(),mobile:document.getElementById('epfoMobile')?.value.trim(),pfNo:document.getElementById('epfoPfNo')?.value.trim(),password:document.getElementById('epfoPassword')?.value})},
+      {id:'aadhaarFormModal',col:'applications',type:'aadhaar',fields:()=>({name:document.getElementById('aadName')?.value.trim().toUpperCase(),fatherName:document.getElementById('aadFather')?.value.trim().toUpperCase(),mobile:document.getElementById('aadMobile')?.value.trim(),aadhar:document.getElementById('aadNumber')?.value.trim(),password:document.getElementById('aadPassword')?.value})},
+      {id:'panFormModal',col:'applications',type:'pan',fields:()=>({name:document.getElementById('panName')?.value.trim().toUpperCase(),fatherName:document.getElementById('panFather')?.value.trim().toUpperCase(),mobile:document.getElementById('panMobile')?.value.trim(),panNo:document.getElementById('panNumber')?.value.trim(),password:document.getElementById('panPassword')?.value})},
+      {id:'esarvishFormModal',col:'applications',type:'esarvish',fields:()=>({name:document.getElementById('esName')?.value.trim().toUpperCase(),fatherName:document.getElementById('esFather')?.value.trim().toUpperCase(),mobile:document.getElementById('esMobile')?.value.trim(),applicationNo:document.getElementById('esAppNo')?.value.trim(),password:document.getElementById('esPassword')?.value})},
+      {id:'licenseFormModal',col:'applications',type:'license',fields:()=>({name:document.getElementById('licName')?.value.trim().toUpperCase(),fatherName:document.getElementById('licFather')?.value.trim().toUpperCase(),mobile:document.getElementById('licMobile')?.value.trim(),applicationNo:document.getElementById('licAppNo')?.value.trim(),password:document.getElementById('licPassword')?.value})}
+    ];
     forms.forEach(f => { document.getElementById(f.id)?.addEventListener('submit', async(e) => { e.preventDefault(); await db.collection(f.col).add({ ...f.fields(), serviceType: f.type, createdAt: firebase.firestore.FieldValue.serverTimestamp() }); bootstrap.Modal.getInstance(document.getElementById(f.id.replace('FormModal','Modal')))?.hide(); fetchAllData(); Swal.fire({ icon:'success', title:'Saved!' }); document.getElementById(f.id).reset(); }); });
     authFirebase.onAuthStateChanged(user => { if(user) { document.getElementById('userEmailProfile').innerText = user.email || 'admin@pnb.com'; fetchAllData(); } });
     fetchAllData();
