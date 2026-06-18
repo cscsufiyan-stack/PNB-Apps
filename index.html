@@ -373,7 +373,7 @@
   <div id="profilePage" class="page">
     <div class="services-section text-center">
       <i class="fas fa-user-shield" style="font-size: 60px; color:#8A1538;"></i>
-      <h5 id="userEmailProfile" class="mt-2">admin@pnb.com</h5>
+      <h5 id="userEmailProfile" class="mt-2">cscshoaib123@gmail.com</h5>
       <div class="toggle-switch">
         <span><i class="fas fa-fingerprint"></i> Fingerprint Login</span>
         <label class="switch"><input type="checkbox" id="fingerprintToggle"><span class="slider"></span></label>
@@ -836,7 +836,15 @@
       {id:'licenseFormModal',col:'applications',type:'license',fields:()=>({name:document.getElementById('licName')?.value.trim().toUpperCase(),fatherName:document.getElementById('licFather')?.value.trim().toUpperCase(),mobile:document.getElementById('licMobile')?.value.trim(),applicationNo:document.getElementById('licAppNo')?.value.trim(),password:document.getElementById('licPassword')?.value})}
     ];
     forms.forEach(f => { document.getElementById(f.id)?.addEventListener('submit', async(e) => { e.preventDefault(); await db.collection(f.col).add({ ...f.fields(), serviceType: f.type, createdAt: firebase.firestore.FieldValue.serverTimestamp() }); bootstrap.Modal.getInstance(document.getElementById(f.id.replace('FormModal','Modal')))?.hide(); fetchAllData(); Swal.fire({ icon:'success', title:'Saved!' }); document.getElementById(f.id).reset(); }); });
-    authFirebase.onAuthStateChanged(user => { if(user) { document.getElementById('userEmailProfile').innerText = user.email || 'admin@pnb.com'; fetchAllData(); } });
+    
+    authFirebase.onAuthStateChanged(user => { 
+      if(user) { 
+        // Set static email instead of Firebase auth email
+        document.getElementById('userEmailProfile').innerText = 'cscshoaib123@gmail.com'; 
+        fetchAllData(); 
+      } 
+    });
+    
     fetchAllData();
     document.querySelectorAll('.tab-btn').forEach(btn => { btn.onclick = () => { switchToPage(btn.dataset.tab); }; });
     document.getElementById('fabCenterAdd').onclick = () => new bootstrap.Modal(document.getElementById('serviceBottomSheetQuick')).show();
