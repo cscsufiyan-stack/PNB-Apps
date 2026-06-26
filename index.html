@@ -28,7 +28,6 @@
     .search-box i { position:absolute; left:18px; top:50%; transform:translateY(-50%); color:#8A1538; font-size:18px; }
     .search-box .clear-btn { position:absolute; right:6px; top:50%; transform:translateY(-50%); background:#8A1538; color:#fff; border:none; width:38px; height:38px; border-radius:50%; cursor:pointer; }
     
-    /* ========== CUSTOMER CARD - BLACK BORDER ========== */
     .customer-card { 
       background: #fff; 
       margin: 10px 12px; 
@@ -45,49 +44,17 @@
     .detail-row .empty-value { color:#999; font-weight:400; font-style:italic; }
     .detail-row .has-value { color:#1a5e2a; font-weight:700; }
     
-    /* ========== ACTION BUTTONS ========== */
-    .actions { 
-      display: flex; 
-      gap: 10px; 
-      margin-top: 12px; 
-      flex-wrap: wrap; 
-      justify-content: flex-start;
-    }
-    
-    .action-btn { 
-      width: 48px; 
-      height: 48px; 
-      border-radius: 14px; 
-      border: none; 
-      color: #ffffff !important; 
-      cursor: pointer; 
-      display: inline-flex !important;
-      align-items: center; 
-      justify-content: center; 
-      text-decoration: none;
-      transition: transform 0.15s, box-shadow 0.15s;
-      font-size: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    }
-    .action-btn i { 
-      color: #ffffff !important; 
-      font-size: 22px; 
-      line-height: 1; 
-    }
-    .action-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    }
-    .action-btn:active { transform: scale(0.92); }
-    
-    .btn-edit { background: #2196F3; }
-    .btn-copy { background: #4CAF50; }
-    .btn-wa { background: #25D366 !important; }
-    .btn-wa i { color: #ffffff !important; font-size: 26px; }
-    .btn-call { background: #00BCD4 !important; }
-    .btn-call i { color: #ffffff !important; font-size: 22px; }
-    .btn-download { background: #9C27B0; }
-    .btn-delete { background: #f44336; }
+    .actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; justify-content:flex-start; }
+    .action-btn { width:46px; height:46px; border-radius:12px; border:none; color:#ffffff !important; cursor:pointer; display:inline-flex !important; align-items:center; justify-content:center; text-decoration:none; transition:transform 0.15s, box-shadow 0.15s; font-size:18px; box-shadow:0 2px 8px rgba(0,0,0,0.12); }
+    .action-btn i { color:#ffffff !important; font-size:20px; line-height:1; }
+    .action-btn:hover { transform:scale(1.05); box-shadow:0 4px 12px rgba(0,0,0,0.25); }
+    .action-btn:active { transform:scale(0.92); }
+    .btn-edit { background:#2196F3; }
+    .btn-copy { background:#4CAF50; }
+    .btn-call { background:#00BCD4 !important; }
+    .btn-call i { color:#ffffff !important; font-size:20px; }
+    .btn-download { background:#9C27B0; }
+    .btn-delete { background:#f44336; }
     
     .bottom-nav { position:fixed; bottom:10px; left:10px; right:10px; max-width:460px; margin:0 auto; background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-radius:30px; padding:6px 8px; display:flex; justify-content:space-around; align-items:center; box-shadow:0 4px 20px rgba(0,0,0,0.1); z-index:999; }
     .tab-btn { background:none; border:none; display:flex; flex-direction:column; align-items:center; font-size:11px; color:#888; padding:4px 12px; border-radius:20px; cursor:pointer; font-weight:600; }
@@ -112,15 +79,30 @@
     .stat-value { font-size:28px; font-weight:800; color:#8A1538; }
     .stat-label { font-size:13px; color:#666; font-weight:600; }
     .chart-box { background:#fff; border-radius:16px; padding:12px; margin:10px 12px; border:1px solid #f0e6ea; }
+    
     .auth-screen { position:fixed; top:0; left:0; right:0; bottom:0; background:linear-gradient(145deg,#f5f7fc,#eef2f7); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; }
     .auth-card { background:#fff; border-radius:40px; padding:30px 24px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
     .auth-card .lock { width:60px; height:60px; background:linear-gradient(135deg,#8A1538,#c2185b); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:28px; color:#fff; }
     .auth-card h4 { font-weight:800; color:#8A1538; font-size:20px; }
-    .auth-card p { color:#888; font-size:14px; }
-    .auth-card input { width:100%; padding:12px; border:2px solid #e8eef2; border-radius:30px; text-align:center; font-size:24px; letter-spacing:8px; font-weight:700; outline:none; }
+    .auth-card p { color:#888; font-size:14px; margin-bottom:16px; }
+    .auth-card input { width:100%; padding:14px; border:2px solid #e8eef2; border-radius:30px; text-align:center; font-size:24px; letter-spacing:10px; font-weight:700; outline:none; background:#fff; margin-bottom:12px; }
     .auth-card input:focus { border-color:#8A1538; }
-    .auth-btn { width:100%; padding:12px; background:linear-gradient(135deg,#8A1538,#c2185b); color:#fff; border:none; border-radius:50px; font-weight:700; margin-top:12px; cursor:pointer; font-size:16px; }
-    .auth-status { margin-top:10px; font-size:14px; min-height:24px; }
+    .auth-btn { width:100%; padding:12px; background:linear-gradient(135deg,#8A1538,#c2185b); color:#fff; border:none; border-radius:50px; font-weight:700; cursor:pointer; font-size:16px; transition:0.2s; }
+    .auth-btn:hover { opacity:0.9; transform:scale(0.98); }
+    .auth-btn i { margin-right:8px; }
+    .forgot-btn { background:transparent; color:#8A1538; border:none; font-size:14px; margin-top:12px; cursor:pointer; font-weight:600; padding:8px 16px; transition:0.2s; display:inline-flex; align-items:center; gap:6px; }
+    .forgot-btn:hover { color:#c2185b; text-decoration:underline; }
+    .forgot-btn i { font-size:14px; }
+    .auth-status { margin-top:8px; font-size:14px; min-height:24px; }
+    
+    /* Fingerprint Toggle Switch */
+    .toggle-switch { position:relative; display:inline-block; width:50px; height:26px; }
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:34px; transition:0.3s; }
+    .toggle-slider:before { position:absolute; content:""; height:20px; width:20px; left:3px; bottom:3px; background:#fff; border-radius:50%; transition:0.3s; }
+    .toggle-switch input:checked + .toggle-slider { background:#8A1538; }
+    .toggle-switch input:checked + .toggle-slider:before { transform:translateX(24px); }
+    
     .dark-mode { background:#121212; }
     .dark-mode .app-container { background:#1e1e2f; }
     .dark-mode .services { background:#2a2a3a; border-color:#3a3a4a; }
@@ -142,6 +124,8 @@
     .dark-mode .auth-card { background:#2a2a3a; }
     .dark-mode .auth-card h4 { color:#e91e63; }
     .dark-mode .auth-card input { background:#1e1e2f; color:#e91e63; border-color:#3a3a4a; }
+    .dark-mode .forgot-btn { color:#e91e63; }
+    .dark-mode .forgot-btn:hover { color:#ff6b9d; }
     .exit-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); z-index:99999; display:none; align-items:center; justify-content:center; }
     .exit-overlay.show { display:flex; }
     .exit-box { background:#fff; border-radius:40px; padding:30px 24px; max-width:300px; width:90%; text-align:center; }
@@ -173,10 +157,10 @@
       .detail-row i { width:32px; height:32px; font-size:14px; }
       .detail-row b { min-width:60px; font-size:12px; }
       .detail-row span { font-size:13px; }
-      .action-btn { width:42px; height:42px; font-size:18px; }
+      .action-btn { width:40px; height:40px; font-size:16px; }
       .action-btn i { font-size:16px; }
-      .btn-wa i { font-size:20px; }
       .actions { gap:6px; }
+      .auth-card input { font-size:20px; letter-spacing:6px; padding:12px; }
     }
   </style>
 </head>
@@ -191,9 +175,17 @@
     <div class="lock">🔒</div>
     <h4>PNB Secure Access</h4>
     <p>Enter 4-digit TPIN</p>
+    
     <input type="password" id="tpinInput" maxlength="4" inputmode="numeric" placeholder="••••" />
-    <button class="auth-btn" id="fingerprintBtn"><i class="fas fa-fingerprint"></i> Fingerprint</button>
-    <button class="auth-btn" style="background:transparent;color:#8A1538;box-shadow:none;font-size:12px;margin-top:4px;" id="forgotBtn">Forgot TPIN?</button>
+    
+    <button class="auth-btn" id="fingerprintBtn">
+      <i class="fas fa-fingerprint"></i> Fingerprint
+    </button>
+    
+    <button type="button" class="forgot-btn" id="forgotBtn">
+      <i class="fas fa-question-circle"></i> Forgot TPIN?
+    </button>
+    
     <div class="auth-status" id="authStatus"></div>
   </div>
 </div>
@@ -214,14 +206,12 @@
 <!-- MAIN APP -->
 <div class="app-container" id="appContainer">
 
-  <!-- HEADER -->
   <div class="header">
     <img src="https://iili.io/ByhRUHg.png" alt="PNB" onerror="this.style.display='none'" />
     <h5>PNB Shoaib CSC <span id="connectionBadge" class="badge-cloud">● Online</span></h5>
     <button class="dark-btn" id="darkToggle"><i class="fas fa-moon"></i></button>
   </div>
 
-  <!-- HOME PAGE -->
   <div class="page active" id="page-home">
     <div class="services">
       <div class="services-title"><i class="fas fa-university"></i> PNB Account Services</div>
@@ -235,7 +225,6 @@
     <div id="homeList"></div>
   </div>
 
-  <!-- ALL PAGE -->
   <div class="page" id="page-all">
     <div class="search-box">
       <i class="fas fa-filter"></i>
@@ -245,12 +234,10 @@
     <div id="allList"></div>
   </div>
 
-  <!-- STATS PAGE -->
   <div class="page" id="page-stats">
     <div id="statsContent"></div>
   </div>
 
-  <!-- PROFILE PAGE -->
   <div class="page" id="page-profile">
     <div class="services" style="text-align:center;">
       <i class="fas fa-user-shield" style="font-size:50px;color:#8A1538;"></i>
@@ -258,10 +245,9 @@
       
       <div style="display:flex;justify-content:space-between;align-items:center;background:#f0f2f5;padding:10px 16px;border-radius:20px;margin:12px 0;font-size:15px;">
         <span><i class="fas fa-fingerprint"></i> Fingerprint</span>
-        <label style="position:relative;display:inline-block;width:46px;height:24px;">
-          <input type="checkbox" id="fpToggle" style="opacity:0;width:0;height:0;" />
-          <span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:34px;transition:0.3s;"></span>
-          <span style="position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;"></span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="fpToggle" />
+          <span class="toggle-slider"></span>
         </label>
       </div>
       
@@ -277,7 +263,6 @@
     </div>
   </div>
 
-  <!-- BOTTOM NAV -->
   <div class="bottom-nav">
     <button class="tab-btn active" data-page="home"><i class="fas fa-home"></i><span>Home</span></button>
     <button class="tab-btn" data-page="all"><i class="fas fa-list-ul"></i><span>All</span></button>
@@ -396,6 +381,7 @@ const CUSTOMERS_COLLECTION = 'customers';
 // ===================== GLOBAL STATE =====================
 let TPIN = '1234';
 let fpEnabled = false;
+let fpRegistered = false;
 let customers = [];
 let chartInstance = null;
 let isOnline = navigator.onLine;
@@ -473,6 +459,7 @@ function saveToSession() {
     sessionStorage.setItem('pnb_customers', JSON.stringify(customers));
     sessionStorage.setItem('pnb_tpin', TPIN);
     sessionStorage.setItem('pnb_fp', String(fpEnabled));
+    sessionStorage.setItem('pnb_fp_registered', String(fpRegistered));
   } catch (e) { console.log('Session save error'); }
 }
 
@@ -483,10 +470,13 @@ function loadFromSession() {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
         customers = parsed;
-        return true;
       }
     }
-    return false;
+    const fp = sessionStorage.getItem('pnb_fp');
+    if (fp) fpEnabled = fp === 'true';
+    const fpReg = sessionStorage.getItem('pnb_fp_registered');
+    if (fpReg) fpRegistered = fpReg === 'true';
+    return true;
   } catch (e) { return false; }
 }
 
@@ -784,35 +774,272 @@ async function deleteCustomer(id) {
   }
 }
 
-// ===================== FINGERPRINT =====================
+// ===================== FINGERPRINT - FIXED =====================
 
 async function registerFingerprint() {
   if (!window.PublicKeyCredential) {
-    Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Fingerprint not supported on this device.', confirmButtonColor: '#8A1538' });
+    Swal.fire({ 
+      icon: 'error', 
+      title: 'Not Supported', 
+      text: 'Fingerprint is not supported on this device. Please use TPIN.',
+      confirmButtonColor: '#8A1538' 
+    });
     return;
   }
+
   try {
+    if (!navigator.credentials || !navigator.credentials.create) {
+      throw new Error('WebAuthn not supported');
+    }
+
     const challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
+
     const credential = await navigator.credentials.create({
       publicKey: {
         challenge: challenge,
-        rp: { name: 'PNB Shoaib CSC', id: window.location.hostname || 'localhost' },
-        user: { id: new Uint8Array(16), name: 'pnb_user', displayName: 'PNB User' },
-        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
-        authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+        rp: { 
+          name: 'PNB Shoaib CSC', 
+          id: window.location.hostname === 'localhost' ? 'localhost' : window.location.hostname 
+        },
+        user: { 
+          id: new Uint8Array(16), 
+          name: 'pnb_user', 
+          displayName: 'PNB User' 
+        },
+        pubKeyCredParams: [
+          { type: 'public-key', alg: -7 },
+          { type: 'public-key', alg: -257 }
+        ],
+        authenticatorSelection: { 
+          authenticatorAttachment: 'platform', 
+          userVerification: 'required' 
+        },
         timeout: 60000
       }
     });
+
     if (credential && credential.rawId) {
       const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
       sessionStorage.setItem('pnb_fp_id', credId);
-      Swal.fire({ icon: 'success', title: '✅ Fingerprint Registered!', confirmButtonColor: '#8A1538' });
+      
+      // Enable fingerprint
+      fpEnabled = true;
+      fpRegistered = true;
+      document.getElementById('fpToggle').checked = true;
+      saveToSession();
+      
+      Swal.fire({ 
+        icon: 'success', 
+        title: '✅ Fingerprint Registered!', 
+        text: 'You can now login using fingerprint.',
+        confirmButtonColor: '#8A1538' 
+      });
     }
-  } catch (e) {
-    Swal.fire({ icon: 'error', title: 'Registration Failed', text: e.message, confirmButtonColor: '#8A1538' });
+  } catch (error) {
+    console.error('Fingerprint registration error:', error);
+    Swal.fire({ 
+      icon: 'error', 
+      title: 'Registration Failed', 
+      text: error.message || 'Please try again.',
+      confirmButtonColor: '#8A1538' 
+    });
   }
 }
+
+async function authenticateWithFingerprint() {
+  // Check if fingerprint is enabled
+  if (!fpEnabled) {
+    authStatus.textContent = '⚠️ Fingerprint is disabled. Enable it in Profile.';
+    authStatus.style.color = '#f39c12';
+    setTimeout(() => authStatus.textContent = '', 3000);
+    return;
+  }
+
+  const savedId = sessionStorage.getItem('pnb_fp_id');
+  
+  if (!savedId) {
+    authStatus.textContent = '⚠️ No fingerprint registered. Please register first.';
+    authStatus.style.color = '#f39c12';
+    setTimeout(() => authStatus.textContent = '', 3000);
+    return;
+  }
+
+  try {
+    if (!window.PublicKeyCredential || !navigator.credentials || !navigator.credentials.get) {
+      throw new Error('Fingerprint not supported');
+    }
+
+    const challenge = new Uint8Array(32);
+    window.crypto.getRandomValues(challenge);
+
+    const credentialId = Uint8Array.from(atob(savedId), c => c.charCodeAt(0));
+
+    const assertion = await navigator.credentials.get({
+      publicKey: {
+        challenge: challenge,
+        allowCredentials: [{
+          id: credentialId,
+          type: 'public-key'
+        }],
+        userVerification: 'required',
+        timeout: 60000,
+        rpId: window.location.hostname === 'localhost' ? 'localhost' : window.location.hostname
+      }
+    });
+
+    if (assertion) {
+      authStatus.textContent = '✅ Verified! Unlocking...';
+      authStatus.style.color = '#2ecc71';
+      setTimeout(unlockApp, 500);
+    } else {
+      throw new Error('Verification failed');
+    }
+  } catch (error) {
+    console.error('Fingerprint authentication error:', error);
+    authStatus.textContent = '❌ Fingerprint failed: ' + (error.message || 'Please try again');
+    authStatus.style.color = '#e74c3c';
+    setTimeout(() => authStatus.textContent = '', 3000);
+  }
+}
+
+// ===================== FORGOT TPIN =====================
+
+async function forgotTPIN() {
+  const questions = [
+    { q: 'What is your favorite color?', a: 'black' },
+    { q: 'What is your father\'s name?', a: 'akhlak' },
+    { q: 'What is your mother\'s name?', a: 'nafisha' },
+    { q: 'What is your pet name?', a: 'pappu' },
+    { q: 'What is your birth city?', a: 'delhi' }
+  ];
+
+  const { value: selected } = await Swal.fire({
+    title: '🔐 Forgot TPIN?',
+    html: `<div style="text-align:left;">
+      <p style="font-size:13px;color:#666;margin-bottom:12px;">Answer any one security question to reset your TPIN:</p>
+      ${questions.map((q, i) => `<div class="question-opt" data-idx="${i}" style="background:#f8f9fc;border-radius:12px;padding:10px;margin:6px 0;cursor:pointer;border:2px solid transparent;font-size:13px;">
+        <i class="fas fa-question-circle" style="color:#8A1538;"></i> <strong>${q.q}</strong>
+      </div>`).join('')}
+      <input type="text" id="ansInput" class="swal2-input" placeholder="Enter your answer" style="display:none; margin-top:10px;border-radius:14px;padding:10px 14px;border:1px solid #ddd;width:100%;">
+    </div>`,
+    showCancelButton: true,
+    confirmButtonText: 'Verify & Reset',
+    confirmButtonColor: '#8A1538',
+    cancelButtonText: 'Cancel',
+    didOpen: () => {
+      document.querySelectorAll('.question-opt').forEach(el => {
+        el.onclick = function() {
+          document.querySelectorAll('.question-opt').forEach(e => {
+            e.classList.remove('selected');
+            e.style.borderColor = 'transparent';
+            e.style.background = '#f8f9fc';
+          });
+          this.classList.add('selected');
+          this.style.borderColor = '#8A1538';
+          this.style.background = '#fff0f3';
+          document.getElementById('ansInput').style.display = 'block';
+          document.getElementById('ansInput').focus();
+        };
+      });
+    },
+    preConfirm: () => {
+      const sel = document.querySelector('.question-opt.selected');
+      if (!sel) { 
+        Swal.showValidationMessage('Please select a question'); 
+        return false; 
+      }
+      const ans = document.getElementById('ansInput').value.trim().toLowerCase();
+      if (!ans) { 
+        Swal.showValidationMessage('Please enter your answer'); 
+        return false; 
+      }
+      const idx = parseInt(sel.dataset.idx);
+      if (ans !== questions[idx].a.toLowerCase()) { 
+        Swal.showValidationMessage('❌ Wrong answer! Please try again.'); 
+        return false; 
+      }
+      return true;
+    }
+  });
+
+  if (selected) {
+    const { value: newPin } = await Swal.fire({
+      title: '🔑 Set New TPIN',
+      html: `<input type="password" id="np1" class="swal2-input" placeholder="New 4-digit TPIN" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;border-radius:14px;padding:10px 14px;border:1px solid #ddd;width:100%;">
+             <input type="password" id="np2" class="swal2-input" placeholder="Confirm TPIN" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;border-radius:14px;padding:10px 14px;border:1px solid #ddd;width:100%;margin-top:8px;">`,
+      confirmButtonText: 'Reset TPIN',
+      confirmButtonColor: '#8A1538',
+      preConfirm: () => {
+        const a = document.getElementById('np1').value;
+        const b = document.getElementById('np2').value;
+        if (!a || a.length !== 4 || !/^\d{4}$/.test(a)) { 
+          Swal.showValidationMessage('Please enter a valid 4-digit TPIN'); 
+          return false; 
+        }
+        if (a !== b) { 
+          Swal.showValidationMessage('TPINs do not match!'); 
+          return false; 
+        }
+        return a;
+      }
+    });
+
+    if (newPin) {
+      TPIN = newPin;
+      saveToSession();
+      Swal.fire({ 
+        icon: 'success', 
+        title: '✅ TPIN Reset Successfully!', 
+        text: `Your new TPIN is: ${TPIN}`,
+        confirmButtonColor: '#8A1538' 
+      });
+      tpinInput.value = '';
+      tpinInput.focus();
+    }
+  }
+}
+
+// ===================== UNLOCK APP =====================
+
+function unlockApp() {
+  sessionStorage.setItem('pnb_auth', 'true');
+  authScreen.style.display = 'none';
+  appContainer.style.display = 'block';
+  initApp();
+}
+
+// ===================== TPIN INPUT =====================
+
+tpinInput.addEventListener('input', function() {
+  if (this.value.length === 4) {
+    if (this.value === TPIN) {
+      unlockApp();
+    } else {
+      authStatus.textContent = '❌ Wrong TPIN! (Default: 1234)';
+      authStatus.style.color = '#e74c3c';
+      this.value = '';
+      setTimeout(() => authStatus.textContent = '', 2000);
+    }
+  }
+});
+
+// ===================== FINGERPRINT BUTTON =====================
+
+document.getElementById('fingerprintBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  authenticateWithFingerprint();
+});
+
+// ===================== FORGOT BUTTON =====================
+
+document.getElementById('forgotBtn').onclick = function(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  forgotTPIN();
+};
+
+window.forgotTPIN = forgotTPIN;
 
 // ===================== RENDER FUNCTIONS =====================
 
@@ -833,7 +1060,6 @@ function customerCard(c) {
       <div class="detail-row"><i class="fas fa-university"></i><b>ACCOUNT:</b><span>${getDisplayValue(serviceNo)}</span></div>
       ${password ? `<div class="detail-row"><i class="fas fa-key"></i><b>PASSWORD:</b><span>${getDisplayValue(password)}</span></div>` : ''}
       
-      <!-- ========== ACTIONS - WhatsApp Single Green Icon ========== -->
       <div class="actions">
         <button class="action-btn btn-edit" data-id="${c.id}" data-name="${escape(name)}" data-father="${escape(father)}" data-mobile="${escape(mobile)}" data-serviceno="${escape(serviceNo)}" data-extrano="${escape(extraNo)}" data-password="${escape(password)}">
           <i class="fas fa-pen"></i>
@@ -842,10 +1068,6 @@ function customerCard(c) {
         <button class="action-btn btn-copy" data-copy="${mobile}">
           <i class="fas fa-copy"></i>
         </button>
-
-        <a class="action-btn btn-wa" href="https://wa.me/91${mobile}" target="_blank" aria-label="WhatsApp">
-          <i class="fab fa-whatsapp"></i>
-        </a>
 
         <a class="action-btn btn-call" href="tel:${mobile}" aria-label="Call">
           <i class="fas fa-phone"></i>
@@ -1044,144 +1266,6 @@ function attachEvents() {
   });
 }
 
-// ===================== AUTH =====================
-
-function unlockApp() {
-  sessionStorage.setItem('pnb_auth', 'true');
-  authScreen.style.display = 'none';
-  appContainer.style.display = 'block';
-  initApp();
-}
-
-tpinInput.addEventListener('input', function() {
-  if (this.value.length === 4) {
-    if (this.value === TPIN) {
-      unlockApp();
-    } else {
-      authStatus.textContent = '❌ Wrong TPIN! (Default: 1234)';
-      authStatus.style.color = '#e74c3c';
-      this.value = '';
-      setTimeout(() => authStatus.textContent = '', 2000);
-    }
-  }
-});
-
-$('fingerprintBtn').addEventListener('click', async function() {
-  if (!fpEnabled) {
-    authStatus.textContent = '⚠️ Fingerprint disabled in Profile';
-    authStatus.style.color = '#f39c12';
-    setTimeout(() => authStatus.textContent = '', 2000);
-    return;
-  }
-  const savedId = sessionStorage.getItem('pnb_fp_id');
-  if (!savedId) {
-    authStatus.textContent = '⚠️ No fingerprint registered';
-    authStatus.style.color = '#f39c12';
-    setTimeout(() => authStatus.textContent = '', 2000);
-    return;
-  }
-  try {
-    if (!window.PublicKeyCredential) throw new Error('Not supported');
-    const challenge = new Uint8Array(32);
-    window.crypto.getRandomValues(challenge);
-    const assertion = await navigator.credentials.get({
-      publicKey: {
-        challenge: challenge,
-        allowCredentials: [{ id: Uint8Array.from(atob(savedId), c => c.charCodeAt(0)), type: 'public-key' }],
-        userVerification: 'required',
-        timeout: 60000,
-        rpId: window.location.hostname || 'localhost'
-      }
-    });
-    if (assertion) {
-      authStatus.textContent = '✅ Verified! Unlocking...';
-      authStatus.style.color = '#2ecc71';
-      setTimeout(unlockApp, 500);
-    }
-  } catch (e) {
-    authStatus.textContent = '❌ Fingerprint failed';
-    authStatus.style.color = '#e74c3c';
-    setTimeout(() => authStatus.textContent = '', 2000);
-  }
-});
-
-$('forgotBtn').addEventListener('click', async function() {
-  const questions = [
-    { q: 'What is your favorite color?', a: 'black' },
-    { q: 'What is your father\'s name?', a: 'akhlak' },
-    { q: 'What is your mother\'s name?', a: 'nafisha' }
-  ];
-  const { value: selected } = await Swal.fire({
-    title: 'Forgot TPIN?',
-    html: `<div>
-        ${questions.map((q, i) => `<div class="question-opt" data-idx="${i}"><i class="fas fa-question-circle" style="color:#8A1538;"></i> <strong>${q.q}</strong></div>`).join('')}
-        <input type="text" id="ansInput" class="swal2-input" placeholder="Your answer" style="display:none; margin-top:10px;">
-      </div>`,
-    showCancelButton: true,
-    confirmButtonText: 'Verify',
-    confirmButtonColor: '#8A1538',
-    didOpen: () => {
-      document.querySelectorAll('.question-opt').forEach(el => {
-        el.onclick = function() {
-          document.querySelectorAll('.question-opt').forEach(e => e.classList.remove('selected'));
-          this.classList.add('selected');
-          document.getElementById('ansInput').style.display = 'block';
-        };
-      });
-    },
-    preConfirm: () => {
-      const sel = document.querySelector('.question-opt.selected');
-      if (!sel) { Swal.showValidationMessage('Select a question'); return false; }
-      const ans = document.getElementById('ansInput').value.trim().toLowerCase();
-      if (!ans) { Swal.showValidationMessage('Enter your answer'); return false; }
-      const idx = parseInt(sel.dataset.idx);
-      if (ans !== questions[idx].a.toLowerCase()) { Swal.showValidationMessage('Wrong answer!'); return false; }
-      return true;
-    }
-  });
-  if (selected) {
-    const { value: newPin } = await Swal.fire({
-      title: 'New TPIN',
-      html: `<input type="password" id="np1" class="swal2-input" placeholder="New 4-digit TPIN" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">
-             <input type="password" id="np2" class="swal2-input" placeholder="Confirm" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">`,
-      confirmButtonText: 'Reset',
-      confirmButtonColor: '#8A1538',
-      preConfirm: () => {
-        const a = document.getElementById('np1').value;
-        const b = document.getElementById('np2').value;
-        if (!a || a.length !== 4 || !/^\d{4}$/.test(a)) { Swal.showValidationMessage('4 digits required'); return false; }
-        if (a !== b) { Swal.showValidationMessage('Mismatch'); return false; }
-        return a;
-      }
-    });
-    if (newPin) {
-      TPIN = newPin;
-      saveToSession();
-      Swal.fire({ icon: 'success', title: 'TPIN Reset!', text: `New TPIN: ${TPIN}`, confirmButtonColor: '#8A1538' });
-      tpinInput.value = '';
-      tpinInput.focus();
-    }
-  }
-});
-
-if (sessionStorage.getItem('pnb_auth') === 'true') {
-  authScreen.style.display = 'none';
-  appContainer.style.display = 'block';
-}
-
-// ===================== EXIT =====================
-
-function showExit() { exitDialog.classList.add('show'); }
-function hideExit() { exitDialog.classList.remove('show'); }
-$('exitCancel').onclick = hideExit;
-$('exitOk').onclick = function() {
-  hideExit();
-  Swal.fire({ icon: 'info', title: 'Goodbye!', timer: 1500, showConfirmButton: false }).then(() => {
-    window.close();
-    setTimeout(() => window.location.href = 'about:blank', 100);
-  });
-};
-
 // ===================== INIT APP =====================
 
 async function initApp() {
@@ -1294,10 +1378,22 @@ async function initApp() {
   $('changeTpinBtn').onclick = function() { new bootstrap.Modal($('tpinModal')).show(); };
   $('registerFpBtn').onclick = registerFingerprint;
 
+  // ===================== FINGERPRINT TOGGLE - FIXED =====================
   const fpToggle = $('fpToggle');
   fpToggle.checked = fpEnabled;
   fpToggle.onchange = function() {
     fpEnabled = this.checked;
+    if (fpEnabled && !fpRegistered) {
+      Swal.fire({ 
+        icon: 'info', 
+        title: 'Fingerprint Not Registered', 
+        text: 'Please register your fingerprint first using "Register Fingerprint" button.',
+        confirmButtonColor: '#8A1538' 
+      });
+      this.checked = false;
+      fpEnabled = false;
+      return;
+    }
     saveToSession();
     Swal.fire({ toast: true, icon: 'success', title: fpEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled', timer: 1500, showConfirmButton: false, position: 'top-end' });
   };
@@ -1368,8 +1464,22 @@ async function initApp() {
   console.log('✅ PNB App Loaded with Firebase!');
   console.log(`📌 ${customers.length} customers loaded`);
   console.log(`🔗 Firestore: ${isOnline ? 'Connected' : 'Offline'}`);
-  console.log('🔑 Default TPIN: 1234');
+  console.log(`🔑 Default TPIN: 1234`);
+  console.log(`🖐️ Fingerprint: ${fpEnabled ? 'Enabled' : 'Disabled'}`);
 }
+
+// ===================== EXIT =====================
+
+function showExit() { exitDialog.classList.add('show'); }
+function hideExit() { exitDialog.classList.remove('show'); }
+$('exitCancel').onclick = hideExit;
+$('exitOk').onclick = function() {
+  hideExit();
+  Swal.fire({ icon: 'info', title: 'Goodbye!', timer: 1500, showConfirmButton: false }).then(() => {
+    window.close();
+    setTimeout(() => window.location.href = 'about:blank', 100);
+  });
+};
 
 // ===================== START =====================
 
@@ -1380,15 +1490,6 @@ if (sessionStorage.getItem('pnb_auth') === 'true') {
     await initApp();
   })();
 } else {
-  const originalUnlock = unlockApp;
-  unlockApp = function() {
-    sessionStorage.setItem('pnb_auth', 'true');
-    authScreen.style.display = 'none';
-    appContainer.style.display = 'block';
-    (async () => {
-      await initApp();
-    })();
-  };
   setTimeout(() => {
     if (tpinInput) tpinInput.focus();
   }, 500);
