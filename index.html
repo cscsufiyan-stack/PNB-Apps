@@ -1,146 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
   <title>PNB Shoaib CSC</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #f0f2f5; font-family: 'Segoe UI', Arial, sans-serif; }
-    .app-container { max-width: 480px; margin: 0 auto; background: #f8fafd; min-height: 100vh; padding-bottom: 75px; display: none; }
-    .header { background: linear-gradient(135deg, #8A1538, #5e0e2a); padding: 14px 18px; color: white; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .header h5 { margin: 0; font-weight: 700; font-size: 16px; }
-    .header img { height: 45px; }
-    .dark-btn { background: rgba(255,255,255,0.2); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#f0f2f5; font-family:'Segoe UI',Arial,sans-serif; }
+    .app-container { max-width:480px; margin:0 auto; background:#f8fafd; min-height:100vh; padding-bottom:75px; display:none; }
+    .header { background:linear-gradient(135deg,#8A1538,#5e0e2a); padding:14px 18px; color:#fff; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .header h5 { margin:0; font-weight:700; font-size:18px; }
+    .header img { height:45px; }
+    .dark-btn { background:rgba(255,255,255,0.2); border:none; color:#fff; width:36px; height:36px; border-radius:50%; cursor:pointer; }
+    .services { background:#fff; margin:12px; border-radius:20px; padding:12px; border:2px solid #f0e6ea; }
+    .services-title { font-size:15px; font-weight:700; color:#8A1538; margin-bottom:10px; }
+    .services-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .service-btn { background:linear-gradient(135deg,#8A1538,#c2185b); border:none; border-radius:14px; padding:14px 4px; text-align:center; cursor:pointer; transition:0.2s; }
+    .service-btn:active { transform:scale(0.95); }
+    .service-btn i { font-size:28px; color:#fff; display:block; }
+    .service-btn span { font-size:13px; font-weight:700; color:#fff; }
+    .search-box { margin:0 12px 14px; position:relative; }
+    .search-box input { width:100%; padding:12px 50px 12px 45px; border-radius:50px; border:3px solid #d7b27a; font-size:16px; font-weight:600; outline:none; background:#fff; }
+    .search-box i { position:absolute; left:18px; top:50%; transform:translateY(-50%); color:#8A1538; font-size:18px; }
+    .search-box .clear-btn { position:absolute; right:6px; top:50%; transform:translateY(-50%); background:#8A1538; color:#fff; border:none; width:38px; height:38px; border-radius:50%; cursor:pointer; }
     
-    .services { background: white; margin: 12px; border-radius: 20px; padding: 12px; border: 2px solid #f0e6ea; }
-    .services-title { font-size: 13px; font-weight: 700; color: #8A1538; margin-bottom: 10px; }
-    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .service-btn { background: #f8f9fc; border: 1px solid #eee; border-radius: 14px; padding: 10px 4px; text-align: center; cursor: pointer; transition: 0.2s; }
-    .service-btn:active { transform: scale(0.95); }
-    .service-btn i { font-size: 22px; color: #8A1538; display: block; }
-    .service-btn span { font-size: 11px; font-weight: 600; color: #333; }
-    .service-btn.full { grid-column: span 3; background: linear-gradient(135deg, #8A1538, #c2185b); border: none; }
-    .service-btn.full i { color: white; }
-    .service-btn.full span { color: white; }
+    /* ========== CUSTOMER CARD - BLACK BORDER ========== */
+    .customer-card { 
+      background: #fff; 
+      margin: 10px 12px; 
+      border-radius: 20px; 
+      padding: 15px; 
+      border: 2px solid #000000; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
     
-    .search-box { margin: 0 12px 14px; position: relative; }
-    .search-box input { width: 100%; padding: 12px 50px 12px 45px; border-radius: 50px; border: 3px solid #d7b27a; font-size: 14px; font-weight: 600; outline: none; background: white; }
-    .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #8A1538; }
-    .search-box .clear-btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); background: #8A1538; color: white; border: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; }
+    .detail-row { display:flex; align-items:center; background:#fafafa; border:1px solid #e5c48d; border-radius:10px; margin-bottom:8px; overflow:hidden; min-height:44px; }
+    .detail-row i { width:38px; height:38px; background:#8A1538; color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+    .detail-row b { color:#8A1538; font-size:14px; margin-left:10px; min-width:75px; font-weight:700; }
+    .detail-row span { font-size:15px; font-weight:600; padding:0 10px; flex:1; word-break:break-word; color:#333; }
+    .detail-row .empty-value { color:#999; font-weight:400; font-style:italic; }
+    .detail-row .has-value { color:#1a5e2a; font-weight:700; }
     
-    .filters { display: flex; gap: 8px; overflow-x: auto; padding: 6px 12px 12px; }
-    .filter-chip { background: #f3f5f9; border: none; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; }
-    .filter-chip.active { background: #8A1538; color: white; }
+    /* ========== ACTION BUTTONS ========== */
+    .actions { 
+      display: flex; 
+      gap: 10px; 
+      margin-top: 12px; 
+      flex-wrap: wrap; 
+      justify-content: flex-start;
+    }
     
-    .customer-card { background: white; margin: 10px 12px; border-radius: 20px; padding: 12px; border: 2px solid #8A1538; }
-    .detail-row { display: flex; align-items: center; background: #fafafa; border: 1px solid #e5c48d; border-radius: 10px; margin-bottom: 6px; overflow: hidden; }
-    .detail-row i { width: 30px; height: 30px; background: #8A1538; color: white; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
-    .detail-row b { color: #8A1538; font-size: 9px; margin-left: 8px; min-width: 60px; }
-    .detail-row span { font-size: 11px; font-weight: 600; padding: 0 6px; flex: 1; word-break: break-word; }
-    .actions { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-    .action-btn { width: 32px; height: 32px; border-radius: 8px; border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; }
-    .action-btn:active { transform: scale(0.9); }
+    .action-btn { 
+      width: 48px; 
+      height: 48px; 
+      border-radius: 14px; 
+      border: none; 
+      color: #ffffff !important; 
+      cursor: pointer; 
+      display: inline-flex !important;
+      align-items: center; 
+      justify-content: center; 
+      text-decoration: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .action-btn i { 
+      color: #ffffff !important; 
+      font-size: 22px; 
+      line-height: 1; 
+    }
+    .action-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+    .action-btn:active { transform: scale(0.92); }
+    
     .btn-edit { background: #2196F3; }
     .btn-copy { background: #4CAF50; }
-    .btn-wa { background: #25D366; }
-    .btn-call { background: #00BCD4; }
+    .btn-wa { background: #25D366 !important; }
+    .btn-wa i { color: #ffffff !important; font-size: 26px; }
+    .btn-call { background: #00BCD4 !important; }
+    .btn-call i { color: #ffffff !important; font-size: 22px; }
     .btn-download { background: #9C27B0; }
     .btn-delete { background: #f44336; }
     
-    .bottom-nav { position: fixed; bottom: 10px; left: 10px; right: 10px; max-width: 460px; margin: 0 auto; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 30px; padding: 6px 8px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.1); z-index: 999; }
-    .tab-btn { background: none; border: none; display: flex; flex-direction: column; align-items: center; font-size: 10px; color: #888; padding: 4px 12px; border-radius: 20px; cursor: pointer; font-weight: 600; }
-    .tab-btn.active { color: #8A1538; background: rgba(138,21,56,0.1); }
-    .tab-btn i { font-size: 18px; }
-    .fab { background: linear-gradient(135deg, #8A1538, #c2185b); color: white; width: 52px; height: 52px; border-radius: 50%; border: none; display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: -26px; box-shadow: 0 4px 15px rgba(138,21,56,0.4); cursor: pointer; }
-    .fab i { font-size: 20px; }
-    .fab span { font-size: 8px; }
+    .bottom-nav { position:fixed; bottom:10px; left:10px; right:10px; max-width:460px; margin:0 auto; background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-radius:30px; padding:6px 8px; display:flex; justify-content:space-around; align-items:center; box-shadow:0 4px 20px rgba(0,0,0,0.1); z-index:999; }
+    .tab-btn { background:none; border:none; display:flex; flex-direction:column; align-items:center; font-size:11px; color:#888; padding:4px 12px; border-radius:20px; cursor:pointer; font-weight:600; }
+    .tab-btn.active { color:#8A1538; background:rgba(138,21,56,0.1); }
+    .tab-btn i { font-size:20px; }
+    .fab { background:linear-gradient(135deg,#8A1538,#c2185b); color:#fff; width:56px; height:56px; border-radius:50%; border:none; display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:-26px; box-shadow:0 4px 15px rgba(138,21,56,0.4); cursor:pointer; }
+    .fab i { font-size:22px; }
+    .fab span { font-size:9px; }
+    .page { display:none; padding:6px 0 10px; }
+    .page.active { display:block; }
+    .no-data { text-align:center; padding:30px; color:#999; font-size:15px; }
+    .no-data i { font-size:50px; color:#ddd; display:block; margin-bottom:10px; }
+    .modal-content { border-radius:24px; border:none; }
+    .modal-header { background:#8A1538; color:#fff; border-radius:24px 24px 0 0; padding:12px 18px; }
+    .modal-header h6 { font-size:16px; }
+    .modal-header .btn-close { filter:brightness(0) invert(1); }
+    .btn-pnb { background:#8A1538; color:#fff; border:none; border-radius:50px; padding:12px; font-weight:700; width:100%; font-size:16px; }
+    .form-control { border-radius:14px; padding:12px 14px; border:1px solid #ddd; margin-bottom:8px; font-size:15px; }
+    .form-control:focus { border-color:#8A1538; box-shadow:0 0 0 3px rgba(138,21,56,0.1); }
+    .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0 12px; }
+    .stat-card { background:#fff; border-radius:16px; padding:14px; text-align:center; border:1px solid #f0e6ea; }
+    .stat-value { font-size:28px; font-weight:800; color:#8A1538; }
+    .stat-label { font-size:13px; color:#666; font-weight:600; }
+    .chart-box { background:#fff; border-radius:16px; padding:12px; margin:10px 12px; border:1px solid #f0e6ea; }
+    .auth-screen { position:fixed; top:0; left:0; right:0; bottom:0; background:linear-gradient(145deg,#f5f7fc,#eef2f7); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .auth-card { background:#fff; border-radius:40px; padding:30px 24px; max-width:340px; width:100%; text-align:center; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
+    .auth-card .lock { width:60px; height:60px; background:linear-gradient(135deg,#8A1538,#c2185b); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-size:28px; color:#fff; }
+    .auth-card h4 { font-weight:800; color:#8A1538; font-size:20px; }
+    .auth-card p { color:#888; font-size:14px; }
+    .auth-card input { width:100%; padding:12px; border:2px solid #e8eef2; border-radius:30px; text-align:center; font-size:24px; letter-spacing:8px; font-weight:700; outline:none; }
+    .auth-card input:focus { border-color:#8A1538; }
+    .auth-btn { width:100%; padding:12px; background:linear-gradient(135deg,#8A1538,#c2185b); color:#fff; border:none; border-radius:50px; font-weight:700; margin-top:12px; cursor:pointer; font-size:16px; }
+    .auth-status { margin-top:10px; font-size:14px; min-height:24px; }
+    .dark-mode { background:#121212; }
+    .dark-mode .app-container { background:#1e1e2f; }
+    .dark-mode .services { background:#2a2a3a; border-color:#3a3a4a; }
+    .dark-mode .services-title { color:#e91e63; }
+    .dark-mode .service-btn { background:linear-gradient(135deg,#e91e63,#c2185b); }
+    .dark-mode .search-box input { background:#2a2a3a; color:#fff; border-color:#e91e63; }
+    .dark-mode .customer-card { background:#2a2a3a; border:2px solid #555555; }
+    .dark-mode .detail-row { background:#1e1e2f; border-color:#3a3a4a; }
+    .dark-mode .detail-row b { color:#e91e63; }
+    .dark-mode .detail-row span { color:#fff; }
+    .dark-mode .detail-row .empty-value { color:#888; }
+    .dark-mode .bottom-nav { background:rgba(30,30,47,0.95); }
+    .dark-mode .tab-btn { color:#aaa; }
+    .dark-mode .tab-btn.active { color:#e91e63; background:rgba(233,30,99,0.2); }
+    .dark-mode .stat-card { background:#2a2a3a; }
+    .dark-mode .stat-label { color:#aaa; }
+    .dark-mode .chart-box { background:#2a2a3a; border-color:#3a3a4a; }
+    .dark-mode .auth-screen { background:#1a1a2e; }
+    .dark-mode .auth-card { background:#2a2a3a; }
+    .dark-mode .auth-card h4 { color:#e91e63; }
+    .dark-mode .auth-card input { background:#1e1e2f; color:#e91e63; border-color:#3a3a4a; }
+    .exit-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(8px); z-index:99999; display:none; align-items:center; justify-content:center; }
+    .exit-overlay.show { display:flex; }
+    .exit-box { background:#fff; border-radius:40px; padding:30px 24px; max-width:300px; width:90%; text-align:center; }
+    .exit-box .icon { width:70px; height:70px; background:#8A1538; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; font-size:32px; color:#fff; }
+    .exit-box h5 { font-weight:800; color:#8A1538; font-size:18px; }
+    .exit-box p { color:#666; font-size:15px; }
+    .exit-btns { display:flex; gap:12px; margin-top:16px; }
+    .exit-btns button { flex:1; padding:10px; border-radius:40px; border:none; font-weight:700; cursor:pointer; font-size:15px; }
+    .exit-cancel { background:#f0f2f5; color:#666; }
+    .exit-ok { background:#8A1538; color:#fff; }
+    .dark-mode .exit-box { background:#2a2a3a; }
+    .dark-mode .exit-box h5 { color:#e91e63; }
+    .dark-mode .exit-box p { color:#aaa; }
+    .dark-mode .exit-cancel { background:#3a3a4a; color:#ddd; }
+    .question-opt { background:#f8f9fc; border-radius:12px; padding:10px; margin:4px 0; cursor:pointer; border:2px solid transparent; font-size:14px; }
+    .question-opt.selected { border-color:#8A1538; background:#fff0f3; }
+    .sync-status { position:fixed; top:70px; left:50%; transform:translateX(-50%); background:#8A1538; color:#fff; padding:4px 16px; border-radius:30px; font-size:13px; font-weight:600; z-index:50; display:none; box-shadow:0 2px 10px rgba(0,0,0,0.2); }
+    .sync-status.show { display:block; }
+    .sync-status i { margin-right:6px; }
+    .badge-cloud { background:#4CAF50; color:#fff; font-size:10px; padding:2px 8px; border-radius:12px; margin-left:6px; }
+    .badge-offline { background:#f44336; }
     
-    .page { display: none; padding: 6px 0 10px; }
-    .page.active { display: block; }
-    
-    .no-data { text-align: center; padding: 30px; color: #999; }
-    .no-data i { font-size: 40px; color: #ddd; display: block; margin-bottom: 10px; }
-    
-    .modal-content { border-radius: 24px; border: none; }
-    .modal-header { background: #8A1538; color: white; border-radius: 24px 24px 0 0; padding: 12px 18px; }
-    .modal-header .btn-close { filter: brightness(0) invert(1); }
-    .btn-pnb { background: #8A1538; color: white; border: none; border-radius: 50px; padding: 10px; font-weight: 700; width: 100%; }
-    .form-control { border-radius: 14px; padding: 10px 14px; border: 1px solid #ddd; margin-bottom: 8px; font-size: 14px; }
-    .form-control:focus { border-color: #8A1538; box-shadow: 0 0 0 3px rgba(138,21,56,0.1); }
-    
-    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 12px; }
-    .stat-card { background: white; border-radius: 16px; padding: 14px; text-align: center; border: 1px solid #f0e6ea; }
-    .stat-value { font-size: 26px; font-weight: 800; color: #8A1538; }
-    .stat-label { font-size: 11px; color: #666; font-weight: 600; }
-    .chart-box { background: white; border-radius: 16px; padding: 12px; margin: 10px 12px; border: 1px solid #f0e6ea; }
-    
-    .auth-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(145deg, #f5f7fc, #eef2f7); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; }
-    .auth-card { background: white; border-radius: 40px; padding: 30px 24px; max-width: 340px; width: 100%; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-    .auth-card .lock { width: 60px; height: 60px; background: linear-gradient(135deg, #8A1538, #c2185b); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 28px; color: white; }
-    .auth-card h4 { font-weight: 800; color: #8A1538; }
-    .auth-card p { color: #888; font-size: 13px; }
-    .auth-card input { width: 100%; padding: 12px; border: 2px solid #e8eef2; border-radius: 30px; text-align: center; font-size: 24px; letter-spacing: 8px; font-weight: 700; outline: none; }
-    .auth-card input:focus { border-color: #8A1538; }
-    .auth-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #8A1538, #c2185b); color: white; border: none; border-radius: 50px; font-weight: 700; margin-top: 12px; cursor: pointer; }
-    .auth-status { margin-top: 10px; font-size: 12px; min-height: 24px; }
-    
-    .dark-mode { background: #121212; }
-    .dark-mode .app-container { background: #1e1e2f; }
-    .dark-mode .services { background: #2a2a3a; border-color: #3a3a4a; }
-    .dark-mode .services-title { color: #e91e63; }
-    .dark-mode .service-btn { background: #2a2a3a; border-color: #3a3a4a; }
-    .dark-mode .service-btn span { color: #fff; }
-    .dark-mode .search-box input { background: #2a2a3a; color: white; border-color: #e91e63; }
-    .dark-mode .customer-card { background: #2a2a3a; border-color: #e91e63; }
-    .dark-mode .detail-row { background: #1e1e2f; border-color: #3a3a4a; }
-    .dark-mode .detail-row b { color: #e91e63; }
-    .dark-mode .detail-row span { color: #fff; }
-    .dark-mode .bottom-nav { background: rgba(30,30,47,0.95); }
-    .dark-mode .tab-btn { color: #aaa; }
-    .dark-mode .tab-btn.active { color: #e91e63; background: rgba(233,30,99,0.2); }
-    .dark-mode .stat-card { background: #2a2a3a; }
-    .dark-mode .stat-label { color: #aaa; }
-    .dark-mode .chart-box { background: #2a2a3a; border-color: #3a3a4a; }
-    .dark-mode .auth-screen { background: #1a1a2e; }
-    .dark-mode .auth-card { background: #2a2a3a; }
-    .dark-mode .auth-card h4 { color: #e91e63; }
-    .dark-mode .auth-card input { background: #1e1e2f; color: #e91e63; border-color: #3a3a4a; }
-    
-    .exit-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 99999; display: none; align-items: center; justify-content: center; }
-    .exit-overlay.show { display: flex; }
-    .exit-box { background: white; border-radius: 40px; padding: 30px 24px; max-width: 300px; width: 90%; text-align: center; }
-    .exit-box .icon { width: 70px; height: 70px; background: #8A1538; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; color: white; }
-    .exit-box h5 { font-weight: 800; color: #8A1538; }
-    .exit-box p { color: #666; font-size: 14px; }
-    .exit-btns { display: flex; gap: 12px; margin-top: 16px; }
-    .exit-btns button { flex: 1; padding: 10px; border-radius: 40px; border: none; font-weight: 700; cursor: pointer; }
-    .exit-cancel { background: #f0f2f5; color: #666; }
-    .exit-ok { background: #8A1538; color: white; }
-    .dark-mode .exit-box { background: #2a2a3a; }
-    .dark-mode .exit-box h5 { color: #e91e63; }
-    .dark-mode .exit-box p { color: #aaa; }
-    .dark-mode .exit-cancel { background: #3a3a4a; color: #ddd; }
-
-    .question-opt { background: #f8f9fc; border-radius: 12px; padding: 10px; margin: 4px 0; cursor: pointer; border: 2px solid transparent; font-size: 13px; }
-    .question-opt.selected { border-color: #8A1538; background: #fff0f3; }
-    
-    @media (max-width: 400px) {
-      .services-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
-      .service-btn { padding: 6px 2px; }
-      .service-btn i { font-size: 18px; }
-      .service-btn span { font-size: 10px; }
-      .detail-row b { min-width: 50px; font-size: 8px; }
-      .detail-row span { font-size: 10px; }
-      .action-btn { width: 28px; height: 28px; font-size: 11px; }
+    @media (max-width:400px) {
+      .services-grid { grid-template-columns:1fr 1fr; gap:5px; }
+      .service-btn { padding:10px 2px; }
+      .service-btn i { font-size:22px; }
+      .service-btn span { font-size:11px; }
+      .detail-row { min-height:38px; }
+      .detail-row i { width:32px; height:32px; font-size:14px; }
+      .detail-row b { min-width:60px; font-size:12px; }
+      .detail-row span { font-size:13px; }
+      .action-btn { width:42px; height:42px; font-size:18px; }
+      .action-btn i { font-size:16px; }
+      .btn-wa i { font-size:20px; }
+      .actions { gap:6px; }
     }
   </style>
 </head>
 <body>
+
+<!-- SYNC STATUS -->
+<div class="sync-status" id="syncStatus"><i class="fas fa-sync fa-spin"></i> Syncing...</div>
 
 <!-- AUTH SCREEN -->
 <div class="auth-screen" id="authScreen">
@@ -148,9 +191,9 @@
     <div class="lock">🔒</div>
     <h4>PNB Secure Access</h4>
     <p>Enter 4-digit TPIN</p>
-    <input type="password" id="tpinInput" maxlength="4" inputmode="numeric" placeholder="••••">
+    <input type="password" id="tpinInput" maxlength="4" inputmode="numeric" placeholder="••••" />
     <button class="auth-btn" id="fingerprintBtn"><i class="fas fa-fingerprint"></i> Fingerprint</button>
-    <button class="auth-btn" style="background: transparent; color: #8A1538; box-shadow: none; font-size: 12px; margin-top: 4px;" id="forgotBtn">Forgot TPIN?</button>
+    <button class="auth-btn" style="background:transparent;color:#8A1538;box-shadow:none;font-size:12px;margin-top:4px;" id="forgotBtn">Forgot TPIN?</button>
     <div class="auth-status" id="authStatus"></div>
   </div>
 </div>
@@ -173,20 +216,20 @@
 
   <!-- HEADER -->
   <div class="header">
-    <img src="https://iili.io/ByhRUHg.png" alt="PNB" onerror="this.style.display='none'">
-    <h5>PNB Shoaib CSC</h5>
+    <img src="https://iili.io/ByhRUHg.png" alt="PNB" onerror="this.style.display='none'" />
+    <h5>PNB Shoaib CSC <span id="connectionBadge" class="badge-cloud">● Online</span></h5>
     <button class="dark-btn" id="darkToggle"><i class="fas fa-moon"></i></button>
   </div>
 
   <!-- HOME PAGE -->
   <div class="page active" id="page-home">
     <div class="services">
-      <div class="services-title"><i class="fas fa-bolt"></i> Express Services</div>
+      <div class="services-title"><i class="fas fa-university"></i> PNB Account Services</div>
       <div class="services-grid" id="servicesGrid"></div>
     </div>
     <div class="search-box">
       <i class="fas fa-search"></i>
-      <input type="text" id="homeSearch" placeholder="Search by name, mobile...">
+      <input type="text" id="homeSearch" placeholder="Search by name, mobile..." />
       <button class="clear-btn" id="clearHome"><i class="fas fa-times"></i></button>
     </div>
     <div id="homeList"></div>
@@ -196,10 +239,9 @@
   <div class="page" id="page-all">
     <div class="search-box">
       <i class="fas fa-filter"></i>
-      <input type="text" id="allSearch" placeholder="Search all records...">
+      <input type="text" id="allSearch" placeholder="Search all records..." />
       <button class="clear-btn" id="clearAll"><i class="fas fa-times"></i></button>
     </div>
-    <div class="filters" id="filterContainer"></div>
     <div id="allList"></div>
   </div>
 
@@ -210,23 +252,28 @@
 
   <!-- PROFILE PAGE -->
   <div class="page" id="page-profile">
-    <div class="services" style="text-align: center;">
-      <i class="fas fa-user-shield" style="font-size: 50px; color: #8A1538;"></i>
-      <h6 class="mt-2">admin@pnb.com</h6>
-      <div style="display: flex; justify-content: space-between; align-items: center; background: #f0f2f5; padding: 10px 16px; border-radius: 20px; margin: 12px 0;">
+    <div class="services" style="text-align:center;">
+      <i class="fas fa-user-shield" style="font-size:50px;color:#8A1538;"></i>
+      <h6 style="font-size:16px;margin-top:8px;">admin@pnb.com</h6>
+      
+      <div style="display:flex;justify-content:space-between;align-items:center;background:#f0f2f5;padding:10px 16px;border-radius:20px;margin:12px 0;font-size:15px;">
         <span><i class="fas fa-fingerprint"></i> Fingerprint</span>
-        <label style="position: relative; display: inline-block; width: 46px; height: 24px;">
-          <input type="checkbox" id="fpToggle" style="opacity: 0; width: 0; height: 0;">
-          <span style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #ccc; border-radius: 34px; transition: 0.3s;"></span>
-          <span style="position: absolute; content: ''; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s;"></span>
+        <label style="position:relative;display:inline-block;width:46px;height:24px;">
+          <input type="checkbox" id="fpToggle" style="opacity:0;width:0;height:0;" />
+          <span style="position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#ccc;border-radius:34px;transition:0.3s;"></span>
+          <span style="position:absolute;content:'';height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s;"></span>
         </label>
       </div>
-      <button class="btn-pnb mt-2" id="registerFpBtn" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2);"><i class="fas fa-fingerprint"></i> Register Fingerprint</button>
-      <button class="btn-pnb mt-2" id="changeTpinBtn" style="background: #c0392b;"><i class="fas fa-key"></i> Change TPIN</button>
-      <button class="btn-pnb mt-2" id="exportCsvBtn" style="background: #2e7d32;"><i class="fas fa-file-csv"></i> Export CSV</button>
-      <button class="btn-pnb mt-2" id="addSampleBtn" style="background: #2196F3;"><i class="fas fa-plus-circle"></i> Add Sample Data</button>
-      <button class="btn-pnb mt-2" id="clearDataBtn" style="background: #d32f2f;"><i class="fas fa-trash"></i> Clear All Data</button>
-      <div style="font-size: 11px; color: #999; margin-top: 16px;">Version 4.0<br>© 2026 PNB Shoaib CSC</div>
+      
+      <button class="btn-pnb mt-2" id="registerFpBtn" style="background:linear-gradient(135deg,#9C27B0,#7B1FA2);font-size:15px;">
+        <i class="fas fa-fingerprint"></i> Register Fingerprint
+      </button>
+      
+      <button class="btn-pnb mt-2" id="changeTpinBtn" style="background:#c0392b;font-size:15px;">
+        <i class="fas fa-key"></i> Change TPIN
+      </button>
+      
+      <div style="font-size:13px;color:#999;margin-top:16px;">Version 5.0 (Firebase)<br />© 2026 PNB Shoaib CSC</div>
     </div>
   </div>
 
@@ -243,25 +290,18 @@
   <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header"><h6><i class="fas fa-user-plus"></i> Add Customer</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+        <div class="modal-header"><h6><i class="fas fa-user-plus"></i> Add PNB Account</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
         <div class="modal-body">
           <form id="addForm">
-            <select class="form-control" id="addService" required>
-              <option value="">Select Service</option>
-              <option value="pnb_account">PNB Account</option>
-              <option value="passport">Passport</option>
-              <option value="epfo">EPFO</option>
-              <option value="aadhaar">Aadhaar</option>
-              <option value="pan">PAN Card</option>
-              <option value="esarvish">eSarvish</option>
-              <option value="license">Driving License</option>
-            </select>
-            <input class="form-control" placeholder="Full Name" id="addName" required>
-            <input class="form-control" placeholder="Father's Name" id="addFather">
-            <input class="form-control" placeholder="Mobile Number" id="addMobile" maxlength="10">
-            <input class="form-control" placeholder="Service Number" id="addServiceNo">
-            <input class="form-control" placeholder="Extra Number (Aadhar/Account)" id="addExtraNo">
-            <input class="form-control" placeholder="Password" id="addPassword">
+            <div style="border:2px solid #8A1538; border-radius:12px; padding:12px; margin-bottom:8px;">
+              <div style="font-size:13px; font-weight:700; color:#8A1538; margin-bottom:8px;">📋 PNB Account Details</div>
+              <input class="form-control" placeholder="Full Name *" id="addName" required />
+              <input class="form-control" placeholder="Father's Name *" id="addFather" required />
+              <input class="form-control" placeholder="Mobile Number *" id="addMobile" maxlength="10" required />
+              <input class="form-control" placeholder="Account Number *" id="addServiceNo" required />
+              <input class="form-control" placeholder="Aadhaar Number (12 digits)" id="addExtraNo" maxlength="14" />
+              <input class="form-control" placeholder="Password (Optional)" id="addPassword" />
+            </div>
             <button class="btn-pnb mt-2" type="submit">Save Customer</button>
           </form>
         </div>
@@ -273,16 +313,19 @@
   <div class="modal fade" id="editModal" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header"><h6><i class="fas fa-edit"></i> Edit Customer</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+        <div class="modal-header"><h6><i class="fas fa-edit"></i> Edit PNB Account</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
         <div class="modal-body">
           <form id="editForm">
-            <input type="hidden" id="editId">
-            <input class="form-control" placeholder="Full Name" id="editName" required>
-            <input class="form-control" placeholder="Father's Name" id="editFather">
-            <input class="form-control" placeholder="Mobile Number" id="editMobile" maxlength="10">
-            <input class="form-control" placeholder="Service Number" id="editServiceNo">
-            <input class="form-control" placeholder="Extra Number" id="editExtraNo">
-            <input class="form-control" placeholder="Password" id="editPassword">
+            <input type="hidden" id="editId" />
+            <div style="border:2px solid #8A1538; border-radius:12px; padding:12px; margin-bottom:8px;">
+              <div style="font-size:13px; font-weight:700; color:#8A1538; margin-bottom:8px;">📋 PNB Account Details</div>
+              <input class="form-control" placeholder="Full Name *" id="editName" required />
+              <input class="form-control" placeholder="Father's Name *" id="editFather" required />
+              <input class="form-control" placeholder="Mobile Number *" id="editMobile" maxlength="10" required />
+              <input class="form-control" placeholder="Account Number *" id="editServiceNo" required />
+              <input class="form-control" placeholder="Aadhaar Number" id="editExtraNo" maxlength="14" />
+              <input class="form-control" placeholder="Password" id="editPassword" />
+            </div>
             <button class="btn-pnb mt-2" type="submit">Update</button>
           </form>
         </div>
@@ -297,9 +340,9 @@
         <div class="modal-header"><h6><i class="fas fa-key"></i> Change TPIN</h6><button class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
         <div class="modal-body">
           <form id="tpinForm">
-            <input class="form-control" placeholder="Current TPIN (4 digits)" id="oldTpin" maxlength="4" type="password">
-            <input class="form-control" placeholder="New TPIN (4 digits)" id="newTpin" maxlength="4" type="password">
-            <input class="form-control" placeholder="Confirm New TPIN" id="confirmTpin" maxlength="4" type="password">
+            <input class="form-control" placeholder="Current TPIN (4 digits)" id="oldTpin" maxlength="4" type="password" />
+            <input class="form-control" placeholder="New TPIN (4 digits)" id="newTpin" maxlength="4" type="password" />
+            <input class="form-control" placeholder="Confirm New TPIN" id="confirmTpin" maxlength="4" type="password" />
             <button class="btn-pnb mt-2" type="submit">Update TPIN</button>
           </form>
         </div>
@@ -309,738 +352,1048 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-(function() {
-  'use strict';
 
-  // ===================== CONFIG =====================
-  let TPIN = '1234';
-  let fpEnabled = false;
-  let customers = [];
-  let currentFilter = 'all';
-  let chartInstance = null;
-  let isEditMode = false;
-
-  // ===================== FIX: CORRECT DATA STRUCTURE =====================
-  function getDefaultCustomers() {
-    return [
-      { id: '1', name: 'RAHUL KUMAR', father: 'RAMESH KUMAR', mobile: '9876543210', serviceType: 'pnb_account', serviceNo: '1234567890', extraNo: '123456789012', password: 'rahul123' },
-      { id: '2', name: 'PRIYA SINGH', father: 'RAJ SINGH', mobile: '9876543211', serviceType: 'passport', serviceNo: 'P1234567', extraNo: '', password: 'priya123' },
-      { id: '3', name: 'AMIT SHAH', father: 'SURESH SHAH', mobile: '9876543212', serviceType: 'epfo', serviceNo: 'EP123456', extraNo: '', password: 'amit123' },
-      { id: '4', name: 'NEHA GUPTA', father: 'RAVI GUPTA', mobile: '9876543213', serviceType: 'aadhaar', serviceNo: '123456789012', extraNo: '', password: 'neha123' },
-      { id: '5', name: 'VIKRAM REDDY', father: 'KRISHNA REDDY', mobile: '9876543214', serviceType: 'pan', serviceNo: 'PAN12345', extraNo: '', password: 'vikram123' },
-      { id: '6', name: 'MEERA JOSHI', father: 'MOHAN JOSHI', mobile: '9876543215', serviceType: 'esarvish', serviceNo: 'ES123456', extraNo: '', password: 'meera123' },
-      { id: '7', name: 'SURAJ YADAV', father: 'RAM YADAV', mobile: '9876543216', serviceType: 'license', serviceNo: 'DL123456', extraNo: '', password: 'suraj123' }
-    ];
+<!-- Firebase SDKs -->
+<script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js"
   }
+}
+</script>
 
-  // ===================== LOAD DATA =====================
+<script type="module">
+import { initializeApp } from 'firebase/app';
+import {
+  getFirestore,
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+  deleteDoc,
+  onSnapshot,
+  query,
+  setDoc,
+  writeBatch
+} from 'firebase/firestore';
+
+// ===================== FIREBASE CONFIG =====================
+const firebaseConfig = {
+  apiKey: "AIzaSyBQAJym4PgqblkfMY7VKRWEMURG8GJ9vU4",
+  authDomain: "custumermanagement.firebaseapp.com",
+  projectId: "custumermanagement",
+  storageBucket: "custumermanagement.firebasestorage.app",
+  messagingSenderId: "520929530997",
+  appId: "1:520929530997:web:46bb12e02c0d4bc2e9143c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const CUSTOMERS_COLLECTION = 'customers';
+
+// ===================== GLOBAL STATE =====================
+let TPIN = '1234';
+let fpEnabled = false;
+let customers = [];
+let chartInstance = null;
+let isOnline = navigator.onLine;
+let syncInProgress = false;
+let unsubscribeFirestore = null;
+let isLoading = false;
+
+// ===================== DOM REFS =====================
+const $ = id => document.getElementById(id);
+const authScreen = $('authScreen');
+const appContainer = $('appContainer');
+const tpinInput = $('tpinInput');
+const authStatus = $('authStatus');
+const exitDialog = $('exitDialog');
+const servicesGrid = $('servicesGrid');
+const homeSearch = $('homeSearch');
+const allSearch = $('allSearch');
+const homeList = $('homeList');
+const allList = $('allList');
+const statsContent = $('statsContent');
+const syncStatus = $('syncStatus');
+const connectionBadge = $('connectionBadge');
+
+// ===================== UTILITY =====================
+function escape(s) { 
+  if (!s) return ''; 
+  return String(s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[m] || m); 
+}
+
+function formatAadhaar(a) { 
+  if (!a) return ''; 
+  const c = String(a).replace(/\s/g, ''); 
+  if (c.length === 12) return `${c.slice(0,4)} ${c.slice(4,8)} ${c.slice(8,12)}`; 
+  return c; 
+}
+
+function getDisplayValue(val) {
+  if (val === undefined || val === null || val === '' || val === 'undefined' || val === 'null') {
+    return `<span class="empty-value">N/A</span>`;
+  }
+  return `<span class="has-value">${escape(val)}</span>`;
+}
+
+function serviceName() { return 'PNB Account'; }
+function serviceIcon() { return 'fa-university'; }
+
+function matchSearch(item, term) {
+  if (!term) return false;
+  const s = term.toLowerCase().trim();
+  const fields = [
+    item.name, item.fullName, item.full_name, item['Full Name'],
+    item.father, item.fatherName, item.fathersName, item.father_name, item['Father Name'], item["Father's Name"],
+    item.mobile, item.phone, item.mobileNumber, item.phoneNumber, item['Mobile Number'],
+    item.serviceNo, item.accountNumber, item.accountNo, item.account, item['Account Number'],
+    item.extraNo, item.aadhaar, item.aadhaarNo, item.aadhaarNumber, item.aadhar, item['Aadhaar Number']
+  ];
+  return fields.some(f => f && String(f).toLowerCase().includes(s));
+}
+
+function generateId() {
+  return Date.now().toString() + Math.random().toString(36).substr(2, 6);
+}
+
+function getDefaultCustomers() {
+  return [
+    { id: '1', name: 'ADITYA', father: 'MANGE RAM', mobile: '8433098603', serviceNo: '2506001700154687', extraNo: '327836167342', password: '' },
+    { id: '2', name: 'DANISH', father: '', mobile: '9756949025', serviceNo: '2506001700140000', extraNo: '370341564104', password: '' },
+    { id: '3', name: 'RAHUL KUMAR', father: 'RAMESH KUMAR', mobile: '9876543210', serviceNo: '1234567890', extraNo: '123456789012', password: 'rahul123' }
+  ];
+}
+
+// ===================== SAVE TO SESSION =====================
+function saveToSession() {
   try {
-    const savedData = sessionStorage.getItem('pnb_customers');
-    if (savedData) {
-      const parsed = JSON.parse(savedData);
+    sessionStorage.setItem('pnb_customers', JSON.stringify(customers));
+    sessionStorage.setItem('pnb_tpin', TPIN);
+    sessionStorage.setItem('pnb_fp', String(fpEnabled));
+  } catch (e) { console.log('Session save error'); }
+}
+
+function loadFromSession() {
+  try {
+    const saved = sessionStorage.getItem('pnb_customers');
+    if (saved) {
+      const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
         customers = parsed;
-      } else {
-        customers = getDefaultCustomers();
-      }
-    } else {
-      customers = getDefaultCustomers();
-      sessionStorage.setItem('pnb_customers', JSON.stringify(customers));
-    }
-    
-    const savedTpin = sessionStorage.getItem('pnb_tpin');
-    if (savedTpin) TPIN = savedTpin;
-    
-    const savedFp = sessionStorage.getItem('pnb_fp');
-    if (savedFp) fpEnabled = savedFp === 'true';
-    
-  } catch(e) {
-    console.log('Storage error, using default data');
-    customers = getDefaultCustomers();
-  }
-
-  // ===================== SAVE FUNCTION =====================
-  function saveData() {
-    try {
-      sessionStorage.setItem('pnb_customers', JSON.stringify(customers));
-      sessionStorage.setItem('pnb_tpin', TPIN);
-      sessionStorage.setItem('pnb_fp', String(fpEnabled));
-    } catch(e) {
-      console.log('Cannot save to sessionStorage');
-    }
-  }
-
-  // ===================== DOM REFS =====================
-  const $ = id => document.getElementById(id);
-  const authScreen = $('authScreen');
-  const appContainer = $('appContainer');
-  const tpinInput = $('tpinInput');
-  const authStatus = $('authStatus');
-  const exitDialog = $('exitDialog');
-  const servicesGrid = $('servicesGrid');
-  const homeSearch = $('homeSearch');
-  const allSearch = $('allSearch');
-  const homeList = $('homeList');
-  const allList = $('allList');
-  const filterContainer = $('filterContainer');
-  const statsContent = $('statsContent');
-
-  // ===================== UTILITY =====================
-  function escape(s) { if (!s) return ''; return String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m] || m); }
-  
-  function formatAadhaar(a) { if (!a) return ''; const c = String(a).replace(/\s/g, ''); if (c.length === 12) return `${c.slice(0,4)} ${c.slice(4,8)} ${c.slice(8,12)}`; return c; }
-  
-  function serviceName(st) {
-    const n = { pnb_account:'PNB Account', passport:'Passport', epfo:'EPFO', aadhaar:'Aadhaar', pan:'PAN Card', esarvish:'eSarvish', license:'Driving License' };
-    return n[st] || st;
-  }
-  
-  function serviceIcon(st) {
-    const i = { pnb_account:'fa-university', passport:'fa-passport', epfo:'fa-file-invoice', aadhaar:'fa-id-card', pan:'fa-credit-card', esarvish:'fa-globe', license:'fa-id-card-alt' };
-    return i[st] || 'fa-tag';
-  }
-  
-  function matchSearch(item, term) {
-    if (!term) return false;
-    const s = term.toLowerCase().trim();
-    const fields = [item.name, item.father, item.mobile, item.serviceNo, item.extraNo];
-    return fields.some(f => f && String(f).toLowerCase().includes(s));
-  }
-
-  // ===================== AUTH =====================
-  function unlockApp() {
-    sessionStorage.setItem('pnb_auth', 'true');
-    authScreen.style.display = 'none';
-    appContainer.style.display = 'block';
-    renderAll();
-  }
-
-  tpinInput.addEventListener('input', function() {
-    if (this.value.length === 4) {
-      if (this.value === TPIN) {
-        unlockApp();
-      } else {
-        authStatus.textContent = '❌ Wrong TPIN! (Default: 1234)';
-        authStatus.style.color = '#e74c3c';
-        this.value = '';
-        setTimeout(() => authStatus.textContent = '', 2000);
-      }
-    }
-  });
-
-  // Fingerprint
-  $('fingerprintBtn').addEventListener('click', async function() {
-    if (!fpEnabled) {
-      authStatus.textContent = '⚠️ Fingerprint disabled in Profile';
-      authStatus.style.color = '#f39c12';
-      setTimeout(() => authStatus.textContent = '', 2000);
-      return;
-    }
-    const savedId = sessionStorage.getItem('pnb_fp_id');
-    if (!savedId) {
-      authStatus.textContent = '⚠️ No fingerprint registered';
-      authStatus.style.color = '#f39c12';
-      setTimeout(() => authStatus.textContent = '', 2000);
-      return;
-    }
-    try {
-      if (!window.PublicKeyCredential) throw new Error('Not supported');
-      const challenge = new Uint8Array(32);
-      window.crypto.getRandomValues(challenge);
-      const assertion = await navigator.credentials.get({
-        publicKey: {
-          challenge: challenge,
-          allowCredentials: [{ id: Uint8Array.from(atob(savedId), c => c.charCodeAt(0)), type: 'public-key' }],
-          userVerification: 'required',
-          timeout: 60000,
-          rpId: window.location.hostname || 'localhost'
-        }
-      });
-      if (assertion) {
-        authStatus.textContent = '✅ Verified! Unlocking...';
-        authStatus.style.color = '#2ecc71';
-        setTimeout(unlockApp, 500);
-      }
-    } catch(e) {
-      authStatus.textContent = '❌ Fingerprint failed';
-      authStatus.style.color = '#e74c3c';
-      setTimeout(() => authStatus.textContent = '', 2000);
-    }
-  });
-
-  // Forgot TPIN
-  $('forgotBtn').addEventListener('click', async function() {
-    const questions = [
-      { q: 'What is your favorite color?', a: 'black' },
-      { q: 'What is your father\'s name?', a: 'akhlak' },
-      { q: 'What is your mother\'s name?', a: 'nafisha' }
-    ];
-    const { value: selected } = await Swal.fire({
-      title: 'Forgot TPIN?',
-      html: `<div>
-        ${questions.map((q, i) => `<div class="question-opt" data-idx="${i}"><i class="fas fa-question-circle" style="color:#8A1538;"></i> <strong>${q.q}</strong></div>`).join('')}
-        <input type="text" id="ansInput" class="swal2-input" placeholder="Your answer" style="display:none; margin-top:10px;">
-      </div>`,
-      showCancelButton: true,
-      confirmButtonText: 'Verify',
-      confirmButtonColor: '#8A1538',
-      didOpen: () => {
-        document.querySelectorAll('.question-opt').forEach(el => {
-          el.onclick = function() {
-            document.querySelectorAll('.question-opt').forEach(e => e.classList.remove('selected'));
-            this.classList.add('selected');
-            document.getElementById('ansInput').style.display = 'block';
-          };
-        });
-      },
-      preConfirm: () => {
-        const sel = document.querySelector('.question-opt.selected');
-        if (!sel) { Swal.showValidationMessage('Select a question'); return false; }
-        const ans = document.getElementById('ansInput').value.trim().toLowerCase();
-        if (!ans) { Swal.showValidationMessage('Enter your answer'); return false; }
-        const idx = parseInt(sel.dataset.idx);
-        if (ans !== questions[idx].a.toLowerCase()) { Swal.showValidationMessage('Wrong answer!'); return false; }
         return true;
       }
-    });
-    if (selected) {
-      const { value: newPin } = await Swal.fire({
-        title: 'New TPIN',
-        html: `<input type="password" id="np1" class="swal2-input" placeholder="New 4-digit TPIN" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">
-               <input type="password" id="np2" class="swal2-input" placeholder="Confirm" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">`,
-        confirmButtonText: 'Reset',
-        confirmButtonColor: '#8A1538',
-        preConfirm: () => {
-          const a = document.getElementById('np1').value;
-          const b = document.getElementById('np2').value;
-          if (!a || a.length !== 4 || !/^\d{4}$/.test(a)) { Swal.showValidationMessage('4 digits required'); return false; }
-          if (a !== b) { Swal.showValidationMessage('Mismatch'); return false; }
-          return a;
-        }
-      });
-      if (newPin) {
-        TPIN = newPin;
-        saveData();
-        Swal.fire({ icon: 'success', title: 'TPIN Reset!', text: `New TPIN: ${TPIN}`, confirmButtonColor: '#8A1538' });
-        tpinInput.value = '';
-        tpinInput.focus();
-      }
     }
-  });
+    return false;
+  } catch (e) { return false; }
+}
 
-  // Auto-login if session exists
-  if (sessionStorage.getItem('pnb_auth') === 'true') {
-    authScreen.style.display = 'none';
-    appContainer.style.display = 'block';
+// ===================== FIRESTORE OPERATIONS =====================
+
+function updateConnectionStatus(online) {
+  isOnline = online;
+  if (online) {
+    connectionBadge.textContent = '● Online';
+    connectionBadge.className = 'badge-cloud';
+  } else {
+    connectionBadge.textContent = '● Offline';
+    connectionBadge.className = 'badge-cloud badge-offline';
+  }
+}
+updateConnectionStatus(isOnline);
+
+function showSyncStatus(text, icon = 'fa-sync fa-spin') {
+  syncStatus.innerHTML = `<i class="fas ${icon}"></i> ${text}`;
+  syncStatus.classList.add('show');
+}
+
+function hideSyncStatus() {
+  syncStatus.classList.remove('show');
+}
+
+function normalizeCustomer(data) {
+  return {
+    id: data.id || generateId(),
+    name: data.name || data.fullName || data.full_name || data['Full Name'] || data['NAME'] || data['Name'] || '',
+    father: data.father || data.fatherName || data.fathersName || data.father_name || data['Father Name'] || data["Father's Name"] || data['FATHER'] || data['Father'] || '',
+    mobile: data.mobile || data.phone || data.mobileNumber || data.phoneNumber || data['Mobile Number'] || data['Phone'] || data['MOBILE'] || '',
+    serviceNo: data.serviceNo || data.accountNumber || data.accountNo || data.account || data['Account Number'] || data['AccountNo'] || data['ACCOUNT'] || data['ACCOUNT_NO'] || '',
+    extraNo: data.extraNo || data.aadhaar || data.aadhaarNo || data.aadhaarNumber || data.aadhar || data['Aadhaar Number'] || data['AadhaarNo'] || data['AADHAAR'] || '',
+    password: data.password || data.Password || '',
+    createdAt: data.createdAt || data.created || data['Created At'] || new Date().toISOString()
+  };
+}
+
+async function loadAllFromFirestore(showLoading = true) {
+  if (!isOnline) return false;
+  if (isLoading) return false;
+  isLoading = true;
+
+  try {
+    if (showLoading) showSyncStatus('Loading from cloud...');
+    
+    const q = query(collection(db, CUSTOMERS_COLLECTION));
+    const querySnapshot = await getDocs(q);
+    const firebaseData = [];
+    
+    querySnapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const normalized = normalizeCustomer({
+        id: docSnap.id,
+        ...data
+      });
+      firebaseData.push(normalized);
+    });
+
+    if (firebaseData.length > 0) {
+      customers = firebaseData;
+      saveToSession();
+      console.log(`✅ Loaded ${customers.length} records from Firestore`);
+      
+      if (showLoading) {
+        hideSyncStatus();
+        Swal.fire({ 
+          icon: 'success', 
+          title: `✅ ${customers.length} Records Loaded`,
+          timer: 1500,
+          showConfirmButton: false
+        });
+      }
+      
+      renderAll();
+      if (document.getElementById('page-stats').classList.contains('active')) renderStats();
+      return true;
+    } else {
+      if (customers.length === 0) {
+        customers = getDefaultCustomers();
+        saveToSession();
+        await pushAllToFirestore();
+      }
+      if (showLoading) hideSyncStatus();
+      return false;
+    }
+  } catch (error) {
+    console.error('Firestore load error:', error);
+    if (showLoading) {
+      hideSyncStatus();
+      Swal.fire({ icon: 'error', title: 'Load Failed', text: error.message, confirmButtonColor: '#8A1538' });
+    }
+    return false;
+  } finally {
+    isLoading = false;
+  }
+}
+
+async function pushAllToFirestore() {
+  if (!isOnline) {
+    Swal.fire({ icon: 'warning', title: 'Offline', text: 'Cannot sync while offline.', confirmButtonColor: '#8A1538' });
+    return false;
   }
 
-  // ===================== EXIT =====================
-  function showExit() { exitDialog.classList.add('show'); }
-  function hideExit() { exitDialog.classList.remove('show'); }
-  $('exitCancel').onclick = hideExit;
-  $('exitOk').onclick = function() {
-    hideExit();
-    Swal.fire({ icon: 'info', title: 'Goodbye!', timer: 1500, showConfirmButton: false }).then(() => {
-      window.close();
-      setTimeout(() => window.location.href = 'about:blank', 100);
+  if (customers.length === 0) {
+    Swal.fire({ icon: 'info', title: 'No Data', text: 'No records to sync.', confirmButtonColor: '#8A1538' });
+    return false;
+  }
+
+  try {
+    showSyncStatus(`Syncing ${customers.length} records...`);
+    const batch = writeBatch(db);
+    const colRef = collection(db, CUSTOMERS_COLLECTION);
+
+    const snapshot = await getDocs(colRef);
+    snapshot.forEach(docSnap => {
+      batch.delete(docSnap.ref);
     });
+
+    customers.forEach(c => {
+      const docRef = doc(colRef, c.id || generateId());
+      const data = { ...c };
+      if (!data.id) data.id = docRef.id;
+      batch.set(docRef, data);
+    });
+
+    await batch.commit();
+    console.log(`✅ Synced ${customers.length} records to Firestore`);
+    hideSyncStatus();
+    Swal.fire({ 
+      icon: 'success', 
+      title: '✅ Synced!', 
+      text: `${customers.length} records uploaded.`,
+      timer: 2000, 
+      showConfirmButton: false 
+    });
+    return true;
+  } catch (error) {
+    console.error('Firestore push error:', error);
+    hideSyncStatus();
+    Swal.fire({ icon: 'error', title: 'Sync Failed', text: error.message, confirmButtonColor: '#8A1538' });
+    return false;
+  }
+}
+
+async function addToFirestore(customer) {
+  if (!isOnline) return false;
+  try {
+    const docRef = doc(db, CUSTOMERS_COLLECTION, customer.id);
+    await setDoc(docRef, customer);
+    return true;
+  } catch (error) {
+    console.error('Add to Firestore error:', error);
+    return false;
+  }
+}
+
+async function updateInFirestore(customer) {
+  if (!isOnline) return false;
+  try {
+    const docRef = doc(db, CUSTOMERS_COLLECTION, customer.id);
+    await updateDoc(docRef, customer);
+    return true;
+  } catch (error) {
+    console.error('Update in Firestore error:', error);
+    return false;
+  }
+}
+
+async function deleteFromFirestore(customerId) {
+  if (!isOnline) return false;
+  try {
+    const docRef = doc(db, CUSTOMERS_COLLECTION, customerId);
+    await deleteDoc(docRef);
+    return true;
+  } catch (error) {
+    console.error('Delete from Firestore error:', error);
+    return false;
+  }
+}
+
+function setupRealtimeListener() {
+  if (unsubscribeFirestore) {
+    unsubscribeFirestore();
+    unsubscribeFirestore = null;
+  }
+
+  if (!isOnline) {
+    console.log('Offline: Real-time listener disabled');
+    return;
+  }
+
+  try {
+    const q = query(collection(db, CUSTOMERS_COLLECTION));
+    unsubscribeFirestore = onSnapshot(q, (snapshot) => {
+      if (syncInProgress || isLoading) return;
+
+      const firebaseData = [];
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const normalized = normalizeCustomer({
+          id: docSnap.id,
+          ...data
+        });
+        firebaseData.push(normalized);
+      });
+
+      const currentIds = customers.map(c => c.id).sort();
+      const fbIds = firebaseData.map(c => c.id).sort();
+      const changed = JSON.stringify(currentIds) !== JSON.stringify(fbIds) ||
+        JSON.stringify(customers) !== JSON.stringify(firebaseData);
+
+      if (changed && firebaseData.length > 0) {
+        console.log(`🔄 Real-time update: ${firebaseData.length} records`);
+        customers = firebaseData;
+        saveToSession();
+        renderAll();
+        if (document.getElementById('page-stats').classList.contains('active')) renderStats();
+        hideSyncStatus();
+      }
+    }, (error) => {
+      console.error('Real-time listener error:', error);
+    });
+
+    console.log('📡 Real-time listener active');
+  } catch (error) {
+    console.error('Listener setup error:', error);
+  }
+}
+
+// ===================== CORE CRUD FUNCTIONS =====================
+
+async function addCustomer(data) {
+  const newCustomer = {
+    id: generateId(),
+    name: data.name.toUpperCase(),
+    father: (data.father || '').toUpperCase(),
+    mobile: data.mobile || '',
+    serviceNo: data.serviceNo || '',
+    extraNo: data.extraNo || '',
+    password: data.password || '',
+    createdAt: new Date().toISOString()
   };
 
-  // ===================== RENDER FUNCTIONS =====================
-  function customerCard(c) {
-    const details = [];
-    if (c.serviceType === 'pnb_account') {
-      if (c.extraNo) details.push({ icon: 'fa-id-card', label: 'AADHAAR', value: formatAadhaar(c.extraNo) });
-      if (c.serviceNo) details.push({ icon: 'fa-university', label: 'ACCOUNT', value: c.serviceNo });
-    } else {
-      const label = { passport:'APPLICATION', epfo:'EPF NO', aadhaar:'AADHAAR', pan:'PAN NO', esarvish:'APPLICATION', license:'APPLICATION' };
-      if (c.serviceNo) details.push({ icon: 'fa-hashtag', label: label[c.serviceType] || 'SERVICE NO', value: c.serviceNo });
-    }
-    
-    let detailHtml = details.map(d => 
-      `<div class="detail-row"><i class="fas ${d.icon}"></i><b>${d.label}:</b><span>${escape(d.value)}</span></div>`
-    ).join('');
-    
-    if (c.password) {
-      detailHtml += `<div class="detail-row"><i class="fas fa-key"></i><b>PASSWORD:</b><span>${escape(c.password)}</span></div>`;
-    }
+  customers.unshift(newCustomer);
+  saveToSession();
+  renderAll();
 
-    return `<div class="customer-card" data-id="${c.id}">
-      <div class="detail-row"><i class="fas ${serviceIcon(c.serviceType)}"></i><b>SERVICE:</b><span>${serviceName(c.serviceType)}</span></div>
-      <div class="detail-row"><i class="fas fa-user"></i><b>NAME:</b><span>${escape(c.name)}</span></div>
-      <div class="detail-row"><i class="fas fa-users"></i><b>FATHER:</b><span>${escape(c.father || '')}</span></div>
-      <div class="detail-row"><i class="fas fa-phone"></i><b>MOBILE:</b><span>${escape(c.mobile || '')}</span></div>
-      ${detailHtml}
+  if (isOnline) {
+    syncInProgress = true;
+    await addToFirestore(newCustomer);
+    syncInProgress = false;
+  }
+
+  return newCustomer;
+}
+
+async function updateCustomer(id, data) {
+  const idx = customers.findIndex(c => c.id === id);
+  if (idx === -1) return null;
+
+  customers[idx] = {
+    ...customers[idx],
+    name: data.name.toUpperCase(),
+    father: (data.father || '').toUpperCase(),
+    mobile: data.mobile || '',
+    serviceNo: data.serviceNo || '',
+    extraNo: data.extraNo || '',
+    password: data.password || '',
+    updatedAt: new Date().toISOString()
+  };
+
+  saveToSession();
+  renderAll();
+
+  if (isOnline) {
+    syncInProgress = true;
+    await updateInFirestore(customers[idx]);
+    syncInProgress = false;
+  }
+
+  return customers[idx];
+}
+
+async function deleteCustomer(id) {
+  customers = customers.filter(c => c.id !== id);
+  saveToSession();
+  renderAll();
+
+  if (isOnline) {
+    syncInProgress = true;
+    await deleteFromFirestore(id);
+    syncInProgress = false;
+  }
+}
+
+// ===================== FINGERPRINT =====================
+
+async function registerFingerprint() {
+  if (!window.PublicKeyCredential) {
+    Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Fingerprint not supported on this device.', confirmButtonColor: '#8A1538' });
+    return;
+  }
+  try {
+    const challenge = new Uint8Array(32);
+    window.crypto.getRandomValues(challenge);
+    const credential = await navigator.credentials.create({
+      publicKey: {
+        challenge: challenge,
+        rp: { name: 'PNB Shoaib CSC', id: window.location.hostname || 'localhost' },
+        user: { id: new Uint8Array(16), name: 'pnb_user', displayName: 'PNB User' },
+        pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+        authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
+        timeout: 60000
+      }
+    });
+    if (credential && credential.rawId) {
+      const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+      sessionStorage.setItem('pnb_fp_id', credId);
+      Swal.fire({ icon: 'success', title: '✅ Fingerprint Registered!', confirmButtonColor: '#8A1538' });
+    }
+  } catch (e) {
+    Swal.fire({ icon: 'error', title: 'Registration Failed', text: e.message, confirmButtonColor: '#8A1538' });
+  }
+}
+
+// ===================== RENDER FUNCTIONS =====================
+
+function customerCard(c) {
+  const name = c.name || c.fullName || c.full_name || c["Full Name"] || c["NAME"] || c["Name"] || "";
+  const father = c.father || c.fatherName || c.fathersName || c.father_name || c["Father Name"] || c["Father's Name"] || c["FATHER"] || c["Father"] || "";
+  const mobile = c.mobile || c.phone || c.mobileNumber || c.phoneNumber || c["Mobile Number"] || c["Phone"] || c["MOBILE"] || "";
+  const serviceNo = c.serviceNo || c.accountNumber || c.accountNo || c.account || c["Account Number"] || c["AccountNo"] || c["ACCOUNT"] || c["ACCOUNT_NO"] || "";
+  const extraNo = c.extraNo || c.aadhaar || c.aadhaarNo || c.aadhaarNumber || c.aadhar || c["Aadhaar Number"] || c["AadhaarNo"] || c["AADHAAR"] || "";
+  const password = c.password || c.Password || "";
+
+  return `<div class="customer-card" data-id="${c.id}">
+      <div class="detail-row"><i class="fas fa-university"></i><b>SERVICE:</b><span>PNB Account</span></div>
+      <div class="detail-row"><i class="fas fa-user"></i><b>NAME:</b><span>${getDisplayValue(name)}</span></div>
+      <div class="detail-row"><i class="fas fa-users"></i><b>FATHER:</b><span>${getDisplayValue(father)}</span></div>
+      <div class="detail-row"><i class="fas fa-phone"></i><b>MOBILE:</b><span>${getDisplayValue(mobile)}</span></div>
+      <div class="detail-row"><i class="fas fa-id-card"></i><b>AADHAAR:</b><span>${extraNo ? getDisplayValue(formatAadhaar(extraNo)) : '<span class="empty-value">N/A</span>'}</span></div>
+      <div class="detail-row"><i class="fas fa-university"></i><b>ACCOUNT:</b><span>${getDisplayValue(serviceNo)}</span></div>
+      ${password ? `<div class="detail-row"><i class="fas fa-key"></i><b>PASSWORD:</b><span>${getDisplayValue(password)}</span></div>` : ''}
+      
+      <!-- ========== ACTIONS - WhatsApp Single Green Icon ========== -->
       <div class="actions">
-        <button class="action-btn btn-edit" data-id="${c.id}" data-name="${escape(c.name)}" data-father="${escape(c.father||'')}" data-mobile="${escape(c.mobile||'')}" data-serviceno="${escape(c.serviceNo||'')}" data-extrano="${escape(c.extraNo||'')}" data-password="${escape(c.password||'')}"><i class="fas fa-pen"></i></button>
-        <button class="action-btn btn-copy" data-copy="${c.mobile||''}"><i class="fas fa-copy"></i></button>
-        <a class="action-btn btn-wa" href="https://wa.me/91${c.mobile||''}" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a class="action-btn btn-call" href="tel:${c.mobile||''}"><i class="fas fa-phone"></i></a>
-        <button class="action-btn btn-download" data-id="${c.id}"><i class="fas fa-download"></i></button>
-        <button class="action-btn btn-delete" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+        <button class="action-btn btn-edit" data-id="${c.id}" data-name="${escape(name)}" data-father="${escape(father)}" data-mobile="${escape(mobile)}" data-serviceno="${escape(serviceNo)}" data-extrano="${escape(extraNo)}" data-password="${escape(password)}">
+          <i class="fas fa-pen"></i>
+        </button>
+
+        <button class="action-btn btn-copy" data-copy="${mobile}">
+          <i class="fas fa-copy"></i>
+        </button>
+
+        <a class="action-btn btn-wa" href="https://wa.me/91${mobile}" target="_blank" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <a class="action-btn btn-call" href="tel:${mobile}" aria-label="Call">
+          <i class="fas fa-phone"></i>
+        </a>
+
+        <button class="action-btn btn-download" data-id="${c.id}">
+          <i class="fas fa-download"></i>
+        </button>
+
+        <button class="action-btn btn-delete" data-id="${c.id}">
+          <i class="fas fa-trash"></i>
+        </button>
       </div>
     </div>`;
-  }
+}
 
-  function renderHome() {
-    const term = homeSearch.value || '';
-    let list = [];
-    if (term.trim()) list = customers.filter(c => matchSearch(c, term));
-    homeList.innerHTML = !term.trim() ? '<div class="no-data"><i class="fas fa-keyboard"></i>Type to search</div>' :
-      list.length === 0 ? '<div class="no-data"><i class="fas fa-search"></i>No match</div>' :
-      list.map(c => customerCard(c)).join('');
-    attachEvents();
-  }
+function renderHome() {
+  const term = homeSearch.value || '';
+  let list = [];
+  if (term.trim()) list = customers.filter(c => matchSearch(c, term));
+  homeList.innerHTML = customers.length === 0 ? 
+    '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>' :
+    !term.trim() ? `<div class="no-data"><i class="fas fa-keyboard"></i>Type to search (${customers.length} records)</div>` :
+    list.length === 0 ? '<div class="no-data"><i class="fas fa-search"></i>No match</div>' :
+    list.map(c => customerCard(c)).join('');
+  attachEvents();
+}
 
-  function renderAllList() {
-    const term = allSearch.value || '';
-    let list = customers;
-    if (term.trim()) list = list.filter(c => matchSearch(c, term));
-    if (currentFilter !== 'all') list = list.filter(c => c.serviceType === currentFilter);
-    allList.innerHTML = list.length === 0 ? '<div class="no-data"><i class="fas fa-database"></i>No records</div>' :
-      list.map(c => customerCard(c)).join('');
-    attachEvents();
-  }
+function renderAllList() {
+  const term = allSearch.value || '';
+  let list = customers;
+  if (term.trim()) list = list.filter(c => matchSearch(c, term));
+  allList.innerHTML = customers.length === 0 ?
+    '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>' :
+    list.length === 0 ? '<div class="no-data"><i class="fas fa-database"></i>No records</div>' :
+    list.map(c => customerCard(c)).join('');
+  attachEvents();
+}
 
-  function renderStats() {
-    const counts = { pnb_account:0, passport:0, epfo:0, aadhaar:0, pan:0, esarvish:0, license:0 };
-    customers.forEach(c => { if (counts[c.serviceType] !== undefined) counts[c.serviceType]++; });
-    const total = customers.length;
-    const withMobile = customers.filter(c => c.mobile && c.mobile.length === 10).length;
-    const withService = customers.filter(c => c.serviceNo).length;
-    
-    statsContent.innerHTML = `
+function renderStats() {
+  const total = customers.length;
+  const withMobile = customers.filter(c => c.mobile && c.mobile.length >= 10).length;
+  const withService = customers.filter(c => c.serviceNo && c.serviceNo !== 'NA' && c.serviceNo !== '' && c.serviceNo !== 'N/A').length;
+  const withAadhaar = customers.filter(c => c.extraNo && c.extraNo.length >= 12).length;
+  const withFather = customers.filter(c => c.father && c.father !== 'NOT PROVIDED' && c.father !== '' && c.father !== 'N/A').length;
+
+  statsContent.innerHTML = `
       <div class="stats-grid">
-        <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total</div></div>
+        <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total Accounts</div></div>
         <div class="stat-card"><div class="stat-value">${withMobile}</div><div class="stat-label">With Mobile</div></div>
-        <div class="stat-card"><div class="stat-value">${withService}</div><div class="stat-label">With Service No</div></div>
-        <div class="stat-card"><div class="stat-value">${Object.values(counts).reduce((a,b)=>a+b,0) - counts.pnb_account}</div><div class="stat-label">Applications</div></div>
+        <div class="stat-card"><div class="stat-value">${withService}</div><div class="stat-label">With Account No</div></div>
+        <div class="stat-card"><div class="stat-value">${withAadhaar}</div><div class="stat-label">With Aadhaar</div></div>
+      </div>
+      <div style="padding:0 12px;margin:10px 0;">
+        <div style="background:#f8f9fc;border-radius:12px;padding:10px;border:1px solid #e5c48d;">
+          <div style="font-size:13px;font-weight:700;color:#8A1538;margin-bottom:6px;">📊 Data Completeness</div>
+          <div style="display:flex;justify-content:space-between;padding:2px 0;font-size:13px;border-bottom:1px solid #f0e6ea;">
+            <span>👤 With Father's Name</span>
+            <span><strong>${withFather}</strong> (${Math.round(withFather/total*100)}%)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:2px 0;font-size:13px;border-bottom:1px solid #f0e6ea;">
+            <span>📱 With Mobile Number</span>
+            <span><strong>${withMobile}</strong> (${Math.round(withMobile/total*100)}%)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:2px 0;font-size:13px;border-bottom:1px solid #f0e6ea;">
+            <span>🏦 With Account Number</span>
+            <span><strong>${withService}</strong> (${Math.round(withService/total*100)}%)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:2px 0;font-size:13px;">
+            <span>🪪 With Aadhaar Number</span>
+            <span><strong>${withAadhaar}</strong> (${Math.round(withAadhaar/total*100)}%)</span>
+          </div>
+        </div>
       </div>
       <div class="chart-box"><canvas id="chart1"></canvas></div>
       <div class="chart-box"><canvas id="chart2"></canvas></div>
     `;
-    
-    const ctx1 = document.getElementById('chart1')?.getContext('2d');
-    const ctx2 = document.getElementById('chart2')?.getContext('2d');
-    if (ctx1) {
-      if (chartInstance) chartInstance.destroy();
-      chartInstance = new Chart(ctx1, {
-        type: 'doughnut',
-        data: {
-          labels: ['PNB Account','Passport','EPFO','Aadhaar','PAN','eSarvish','License'],
-          datasets: [{ data: [counts.pnb_account, counts.passport, counts.epfo, counts.aadhaar, counts.pan, counts.esarvish, counts.license], backgroundColor: ['#8A1538','#e91e63','#ff9800','#4caf50','#2196f3','#9c27b0','#00bcd4'], borderWidth: 0 }]
-        },
-        options: { responsive: true, plugins: { legend: { position: 'bottom', labels: { font: { size: 10 } } } } }
-      });
-    }
-    if (ctx2) {
-      new Chart(ctx2, {
-        type: 'bar',
-        data: {
-          labels: ['With Mobile', 'Without Mobile'],
-          datasets: [{ label: 'Customers', data: [withMobile, total - withMobile], backgroundColor: ['#8A1538', '#e0e0e0'], borderRadius: 6 }]
-        },
-        options: { responsive: true, plugins: { legend: { position: 'top' } } }
-      });
-    }
-  }
 
-  function renderAll() {
-    renderHome();
-    renderAllList();
-    if (document.getElementById('page-stats').classList.contains('active')) renderStats();
-    saveData();
-  }
-
-  // ===================== EVENTS =====================
-  function attachEvents() {
-    // Edit
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-      btn.onclick = function() {
-        isEditMode = true;
-        $('editId').value = this.dataset.id;
-        $('editName').value = this.dataset.name || '';
-        $('editFather').value = this.dataset.father || '';
-        $('editMobile').value = this.dataset.mobile || '';
-        $('editServiceNo').value = this.dataset.serviceno || '';
-        $('editExtraNo').value = this.dataset.extrano || '';
-        $('editPassword').value = this.dataset.password || '';
-        new bootstrap.Modal($('editModal')).show();
-      };
-    });
-
-    // Delete
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.onclick = async function() {
-        const result = await Swal.fire({ title: 'Delete?', text: 'This cannot be undone.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Delete' });
-        if (result.isConfirmed) {
-          customers = customers.filter(c => c.id !== this.dataset.id);
-          renderAll();
-          Swal.fire({ icon: 'success', title: 'Deleted!', timer: 1500, showConfirmButton: false });
-        }
-      };
-    });
-
-    // Copy
-    document.querySelectorAll('.btn-copy').forEach(btn => {
-      btn.onclick = function() {
-        const text = this.dataset.copy || '';
-        navigator.clipboard.writeText(text).then(() => {
-          Swal.fire({ toast: true, icon: 'success', title: '📋 Copied!', timer: 1500, showConfirmButton: false, position: 'top-end' });
-        }).catch(() => {
-          const ta = document.createElement('textarea');
-          ta.value = text;
-          document.body.appendChild(ta);
-          ta.select();
-          document.execCommand('copy');
-          document.body.removeChild(ta);
-          Swal.fire({ toast: true, icon: 'success', title: '📋 Copied!', timer: 1500, showConfirmButton: false, position: 'top-end' });
-        });
-      };
-    });
-
-    // Download
-    document.querySelectorAll('.btn-download').forEach(btn => {
-      btn.onclick = function() {
-        const c = customers.find(x => x.id === this.dataset.id);
-        if (!c) return;
-        const now = new Date();
-        const date = `${now.getDate().toString().padStart(2,'0')}-${(now.getMonth()+1).toString().padStart(2,'0')}-${now.getFullYear()}`;
-        let report = '';
-        report += '═══════════════════════════════════════════════════════\n';
-        report += '              PNB SHOAIB CSC                          \n';
-        report += '           CUSTOMER DETAILS REPORT                    \n';
-        report += '═══════════════════════════════════════════════════════\n\n';
-        report += `  SERVICE    : ${serviceName(c.serviceType)}\n`;
-        report += `  NAME       : ${c.name || 'N/A'}\n`;
-        report += `  FATHER     : ${c.father || 'N/A'}\n`;
-        report += `  MOBILE     : ${c.mobile || 'N/A'}\n`;
-        if (c.serviceNo) report += `  SERVICE NO : ${c.serviceNo}\n`;
-        if (c.extraNo) report += `  EXTRA NO   : ${c.extraNo}\n`;
-        if (c.password) report += `  PASSWORD   : ${c.password}\n`;
-        report += `  DATE       : ${date}\n`;
-        report += '\n═══════════════════════════════════════════════════════\n';
-        report += '              PNB Shoaib CSC Center                    \n';
-        report += '═══════════════════════════════════════════════════════\n';
-        
-        const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `${(c.name || 'Customer').replace(/[^a-z0-9]/gi, '_')}_Details.txt`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        Swal.fire({ icon: 'success', title: '✅ Downloaded!', timer: 2000, showConfirmButton: false });
-      };
-    });
-  }
-
-  // ===================== ADD SAMPLE DATA =====================
-  function addSampleData() {
-    const samples = getDefaultCustomers();
-    let added = 0;
-    samples.forEach(s => {
-      const exists = customers.some(c => c.name === s.name && c.mobile === s.mobile);
-      if (!exists) {
-        customers.push({
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 3),
-          ...s
-        });
-        added++;
+  const ctx1 = document.getElementById('chart1')?.getContext('2d');
+  const ctx2 = document.getElementById('chart2')?.getContext('2d');
+  if (ctx1) {
+    if (chartInstance) chartInstance.destroy();
+    chartInstance = new Chart(ctx1, {
+      type: 'doughnut',
+      data: {
+        labels: ['With Aadhaar', 'Without Aadhaar'],
+        datasets: [{ 
+          data: [withAadhaar, total - withAadhaar], 
+          backgroundColor: ['#8A1538', '#e0e0e0'], 
+          borderWidth: 0 
+        }]
+      },
+      options: { 
+        responsive: true, 
+        plugins: { 
+          legend: { position: 'bottom', labels: { font: { size: 12 } } },
+          title: { display: true, text: `Total: ${total} PNB Accounts`, font: { size: 14 } }
+        } 
       }
     });
-    
-    renderAll();
-    Swal.fire({
-      icon: 'success',
-      title: '✅ Sample Data Added!',
-      text: `${added} new records added. Total: ${customers.length}`,
-      confirmButtonColor: '#8A1538',
-      timer: 2000
+  }
+  if (ctx2) {
+    new Chart(ctx2, {
+      type: 'bar',
+      data: {
+        labels: ['With Mobile', 'Without Mobile'],
+        datasets: [{ label: 'Customers', data: [withMobile, total - withMobile], backgroundColor: ['#8A1538', '#e0e0e0'], borderRadius: 6 }]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'top' } } }
     });
   }
+}
 
-  // ===================== INIT =====================
-  function initApp() {
-    // Services
-    const services = [
-      { id: 'pnb_account', icon: 'fa-university', name: 'Account' },
-      { id: 'epfo', icon: 'fa-file-invoice', name: 'ePFO' },
-      { id: 'aadhaar', icon: 'fa-id-card', name: 'Aadhaar' },
-      { id: 'pan', icon: 'fa-credit-card', name: 'PAN' },
-      { id: 'esarvish', icon: 'fa-globe', name: 'eSarvish' },
-      { id: 'license', icon: 'fa-id-card-alt', name: 'License' }
-    ];
-    servicesGrid.innerHTML = services.map(s => 
-      `<div class="service-btn" data-svc="${s.id}"><i class="fas ${s.icon}"></i><span>${s.name}</span></div>`
-    ).join('') + 
-    `<div class="service-btn full" data-svc="passport"><i class="fas fa-passport"></i><span>Passport</span></div>`;
+function renderAll() {
+  renderHome();
+  renderAllList();
+  if (document.getElementById('page-stats').classList.contains('active')) renderStats();
+  saveToSession();
+}
 
-    document.querySelectorAll('.service-btn').forEach(btn => {
-      btn.onclick = function() {
-        $('addService').value = this.dataset.svc;
-        new bootstrap.Modal($('addModal')).show();
-      };
+// ===================== EVENTS =====================
+
+function attachEvents() {
+  document.querySelectorAll('.btn-edit').forEach(btn => {
+    btn.onclick = function() {
+      $('editId').value = this.dataset.id;
+      $('editName').value = this.dataset.name || '';
+      $('editFather').value = this.dataset.father || '';
+      $('editMobile').value = this.dataset.mobile || '';
+      $('editServiceNo').value = this.dataset.serviceno || '';
+      $('editExtraNo').value = this.dataset.extrano || '';
+      $('editPassword').value = this.dataset.password || '';
+      new bootstrap.Modal($('editModal')).show();
+    };
+  });
+
+  document.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.onclick = async function() {
+      const result = await Swal.fire({ title: 'Delete?', text: 'This cannot be undone.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'Delete' });
+      if (result.isConfirmed) {
+        await deleteCustomer(this.dataset.id);
+        Swal.fire({ icon: 'success', title: 'Deleted!', timer: 1500, showConfirmButton: false });
+      }
+    };
+  });
+
+  document.querySelectorAll('.btn-copy').forEach(btn => {
+    btn.onclick = function() {
+      const text = this.dataset.copy || '';
+      navigator.clipboard.writeText(text).then(() => {
+        Swal.fire({ toast: true, icon: 'success', title: '📋 Copied!', timer: 1500, showConfirmButton: false, position: 'top-end' });
+      }).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        Swal.fire({ toast: true, icon: 'success', title: '📋 Copied!', timer: 1500, showConfirmButton: false, position: 'top-end' });
+      });
+    };
+  });
+
+  document.querySelectorAll('.btn-download').forEach(btn => {
+    btn.onclick = function() {
+      const c = customers.find(x => x.id === this.dataset.id);
+      if (!c) return;
+      const now = new Date();
+      const date = `${now.getDate().toString().padStart(2, '0')}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getFullYear()}`;
+      let report = '';
+      report += '═══════════════════════════════════════════════════════\n';
+      report += '              PNB SHOAIB CSC                          \n';
+      report += '           CUSTOMER DETAILS REPORT                    \n';
+      report += '═══════════════════════════════════════════════════════\n\n';
+      report += `  SERVICE      : PNB Account\n`;
+      report += `  NAME         : ${c.name || 'N/A'}\n`;
+      report += `  FATHER       : ${c.father || 'N/A'}\n`;
+      report += `  MOBILE       : ${c.mobile || 'N/A'}\n`;
+      report += `  AADHAAR      : ${c.extraNo || 'N/A'}\n`;
+      report += `  ACCOUNT      : ${c.serviceNo || 'N/A'}\n`;
+      report += `  PASSWORD     : ${c.password || 'N/A'}\n`;
+      report += `  DATE         : ${date}\n`;
+      report += '\n═══════════════════════════════════════════════════════\n';
+      report += '              PNB Shoaib CSC Center                    \n';
+      report += '═══════════════════════════════════════════════════════\n';
+
+      const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${(c.name || 'Customer').replace(/[^a-z0-9]/gi, '_')}_Details.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      Swal.fire({ icon: 'success', title: '✅ Downloaded!', timer: 2000, showConfirmButton: false });
+    };
+  });
+}
+
+// ===================== AUTH =====================
+
+function unlockApp() {
+  sessionStorage.setItem('pnb_auth', 'true');
+  authScreen.style.display = 'none';
+  appContainer.style.display = 'block';
+  initApp();
+}
+
+tpinInput.addEventListener('input', function() {
+  if (this.value.length === 4) {
+    if (this.value === TPIN) {
+      unlockApp();
+    } else {
+      authStatus.textContent = '❌ Wrong TPIN! (Default: 1234)';
+      authStatus.style.color = '#e74c3c';
+      this.value = '';
+      setTimeout(() => authStatus.textContent = '', 2000);
+    }
+  }
+});
+
+$('fingerprintBtn').addEventListener('click', async function() {
+  if (!fpEnabled) {
+    authStatus.textContent = '⚠️ Fingerprint disabled in Profile';
+    authStatus.style.color = '#f39c12';
+    setTimeout(() => authStatus.textContent = '', 2000);
+    return;
+  }
+  const savedId = sessionStorage.getItem('pnb_fp_id');
+  if (!savedId) {
+    authStatus.textContent = '⚠️ No fingerprint registered';
+    authStatus.style.color = '#f39c12';
+    setTimeout(() => authStatus.textContent = '', 2000);
+    return;
+  }
+  try {
+    if (!window.PublicKeyCredential) throw new Error('Not supported');
+    const challenge = new Uint8Array(32);
+    window.crypto.getRandomValues(challenge);
+    const assertion = await navigator.credentials.get({
+      publicKey: {
+        challenge: challenge,
+        allowCredentials: [{ id: Uint8Array.from(atob(savedId), c => c.charCodeAt(0)), type: 'public-key' }],
+        userVerification: 'required',
+        timeout: 60000,
+        rpId: window.location.hostname || 'localhost'
+      }
     });
+    if (assertion) {
+      authStatus.textContent = '✅ Verified! Unlocking...';
+      authStatus.style.color = '#2ecc71';
+      setTimeout(unlockApp, 500);
+    }
+  } catch (e) {
+    authStatus.textContent = '❌ Fingerprint failed';
+    authStatus.style.color = '#e74c3c';
+    setTimeout(() => authStatus.textContent = '', 2000);
+  }
+});
 
-    // Filters
-    const filters = [
-      { id: 'all', name: 'All', icon: 'fa-globe' },
-      { id: 'pnb_account', name: 'Account', icon: 'fa-university' },
-      { id: 'passport', name: 'Passport', icon: 'fa-passport' },
-      { id: 'epfo', name: 'EPFO', icon: 'fa-file-invoice' },
-      { id: 'aadhaar', name: 'Aadhaar', icon: 'fa-id-card' },
-      { id: 'pan', name: 'PAN', icon: 'fa-credit-card' },
-      { id: 'esarvish', name: 'eSarvish', icon: 'fa-globe' },
-      { id: 'license', name: 'License', icon: 'fa-id-card-alt' }
-    ];
-    filterContainer.innerHTML = filters.map(f =>
-      `<button class="filter-chip ${currentFilter === f.id ? 'active' : ''}" data-filter="${f.id}"><i class="fas ${f.icon}"></i> ${f.name}</button>`
-    ).join('');
-    document.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.onclick = function() {
-        currentFilter = this.dataset.filter;
-        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-        renderAllList();
-      };
+$('forgotBtn').addEventListener('click', async function() {
+  const questions = [
+    { q: 'What is your favorite color?', a: 'black' },
+    { q: 'What is your father\'s name?', a: 'akhlak' },
+    { q: 'What is your mother\'s name?', a: 'nafisha' }
+  ];
+  const { value: selected } = await Swal.fire({
+    title: 'Forgot TPIN?',
+    html: `<div>
+        ${questions.map((q, i) => `<div class="question-opt" data-idx="${i}"><i class="fas fa-question-circle" style="color:#8A1538;"></i> <strong>${q.q}</strong></div>`).join('')}
+        <input type="text" id="ansInput" class="swal2-input" placeholder="Your answer" style="display:none; margin-top:10px;">
+      </div>`,
+    showCancelButton: true,
+    confirmButtonText: 'Verify',
+    confirmButtonColor: '#8A1538',
+    didOpen: () => {
+      document.querySelectorAll('.question-opt').forEach(el => {
+        el.onclick = function() {
+          document.querySelectorAll('.question-opt').forEach(e => e.classList.remove('selected'));
+          this.classList.add('selected');
+          document.getElementById('ansInput').style.display = 'block';
+        };
+      });
+    },
+    preConfirm: () => {
+      const sel = document.querySelector('.question-opt.selected');
+      if (!sel) { Swal.showValidationMessage('Select a question'); return false; }
+      const ans = document.getElementById('ansInput').value.trim().toLowerCase();
+      if (!ans) { Swal.showValidationMessage('Enter your answer'); return false; }
+      const idx = parseInt(sel.dataset.idx);
+      if (ans !== questions[idx].a.toLowerCase()) { Swal.showValidationMessage('Wrong answer!'); return false; }
+      return true;
+    }
+  });
+  if (selected) {
+    const { value: newPin } = await Swal.fire({
+      title: 'New TPIN',
+      html: `<input type="password" id="np1" class="swal2-input" placeholder="New 4-digit TPIN" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">
+             <input type="password" id="np2" class="swal2-input" placeholder="Confirm" maxlength="4" style="text-align:center;font-size:22px;letter-spacing:8px;">`,
+      confirmButtonText: 'Reset',
+      confirmButtonColor: '#8A1538',
+      preConfirm: () => {
+        const a = document.getElementById('np1').value;
+        const b = document.getElementById('np2').value;
+        if (!a || a.length !== 4 || !/^\d{4}$/.test(a)) { Swal.showValidationMessage('4 digits required'); return false; }
+        if (a !== b) { Swal.showValidationMessage('Mismatch'); return false; }
+        return a;
+      }
     });
+    if (newPin) {
+      TPIN = newPin;
+      saveToSession();
+      Swal.fire({ icon: 'success', title: 'TPIN Reset!', text: `New TPIN: ${TPIN}`, confirmButtonColor: '#8A1538' });
+      tpinInput.value = '';
+      tpinInput.focus();
+    }
+  }
+});
 
-    // Search
-    homeSearch.addEventListener('input', renderHome);
-    allSearch.addEventListener('input', renderAllList);
-    $('clearHome').onclick = function() { homeSearch.value = ''; renderHome(); };
-    $('clearAll').onclick = function() { allSearch.value = ''; renderAllList(); };
+if (sessionStorage.getItem('pnb_auth') === 'true') {
+  authScreen.style.display = 'none';
+  appContainer.style.display = 'block';
+}
 
-    // FAB
-    $('fabBtn').onclick = function() {
-      isEditMode = false;
-      $('addForm').reset();
-      $('addService').value = '';
+// ===================== EXIT =====================
+
+function showExit() { exitDialog.classList.add('show'); }
+function hideExit() { exitDialog.classList.remove('show'); }
+$('exitCancel').onclick = hideExit;
+$('exitOk').onclick = function() {
+  hideExit();
+  Swal.fire({ icon: 'info', title: 'Goodbye!', timer: 1500, showConfirmButton: false }).then(() => {
+    window.close();
+    setTimeout(() => window.location.href = 'about:blank', 100);
+  });
+};
+
+// ===================== INIT APP =====================
+
+async function initApp() {
+  if (!loadFromSession()) {
+    customers = getDefaultCustomers();
+    saveToSession();
+  }
+
+  if (isOnline) {
+    await loadAllFromFirestore(true);
+    setupRealtimeListener();
+  } else {
+    renderAll();
+  }
+
+  servicesGrid.innerHTML = `
+    <div class="service-btn" data-svc="pnb_account" style="grid-column: span 2;">
+      <i class="fas fa-university"></i>
+      <span>Add PNB Account</span>
+    </div>
+  `;
+
+  document.querySelectorAll('.service-btn').forEach(btn => {
+    btn.onclick = function() {
       new bootstrap.Modal($('addModal')).show();
     };
+  });
 
-    // Add Form
-    $('addForm').onsubmit = function(e) {
-      e.preventDefault();
-      const serviceType = $('addService').value;
-      if (!serviceType) { Swal.fire({ icon: 'warning', title: 'Select Service', confirmButtonColor: '#8A1538' }); return; }
-      const name = $('addName').value.trim().toUpperCase();
-      const mobile = $('addMobile').value.trim();
-      if (!name || !mobile) { Swal.fire({ icon: 'warning', title: 'Name & Mobile required', confirmButtonColor: '#8A1538' }); return; }
-      
-      customers.push({
-        id: Date.now().toString() + Math.random().toString(36).substr(2, 3),
-        serviceType,
-        name,
-        father: $('addFather').value.trim().toUpperCase(),
-        mobile,
-        serviceNo: $('addServiceNo').value.trim(),
-        extraNo: $('addExtraNo').value.trim(),
-        password: $('addPassword').value.trim()
-      });
-      
-      renderAll();
-      bootstrap.Modal.getInstance($('addModal')).hide();
-      $('addForm').reset();
-      Swal.fire({ icon: 'success', title: '✅ Added!', timer: 1500, showConfirmButton: false });
-    };
+  homeSearch.addEventListener('input', renderHome);
+  allSearch.addEventListener('input', renderAllList);
+  $('clearHome').onclick = function() { homeSearch.value = ''; renderHome(); };
+  $('clearAll').onclick = function() { allSearch.value = ''; renderAllList(); };
 
-    // Edit Form
-    $('editForm').onsubmit = function(e) {
-      e.preventDefault();
-      const id = $('editId').value;
-      const idx = customers.findIndex(c => c.id === id);
-      if (idx === -1) return;
-      
-      customers[idx] = {
-        ...customers[idx],
-        name: $('editName').value.trim().toUpperCase(),
-        father: $('editFather').value.trim().toUpperCase(),
-        mobile: $('editMobile').value.trim(),
-        serviceNo: $('editServiceNo').value.trim(),
-        extraNo: $('editExtraNo').value.trim(),
-        password: $('editPassword').value.trim()
-      };
-      
-      renderAll();
-      bootstrap.Modal.getInstance($('editModal')).hide();
-      Swal.fire({ icon: 'success', title: '✅ Updated!', timer: 1500, showConfirmButton: false });
-    };
+  $('fabBtn').onclick = function() {
+    $('addForm').reset();
+    new bootstrap.Modal($('addModal')).show();
+  };
 
-    // TPIN Form
-    $('tpinForm').onsubmit = function(e) {
-      e.preventDefault();
-      const old = $('oldTpin').value;
-      const newp = $('newTpin').value;
-      const confirm = $('confirmTpin').value;
-      if (old !== TPIN) { Swal.fire({ icon: 'error', title: 'Wrong current TPIN', confirmButtonColor: '#8A1538' }); return; }
-      if (newp.length !== 4 || !/^\d{4}$/.test(newp)) { Swal.fire({ icon: 'error', title: '4 digits required', confirmButtonColor: '#8A1538' }); return; }
-      if (newp !== confirm) { Swal.fire({ icon: 'error', title: 'Mismatch', confirmButtonColor: '#8A1538' }); return; }
-      TPIN = newp;
-      saveData();
-      Swal.fire({ icon: 'success', title: '✅ TPIN Changed!', text: `New TPIN: ${TPIN}`, confirmButtonColor: '#8A1538' });
-      bootstrap.Modal.getInstance($('tpinModal')).hide();
-      $('tpinForm').reset();
-    };
-
-    // Profile buttons
-    $('changeTpinBtn').onclick = function() { new bootstrap.Modal($('tpinModal')).show(); };
-    $('registerFpBtn').onclick = registerFingerprint;
-    $('exportCsvBtn').onclick = exportCSV;
-    $('clearDataBtn').onclick = clearAllData;
-    $('addSampleBtn').onclick = addSampleData;
-
-    // Fingerprint Toggle
-    const fpToggle = $('fpToggle');
-    fpToggle.checked = fpEnabled;
-    fpToggle.onchange = function() {
-      fpEnabled = this.checked;
-      saveData();
-      Swal.fire({ toast: true, icon: 'success', title: fpEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled', timer: 1500, showConfirmButton: false, position: 'top-end' });
-    };
-
-    // Dark Mode
-    const darkToggle = $('darkToggle');
-    if (sessionStorage.getItem('pnb_dark') === 'true') {
-      document.body.classList.add('dark-mode');
-      darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  $('addForm').onsubmit = async function(e) {
+    e.preventDefault();
+    
+    const name = $('addName').value.trim().toUpperCase();
+    const father = $('addFather').value.trim().toUpperCase();
+    const mobile = $('addMobile').value.trim();
+    const serviceNo = $('addServiceNo').value.trim();
+    const extraNo = $('addExtraNo').value.trim().replace(/\s/g, '');
+    const password = $('addPassword').value.trim();
+    
+    if (!name || !father || !mobile || !serviceNo) { 
+      Swal.fire({ icon: 'warning', title: 'Required Fields', text: 'Name, Father, Mobile & Account are required', confirmButtonColor: '#8A1538' }); 
+      return; 
     }
-    darkToggle.onclick = function() {
-      document.body.classList.toggle('dark-mode');
-      const dark = document.body.classList.contains('dark-mode');
-      sessionStorage.setItem('pnb_dark', dark);
-      this.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+
+    await addCustomer({
+      name,
+      father,
+      mobile,
+      serviceNo,
+      extraNo,
+      password
+    });
+
+    bootstrap.Modal.getInstance($('addModal')).hide();
+    $('addForm').reset();
+    Swal.fire({ icon: 'success', title: '✅ Added!', timer: 1500, showConfirmButton: false });
+  };
+
+  $('editForm').onsubmit = async function(e) {
+    e.preventDefault();
+    const id = $('editId').value;
+    const name = $('editName').value.trim().toUpperCase();
+    const father = $('editFather').value.trim().toUpperCase();
+    const mobile = $('editMobile').value.trim();
+    const serviceNo = $('editServiceNo').value.trim();
+    const extraNo = $('editExtraNo').value.trim().replace(/\s/g, '');
+    const password = $('editPassword').value.trim();
+    
+    if (!name || !father || !mobile || !serviceNo) {
+      Swal.fire({ icon: 'warning', title: 'Required Fields', text: 'Name, Father, Mobile & Account are required', confirmButtonColor: '#8A1538' });
+      return;
+    }
+    
+    await updateCustomer(id, {
+      name,
+      father,
+      mobile,
+      serviceNo,
+      extraNo,
+      password
+    });
+    bootstrap.Modal.getInstance($('editModal')).hide();
+    Swal.fire({ icon: 'success', title: '✅ Updated!', timer: 1500, showConfirmButton: false });
+  };
+
+  $('tpinForm').onsubmit = function(e) {
+    e.preventDefault();
+    const old = $('oldTpin').value;
+    const newp = $('newTpin').value;
+    const confirm = $('confirmTpin').value;
+    if (old !== TPIN) { Swal.fire({ icon: 'error', title: 'Wrong current TPIN', confirmButtonColor: '#8A1538' }); return; }
+    if (newp.length !== 4 || !/^\d{4}$/.test(newp)) { Swal.fire({ icon: 'error', title: '4 digits required', confirmButtonColor: '#8A1538' }); return; }
+    if (newp !== confirm) { Swal.fire({ icon: 'error', title: 'Mismatch', confirmButtonColor: '#8A1538' }); return; }
+    TPIN = newp;
+    saveToSession();
+    Swal.fire({ icon: 'success', title: '✅ TPIN Changed!', text: `New TPIN: ${TPIN}`, confirmButtonColor: '#8A1538' });
+    bootstrap.Modal.getInstance($('tpinModal')).hide();
+    $('tpinForm').reset();
+  };
+
+  $('changeTpinBtn').onclick = function() { new bootstrap.Modal($('tpinModal')).show(); };
+  $('registerFpBtn').onclick = registerFingerprint;
+
+  const fpToggle = $('fpToggle');
+  fpToggle.checked = fpEnabled;
+  fpToggle.onchange = function() {
+    fpEnabled = this.checked;
+    saveToSession();
+    Swal.fire({ toast: true, icon: 'success', title: fpEnabled ? 'Fingerprint Enabled' : 'Fingerprint Disabled', timer: 1500, showConfirmButton: false, position: 'top-end' });
+  };
+
+  const darkToggle = $('darkToggle');
+  if (sessionStorage.getItem('pnb_dark') === 'true') {
+    document.body.classList.add('dark-mode');
+    darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+  darkToggle.onclick = function() {
+    document.body.classList.toggle('dark-mode');
+    const dark = document.body.classList.contains('dark-mode');
+    sessionStorage.setItem('pnb_dark', dark);
+    this.innerHTML = dark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+  };
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.onclick = function() {
+      const page = this.dataset.page;
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      if (page === 'stats') renderStats();
+      if (page === 'all') renderAllList();
+      if (page === 'home') renderHome();
+      history.pushState({ page: page }, '', window.location.href);
     };
+  });
 
-    // Tab navigation
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.onclick = function() {
-        const page = this.dataset.page;
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + page).classList.add('active');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        if (page === 'stats') renderStats();
-        if (page === 'all') renderAllList();
-        if (page === 'home') renderHome();
-        history.pushState({ page: page }, '', window.location.href);
-      };
-    });
+  window.addEventListener('popstate', function(e) {
+    if (e.state && e.state.page) {
+      const page = e.state.page;
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.page === page);
+      });
+      if (page === 'stats') renderStats();
+      if (page === 'all') renderAllList();
+      if (page === 'home') renderHome();
+    } else {
+      showExit();
+    }
+  });
+  history.pushState({ page: 'home' }, '', window.location.href);
 
-    // Back button
-    window.addEventListener('popstate', function(e) {
-      if (e.state && e.state.page) {
-        const page = e.state.page;
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById('page-' + page).classList.add('active');
-        document.querySelectorAll('.tab-btn').forEach(b => {
-          b.classList.toggle('active', b.dataset.page === page);
-        });
-        if (page === 'stats') renderStats();
-        if (page === 'all') renderAllList();
-        if (page === 'home') renderHome();
-      } else {
-        showExit();
-      }
-    });
-    history.pushState({ page: 'home' }, '', window.location.href);
-
-    // Initial render
+  window.addEventListener('online', async () => {
+    updateConnectionStatus(true);
+    Swal.fire({ toast: true, icon: 'success', title: '🟢 Online', timer: 1500, showConfirmButton: false, position: 'top-end' });
+    await loadAllFromFirestore(false);
+    setupRealtimeListener();
     renderAll();
-    if (document.getElementById('page-stats').classList.contains('active')) renderStats();
+  });
 
-    console.log('✅ PNB App Loaded!');
-    console.log(`📌 ${customers.length} customers`);
-    console.log('🔑 Default TPIN: 1234');
-  }
-
-  // ===================== FINGERPRINT REGISTER =====================
-  async function registerFingerprint() {
-    if (!window.PublicKeyCredential) {
-      Swal.fire({ icon: 'error', title: 'Not Supported', text: 'Fingerprint not supported on this device.', confirmButtonColor: '#8A1538' });
-      return;
+  window.addEventListener('offline', () => {
+    updateConnectionStatus(false);
+    Swal.fire({ toast: true, icon: 'warning', title: '🔴 Offline', timer: 1500, showConfirmButton: false, position: 'top-end' });
+    if (unsubscribeFirestore) {
+      unsubscribeFirestore();
+      unsubscribeFirestore = null;
     }
-    try {
-      const challenge = new Uint8Array(32);
-      window.crypto.getRandomValues(challenge);
-      const credential = await navigator.credentials.create({
-        publicKey: {
-          challenge: challenge,
-          rp: { name: 'PNB Shoaib CSC', id: window.location.hostname || 'localhost' },
-          user: { id: new Uint8Array(16), name: 'pnb_user', displayName: 'PNB User' },
-          pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
-          authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required' },
-          timeout: 60000
-        }
-      });
-      if (credential && credential.rawId) {
-        const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
-        sessionStorage.setItem('pnb_fp_id', credId);
-        Swal.fire({ icon: 'success', title: '✅ Fingerprint Registered!', confirmButtonColor: '#8A1538' });
-      }
-    } catch(e) {
-      Swal.fire({ icon: 'error', title: 'Registration Failed', text: e.message, confirmButtonColor: '#8A1538' });
-    }
-  }
+  });
 
-  // ===================== EXPORT CSV =====================
-  function exportCSV() {
-    if (customers.length === 0) {
-      Swal.fire({ icon: 'info', title: 'No Data', text: 'No records to export.', confirmButtonColor: '#8A1538' });
-      return;
-    }
-    let csv = 'S.No,Name,Father,Mobile,Service,Service No,Extra No,Password\n';
-    customers.forEach((c, i) => {
-      csv += `${i+1},"${c.name||''}","${c.father||''}","${c.mobile||''}","${serviceName(c.serviceType)}","${c.serviceNo||''}","${c.extraNo||''}","${c.password||''}"\n`;
-    });
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `PNB_Customers_${new Date().toISOString().slice(0,10)}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    Swal.fire({ icon: 'success', title: '✅ CSV Exported!', text: `${customers.length} records.`, timer: 2000, showConfirmButton: false });
-  }
+  renderAll();
+  if (document.getElementById('page-stats').classList.contains('active')) renderStats();
 
-  // ===================== CLEAR ALL =====================
-  async function clearAllData() {
-    const result = await Swal.fire({
-      title: 'Delete All Data?',
-      text: 'This will permanently delete all customer records!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, Delete All',
-      confirmButtonColor: '#d33'
-    });
-    if (result.isConfirmed) {
-      customers = [];
-      renderAll();
-      Swal.fire({ icon: 'success', title: 'All data cleared!', timer: 1500, showConfirmButton: false });
-    }
-  }
+  console.log('✅ PNB App Loaded with Firebase!');
+  console.log(`📌 ${customers.length} customers loaded`);
+  console.log(`🔗 Firestore: ${isOnline ? 'Connected' : 'Offline'}`);
+  console.log('🔑 Default TPIN: 1234');
+}
 
-  // ===================== START =====================
-  if (sessionStorage.getItem('pnb_auth') === 'true') {
+// ===================== START =====================
+
+if (sessionStorage.getItem('pnb_auth') === 'true') {
+  authScreen.style.display = 'none';
+  appContainer.style.display = 'block';
+  (async () => {
+    await initApp();
+  })();
+} else {
+  const originalUnlock = unlockApp;
+  unlockApp = function() {
+    sessionStorage.setItem('pnb_auth', 'true');
     authScreen.style.display = 'none';
     appContainer.style.display = 'block';
-    initApp();
-  } else {
-    const originalUnlock = unlockApp;
-    unlockApp = function() {
-      sessionStorage.setItem('pnb_auth', 'true');
-      authScreen.style.display = 'none';
-      appContainer.style.display = 'block';
-      initApp();
-    };
-    setTimeout(() => {
-      if (tpinInput) tpinInput.focus();
-    }, 500);
-  }
+    (async () => {
+      await initApp();
+    })();
+  };
+  setTimeout(() => {
+    if (tpinInput) tpinInput.focus();
+  }, 500);
+}
 
-})();
 </script>
 </body>
 </html>
