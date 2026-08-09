@@ -95,7 +95,6 @@
     .forgot-btn i { font-size:14px; }
     .auth-status { margin-top:8px; font-size:14px; min-height:24px; }
     
-    /* Fingerprint Toggle Switch */
     .toggle-switch { position:relative; display:inline-block; width:50px; height:26px; }
     .toggle-switch input { opacity:0; width:0; height:0; }
     .toggle-slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#ccc; border-radius:34px; transition:0.3s; }
@@ -259,7 +258,7 @@
         <i class="fas fa-key"></i> Change TPIN
       </button>
       
-      <div style="font-size:13px;color:#999;margin-top:16px;">Version 5.0 (Firebase)<br />© 2026 PNB Shoaib CSC</div>
+      <div style="font-size:13px;color:#999;margin-top:16px;">Version 5.1 (Firebase)<br />© 2026 PNB Shoaib CSC</div>
     </div>
   </div>
 
@@ -388,6 +387,7 @@ let isOnline = navigator.onLine;
 let syncInProgress = false;
 let unsubscribeFirestore = null;
 let isLoading = false;
+let searchTimeout = null;
 
 // ===================== DOM REFS =====================
 const $ = id => document.getElementById(id);
@@ -425,20 +425,24 @@ function getDisplayValue(val) {
   return `<span class="has-value">${escape(val)}</span>`;
 }
 
-function serviceName() { return 'PNB Account'; }
-function serviceIcon() { return 'fa-university'; }
-
 function matchSearch(item, term) {
-  if (!term) return false;
+  if (!term || term.trim() === '') return false;
   const s = term.toLowerCase().trim();
-  const fields = [
+  
+  // Create searchable fields array
+  const searchableFields = [
     item.name, item.fullName, item.full_name, item['Full Name'],
     item.father, item.fatherName, item.fathersName, item.father_name, item['Father Name'], item["Father's Name"],
     item.mobile, item.phone, item.mobileNumber, item.phoneNumber, item['Mobile Number'],
     item.serviceNo, item.accountNumber, item.accountNo, item.account, item['Account Number'],
     item.extraNo, item.aadhaar, item.aadhaarNo, item.aadhaarNumber, item.aadhar, item['Aadhaar Number']
   ];
-  return fields.some(f => f && String(f).toLowerCase().includes(s));
+  
+  // Check if any field contains the search term
+  return searchableFields.some(f => {
+    if (!f) return false;
+    return String(f).toLowerCase().includes(s);
+  });
 }
 
 function generateId() {
@@ -453,7 +457,7 @@ function getDefaultCustomers() {
   ];
 }
 
-// ===================== SAVE TO SESSION (UPDATED WITH LOCALSTORAGE) =====================
+// ===================== SAVE TO SESSION =====================
 function saveToSession() {
   try {
     sessionStorage.setItem('pnb_customers', JSON.stringify(customers));
@@ -778,36 +782,41 @@ async function deleteCustomer(id) {
   }
 }
 
-// ===================== FINGERPRINT - UPDATED WITH LOCALSTORAGE =====================
+// ===================== FINGERPRINT - FIXED =====================
 
 function isSecureContext() {
   const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const isHttps = window.location.protocol === 'https:';
   const isFile = window.location.protocol === 'file:';
+  const isGitHubPages = window.location.hostname.includes('github.io');
   
+  // Check if we're in a secure context
   if (isFile) {
     return false;
   }
   
-  return isHttps || isLocalhost;
+  // Allow localhost, HTTPS, and GitHub Pages
+  return isHttps || isLocalhost || isGitHubPages;
 }
 
 async function registerFingerprint() {
+  // Check if WebAuthn is supported
   if (!window.PublicKeyCredential) {
-    Swal.fire({ 
+    await Swal.fire({ 
       icon: 'error', 
       title: 'Not Supported', 
-      text: 'Fingerprint is not supported on this device. Please use TPIN.',
+      text: 'Fingerprint is not supported on this device or browser. Please use TPIN.',
       confirmButtonColor: '#8A1538' 
     });
     return;
   }
 
+  // Check if we're in a secure context
   if (!isSecureContext()) {
-    Swal.fire({ 
+    await Swal.fire({ 
       icon: 'error', 
       title: '⚠️ Secure Connection Required', 
-      html: 'Fingerprint requires <strong>HTTPS</strong> or <strong>localhost</strong>.<br><br>Current: <code>' + window.location.protocol + '//' + window.location.hostname + '</code>',
+      html: `Fingerprint requires <strong>HTTPS</strong> or <strong>localhost</strong>.<br><br>Current: <code>${window.location.protocol}//${window.location.hostname}</code>`,
       confirmButtonColor: '#8A1538' 
     });
     return;
@@ -815,37 +824,61 @@ async function registerFingerprint() {
 
   try {
     if (!navigator.credentials || !navigator.credentials.create) {
-      throw new Error('WebAuthn not supported');
+      throw new Error('WebAuthn API not available');
     }
+
+    // Show loading
+    Swal.fire({
+      title: '🔐 Registering Fingerprint',
+      text: 'Please touch the fingerprint sensor on your device...',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
 
     const challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
 
+    // Get hostname for RP ID
+    let rpId = window.location.hostname;
+    // For localhost, use localhost
+    if (rpId === 'localhost' || rpId === '127.0.0.1') {
+      rpId = 'localhost';
+    }
+
+    const publicKeyOptions = {
+      challenge: challenge,
+      rp: { 
+        name: 'PNB Shoaib CSC', 
+        id: rpId
+      },
+      user: { 
+        id: new Uint8Array(16), 
+        name: 'pnb_user', 
+        displayName: 'PNB User' 
+      },
+      pubKeyCredParams: [
+        { type: 'public-key', alg: -7 }, // ES256
+        { type: 'public-key', alg: -257 } // RS256
+      ],
+      authenticatorSelection: { 
+        authenticatorAttachment: 'platform',
+        userVerification: 'preferred',
+        residentKey: 'preferred'
+      },
+      timeout: 60000,
+      attestation: 'none'
+    };
+
+    console.log('WebAuthn registration options:', publicKeyOptions);
+
     const credential = await navigator.credentials.create({
-      publicKey: {
-        challenge: challenge,
-        rp: { 
-          name: 'PNB Shoaib CSC', 
-          id: window.location.hostname 
-        },
-        user: { 
-          id: new Uint8Array(16), 
-          name: 'pnb_user', 
-          displayName: 'PNB User' 
-        },
-        pubKeyCredParams: [
-          { type: 'public-key', alg: -7 },
-          { type: 'public-key', alg: -257 }
-        ],
-        authenticatorSelection: { 
-          authenticatorAttachment: 'platform', 
-          userVerification: 'required' 
-        },
-        timeout: 60000
-      }
+      publicKey: publicKeyOptions
     });
 
     if (credential && credential.rawId) {
+      // Store credential ID
       const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
       localStorage.setItem('pnb_fp_id', credId);
       
@@ -854,25 +887,40 @@ async function registerFingerprint() {
       document.getElementById('fpToggle').checked = true;
       saveToSession();
       
-      Swal.fire({ 
+      await Swal.fire({ 
         icon: 'success', 
         title: '✅ Fingerprint Registered!', 
         text: 'You can now login using fingerprint.',
         confirmButtonColor: '#8A1538' 
       });
+    } else {
+      throw new Error('Registration failed - no credential returned');
     }
   } catch (error) {
     console.error('Fingerprint registration error:', error);
-    Swal.fire({ 
+    
+    let errorMessage = error.message || 'Registration failed';
+    
+    // Provide more user-friendly messages
+    if (error.name === 'NotAllowedError') {
+      errorMessage = 'You cancelled the fingerprint prompt or it was blocked.';
+    } else if (error.name === 'NotSupportedError') {
+      errorMessage = 'Your device does not support fingerprint authentication.';
+    } else if (error.message && error.message.includes('authenticator')) {
+      errorMessage = 'No fingerprint sensor found. Please use TPIN instead.';
+    }
+    
+    await Swal.fire({ 
       icon: 'error', 
       title: 'Registration Failed', 
-      text: error.message || 'Please try again.',
+      text: errorMessage,
       confirmButtonColor: '#8A1538' 
     });
   }
 }
 
 async function authenticateWithFingerprint() {
+  // Check if we're in a secure context
   if (!isSecureContext()) {
     authStatus.textContent = '⚠️ HTTPS/localhost required for fingerprint';
     authStatus.style.color = '#f39c12';
@@ -897,26 +945,35 @@ async function authenticateWithFingerprint() {
   }
 
   try {
+    // Check WebAuthn support
     if (!window.PublicKeyCredential || !navigator.credentials || !navigator.credentials.get) {
-      throw new Error('Fingerprint not supported');
+      throw new Error('Fingerprint not supported on this device');
     }
+
+    authStatus.textContent = '🔐 Please touch fingerprint sensor...';
+    authStatus.style.color = '#2ecc71';
 
     const challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
 
+    // Decode stored credential ID
     const credentialId = Uint8Array.from(atob(savedId), c => c.charCodeAt(0));
 
+    const publicKeyOptions = {
+      challenge: challenge,
+      allowCredentials: [{
+        id: credentialId,
+        type: 'public-key'
+      }],
+      userVerification: 'preferred',
+      timeout: 30000,
+      rpId: window.location.hostname
+    };
+
+    console.log('WebAuthn authentication options:', publicKeyOptions);
+
     const assertion = await navigator.credentials.get({
-      publicKey: {
-        challenge: challenge,
-        allowCredentials: [{
-          id: credentialId,
-          type: 'public-key'
-        }],
-        userVerification: 'required',
-        timeout: 60000,
-        rpId: window.location.hostname
-      }
+      publicKey: publicKeyOptions
     });
 
     if (assertion) {
@@ -924,13 +981,22 @@ async function authenticateWithFingerprint() {
       authStatus.style.color = '#2ecc71';
       setTimeout(unlockApp, 500);
     } else {
-      throw new Error('Verification failed');
+      throw new Error('Verification failed - no assertion returned');
     }
   } catch (error) {
     console.error('Fingerprint authentication error:', error);
-    authStatus.textContent = '❌ Fingerprint failed: ' + (error.message || 'Please try again');
+    
+    let errorMessage = error.message || 'Authentication failed';
+    
+    if (error.name === 'NotAllowedError') {
+      errorMessage = 'Fingerprint authentication was cancelled or blocked.';
+    } else if (error.name === 'NotSupportedError') {
+      errorMessage = 'Fingerprint is not supported on this device.';
+    }
+    
+    authStatus.textContent = `❌ ${errorMessage}`;
     authStatus.style.color = '#e74c3c';
-    setTimeout(() => authStatus.textContent = '', 3000);
+    setTimeout(() => authStatus.textContent = '', 4000);
   }
 }
 
@@ -1115,26 +1181,47 @@ function customerCard(c) {
     </div>`;
 }
 
+// Debounced search to improve performance
+function debouncedSearch(fn, delay = 300) {
+  return function(...args) {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
 function renderHome() {
   const term = homeSearch.value || '';
   let list = [];
-  if (term.trim()) list = customers.filter(c => matchSearch(c, term));
-  homeList.innerHTML = customers.length === 0 ? 
-    '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>' :
-    !term.trim() ? `<div class="no-data"><i class="fas fa-keyboard"></i>Type to search (${customers.length} records)</div>` :
-    list.length === 0 ? '<div class="no-data"><i class="fas fa-search"></i>No match</div>' :
-    list.map(c => customerCard(c)).join('');
+  if (term.trim()) {
+    list = customers.filter(c => matchSearch(c, term));
+  }
+  
+  if (customers.length === 0) {
+    homeList.innerHTML = '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>';
+  } else if (!term.trim()) {
+    homeList.innerHTML = `<div class="no-data"><i class="fas fa-keyboard"></i>Type to search (${customers.length} records)</div>`;
+  } else if (list.length === 0) {
+    homeList.innerHTML = '<div class="no-data"><i class="fas fa-search"></i>No match found</div>';
+  } else {
+    homeList.innerHTML = list.map(c => customerCard(c)).join('');
+  }
   attachEvents();
 }
 
 function renderAllList() {
   const term = allSearch.value || '';
   let list = customers;
-  if (term.trim()) list = list.filter(c => matchSearch(c, term));
-  allList.innerHTML = customers.length === 0 ?
-    '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>' :
-    list.length === 0 ? '<div class="no-data"><i class="fas fa-database"></i>No records</div>' :
-    list.map(c => customerCard(c)).join('');
+  if (term.trim()) {
+    list = list.filter(c => matchSearch(c, term));
+  }
+  
+  if (customers.length === 0) {
+    allList.innerHTML = '<div class="no-data"><i class="fas fa-cloud-upload-alt"></i>No data. Click "Sync" to load from cloud.</div>';
+  } else if (list.length === 0) {
+    allList.innerHTML = '<div class="no-data"><i class="fas fa-database"></i>No records</div>';
+  } else {
+    allList.innerHTML = list.map(c => customerCard(c)).join('');
+  }
   attachEvents();
 }
 
@@ -1325,10 +1412,18 @@ async function initApp() {
     };
   });
 
-  homeSearch.addEventListener('input', renderHome);
-  allSearch.addEventListener('input', renderAllList);
-  $('clearHome').onclick = function() { homeSearch.value = ''; renderHome(); };
-  $('clearAll').onclick = function() { allSearch.value = ''; renderAllList(); };
+  // Debounced search for better performance
+  homeSearch.addEventListener('input', debouncedSearch(renderHome, 300));
+  allSearch.addEventListener('input', debouncedSearch(renderAllList, 300));
+  
+  $('clearHome').onclick = function() { 
+    homeSearch.value = ''; 
+    renderHome(); 
+  };
+  $('clearAll').onclick = function() { 
+    allSearch.value = ''; 
+    renderAllList(); 
+  };
 
   $('fabBtn').onclick = function() {
     $('addForm').reset();
