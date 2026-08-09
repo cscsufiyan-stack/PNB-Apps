@@ -35,6 +35,11 @@
       padding: 15px; 
       border: 2px solid #000000; 
       box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .detail-row { display:flex; align-items:center; background:#fafafa; border:1px solid #e5c48d; border-radius:10px; margin-bottom:8px; overflow:hidden; min-height:44px; }
@@ -161,6 +166,16 @@
       .actions { gap:6px; }
       .auth-card input { font-size:20px; letter-spacing:6px; padding:12px; }
     }
+    .search-highlight {
+      background: #ffeb3b;
+      padding: 0 2px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+    .dark-mode .search-highlight {
+      background: #ff6f00;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -218,7 +233,7 @@
     </div>
     <div class="search-box">
       <i class="fas fa-search"></i>
-      <input type="text" id="homeSearch" placeholder="Search by name, mobile..." />
+      <input type="text" id="homeSearch" placeholder="Search by name, mobile, account, aadhaar..." />
       <button class="clear-btn" id="clearHome"><i class="fas fa-times"></i></button>
     </div>
     <div id="homeList"></div>
@@ -258,7 +273,7 @@
         <i class="fas fa-key"></i> Change TPIN
       </button>
       
-      <div style="font-size:13px;color:#999;margin-top:16px;">Version 5.1 (Firebase)<br />© 2026 PNB Shoaib CSC</div>
+      <div style="font-size:13px;color:#999;margin-top:16px;">Version 5.2 (Firebase)<br />© 2026 PNB Shoaib CSC</div>
     </div>
   </div>
 
@@ -382,12 +397,14 @@ let TPIN = '1234';
 let fpEnabled = false;
 let fpRegistered = false;
 let customers = [];
+let filteredCustomers = [];
 let chartInstance = null;
 let isOnline = navigator.onLine;
 let syncInProgress = false;
 let unsubscribeFirestore = null;
 let isLoading = false;
 let searchTimeout = null;
+let currentSearchTerm = '';
 
 // ===================== DOM REFS =====================
 const $ = id => document.getElementById(id);
@@ -425,12 +442,19 @@ function getDisplayValue(val) {
   return `<span class="has-value">${escape(val)}</span>`;
 }
 
+function highlightText(text, term) {
+  if (!text || !term || term.trim() === '') return escape(text);
+  const regex = new RegExp(`(${escape(term)})`, 'gi');
+  return escape(text).replace(regex, '<span class="search-highlight">$1</span>');
+}
+
 function matchSearch(item, term) {
-  if (!term || term.trim() === '') return false;
+  if (!term || term.trim() === '') return true;
   const s = term.toLowerCase().trim();
+  if (s === '') return true;
   
-  // Create searchable fields array
-  const searchableFields = [
+  // Get all searchable fields as strings
+  const fields = [
     item.name, item.fullName, item.full_name, item['Full Name'],
     item.father, item.fatherName, item.fathersName, item.father_name, item['Father Name'], item["Father's Name"],
     item.mobile, item.phone, item.mobileNumber, item.phoneNumber, item['Mobile Number'],
@@ -438,11 +462,13 @@ function matchSearch(item, term) {
     item.extraNo, item.aadhaar, item.aadhaarNo, item.aadhaarNumber, item.aadhar, item['Aadhaar Number']
   ];
   
-  // Check if any field contains the search term
-  return searchableFields.some(f => {
-    if (!f) return false;
-    return String(f).toLowerCase().includes(s);
-  });
+  // Check each field
+  for (let field of fields) {
+    if (field && String(field).toLowerCase().includes(s)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function generateId() {
@@ -452,7 +478,7 @@ function generateId() {
 function getDefaultCustomers() {
   return [
     { id: '1', name: 'ADITYA', father: 'MANGE RAM', mobile: '8433098603', serviceNo: '2506001700154687', extraNo: '327836167342', password: '' },
-    { id: '2', name: 'DANISH', father: '', mobile: '9756949025', serviceNo: '2506001700140000', extraNo: '370341564104', password: '' },
+    { id: '2', name: 'DANISH', father: 'NOT PROVIDED', mobile: '9756949025', serviceNo: '2506001700140000', extraNo: '370341564104', password: '' },
     { id: '3', name: 'RAHUL KUMAR', father: 'RAMESH KUMAR', mobile: '9876543210', serviceNo: '1234567890', extraNo: '123456789012', password: 'rahul123' }
   ];
 }
@@ -474,6 +500,7 @@ function loadFromSession() {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
         customers = parsed;
+        filteredCustomers = [...customers];
       }
     }
     
@@ -547,6 +574,7 @@ async function loadAllFromFirestore(showLoading = true) {
 
     if (firebaseData.length > 0) {
       customers = firebaseData;
+      filteredCustomers = [...customers];
       saveToSession();
       console.log(`✅ Loaded ${customers.length} records from Firestore`);
       
@@ -566,6 +594,7 @@ async function loadAllFromFirestore(showLoading = true) {
     } else {
       if (customers.length === 0) {
         customers = getDefaultCustomers();
+        filteredCustomers = [...customers];
         saveToSession();
         await pushAllToFirestore();
       }
@@ -701,6 +730,7 @@ function setupRealtimeListener() {
       if (changed && firebaseData.length > 0) {
         console.log(`🔄 Real-time update: ${firebaseData.length} records`);
         customers = firebaseData;
+        filteredCustomers = [...customers];
         saveToSession();
         renderAll();
         if (document.getElementById('page-stats').classList.contains('active')) renderStats();
@@ -731,6 +761,7 @@ async function addCustomer(data) {
   };
 
   customers.unshift(newCustomer);
+  filteredCustomers = [...customers];
   saveToSession();
   renderAll();
 
@@ -758,6 +789,7 @@ async function updateCustomer(id, data) {
     updatedAt: new Date().toISOString()
   };
 
+  filteredCustomers = [...customers];
   saveToSession();
   renderAll();
 
@@ -772,6 +804,7 @@ async function updateCustomer(id, data) {
 
 async function deleteCustomer(id) {
   customers = customers.filter(c => c.id !== id);
+  filteredCustomers = [...customers];
   saveToSession();
   renderAll();
 
@@ -782,55 +815,59 @@ async function deleteCustomer(id) {
   }
 }
 
-// ===================== FINGERPRINT - FIXED =====================
+// ===================== FINGERPRINT - COMPLETELY REWRITTEN =====================
 
 function isSecureContext() {
-  const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const isHttps = window.location.protocol === 'https:';
-  const isFile = window.location.protocol === 'file:';
-  const isGitHubPages = window.location.hostname.includes('github.io');
-  
   // Check if we're in a secure context
-  if (isFile) {
-    return false;
+  return window.isSecureContext === true;
+}
+
+async function checkWebAuthnSupport() {
+  if (!window.PublicKeyCredential) {
+    return { supported: false, message: 'WebAuthn not supported by this browser' };
   }
   
-  // Allow localhost, HTTPS, and GitHub Pages
-  return isHttps || isLocalhost || isGitHubPages;
+  try {
+    // Check if platform authenticator is available
+    const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+    if (!available) {
+      return { supported: false, message: 'No fingerprint sensor found on this device' };
+    }
+    return { supported: true, message: 'Fingerprint supported' };
+  } catch (e) {
+    return { supported: false, message: 'Fingerprint authentication not available' };
+  }
 }
 
 async function registerFingerprint() {
-  // Check if WebAuthn is supported
-  if (!window.PublicKeyCredential) {
+  // Step 1: Check secure context
+  if (!isSecureContext()) {
     await Swal.fire({ 
       icon: 'error', 
-      title: 'Not Supported', 
-      text: 'Fingerprint is not supported on this device or browser. Please use TPIN.',
+      title: '⚠️ Secure Connection Required', 
+      html: `Fingerprint requires <strong>HTTPS</strong>.<br><br>Current: <code>${window.location.protocol}</code>`,
       confirmButtonColor: '#8A1538' 
     });
     return;
   }
 
-  // Check if we're in a secure context
-  if (!isSecureContext()) {
+  // Step 2: Check WebAuthn support
+  const support = await checkWebAuthnSupport();
+  if (!support.supported) {
     await Swal.fire({ 
       icon: 'error', 
-      title: '⚠️ Secure Connection Required', 
-      html: `Fingerprint requires <strong>HTTPS</strong> or <strong>localhost</strong>.<br><br>Current: <code>${window.location.protocol}//${window.location.hostname}</code>`,
+      title: 'Fingerprint Not Available', 
+      text: support.message,
       confirmButtonColor: '#8A1538' 
     });
     return;
   }
 
   try {
-    if (!navigator.credentials || !navigator.credentials.create) {
-      throw new Error('WebAuthn API not available');
-    }
-
     // Show loading
-    Swal.fire({
+    await Swal.fire({
       title: '🔐 Registering Fingerprint',
-      text: 'Please touch the fingerprint sensor on your device...',
+      text: 'Please touch the fingerprint sensor...',
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -840,32 +877,29 @@ async function registerFingerprint() {
     const challenge = new Uint8Array(32);
     window.crypto.getRandomValues(challenge);
 
-    // Get hostname for RP ID
-    let rpId = window.location.hostname;
-    // For localhost, use localhost
-    if (rpId === 'localhost' || rpId === '127.0.0.1') {
-      rpId = 'localhost';
-    }
+    // Get RP ID - use actual domain for security
+    const rpId = window.location.hostname;
+    console.log('RP ID:', rpId);
 
     const publicKeyOptions = {
       challenge: challenge,
       rp: { 
-        name: 'PNB Shoaib CSC', 
+        name: 'PNB Shoaib CSC',
         id: rpId
       },
       user: { 
-        id: new Uint8Array(16), 
-        name: 'pnb_user', 
-        displayName: 'PNB User' 
+        id: new TextEncoder().encode('pnb_user_' + Date.now()),
+        name: 'pnb_user@pnb.com',
+        displayName: 'PNB User'
       },
       pubKeyCredParams: [
-        { type: 'public-key', alg: -7 }, // ES256
+        { type: 'public-key', alg: -7 },  // ES256
         { type: 'public-key', alg: -257 } // RS256
       ],
       authenticatorSelection: { 
         authenticatorAttachment: 'platform',
-        userVerification: 'preferred',
-        residentKey: 'preferred'
+        residentKey: 'preferred',
+        userVerification: 'required'
       },
       timeout: 60000,
       attestation: 'none'
@@ -881,6 +915,7 @@ async function registerFingerprint() {
       // Store credential ID
       const credId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
       localStorage.setItem('pnb_fp_id', credId);
+      localStorage.setItem('pnb_fp_user', 'pnb_user');
       
       fpEnabled = true;
       fpRegistered = true;
@@ -894,20 +929,18 @@ async function registerFingerprint() {
         confirmButtonColor: '#8A1538' 
       });
     } else {
-      throw new Error('Registration failed - no credential returned');
+      throw new Error('Registration failed');
     }
   } catch (error) {
     console.error('Fingerprint registration error:', error);
     
-    let errorMessage = error.message || 'Registration failed';
-    
-    // Provide more user-friendly messages
+    let errorMessage = 'Registration failed. Please try again.';
     if (error.name === 'NotAllowedError') {
       errorMessage = 'You cancelled the fingerprint prompt or it was blocked.';
     } else if (error.name === 'NotSupportedError') {
       errorMessage = 'Your device does not support fingerprint authentication.';
-    } else if (error.message && error.message.includes('authenticator')) {
-      errorMessage = 'No fingerprint sensor found. Please use TPIN instead.';
+    } else if (error.message) {
+      errorMessage = error.message;
     }
     
     await Swal.fire({ 
@@ -920,14 +953,15 @@ async function registerFingerprint() {
 }
 
 async function authenticateWithFingerprint() {
-  // Check if we're in a secure context
+  // Step 1: Check secure context
   if (!isSecureContext()) {
-    authStatus.textContent = '⚠️ HTTPS/localhost required for fingerprint';
+    authStatus.textContent = '⚠️ HTTPS required for fingerprint';
     authStatus.style.color = '#f39c12';
     setTimeout(() => authStatus.textContent = '', 3000);
     return;
   }
 
+  // Step 2: Check if fingerprint is enabled
   if (!fpEnabled) {
     authStatus.textContent = '⚠️ Fingerprint is disabled. Enable it in Profile.';
     authStatus.style.color = '#f39c12';
@@ -935,8 +969,8 @@ async function authenticateWithFingerprint() {
     return;
   }
 
+  // Step 3: Check if registered
   const savedId = localStorage.getItem('pnb_fp_id');
-  
   if (!savedId) {
     authStatus.textContent = '⚠️ No fingerprint registered. Please register first.';
     authStatus.style.color = '#f39c12';
@@ -945,9 +979,13 @@ async function authenticateWithFingerprint() {
   }
 
   try {
-    // Check WebAuthn support
-    if (!window.PublicKeyCredential || !navigator.credentials || !navigator.credentials.get) {
-      throw new Error('Fingerprint not supported on this device');
+    // Step 4: Check WebAuthn support
+    const support = await checkWebAuthnSupport();
+    if (!support.supported) {
+      authStatus.textContent = `❌ ${support.message}`;
+      authStatus.style.color = '#e74c3c';
+      setTimeout(() => authStatus.textContent = '', 3000);
+      return;
     }
 
     authStatus.textContent = '🔐 Please touch fingerprint sensor...';
@@ -965,7 +1003,7 @@ async function authenticateWithFingerprint() {
         id: credentialId,
         type: 'public-key'
       }],
-      userVerification: 'preferred',
+      userVerification: 'required',
       timeout: 30000,
       rpId: window.location.hostname
     };
@@ -981,17 +1019,18 @@ async function authenticateWithFingerprint() {
       authStatus.style.color = '#2ecc71';
       setTimeout(unlockApp, 500);
     } else {
-      throw new Error('Verification failed - no assertion returned');
+      throw new Error('Verification failed');
     }
   } catch (error) {
     console.error('Fingerprint authentication error:', error);
     
-    let errorMessage = error.message || 'Authentication failed';
-    
+    let errorMessage = 'Authentication failed. Please try again.';
     if (error.name === 'NotAllowedError') {
       errorMessage = 'Fingerprint authentication was cancelled or blocked.';
     } else if (error.name === 'NotSupportedError') {
       errorMessage = 'Fingerprint is not supported on this device.';
+    } else if (error.message) {
+      errorMessage = error.message;
     }
     
     authStatus.textContent = `❌ ${errorMessage}`;
@@ -1138,9 +1177,9 @@ document.getElementById('forgotBtn').onclick = function(e) {
 
 window.forgotTPIN = forgotTPIN;
 
-// ===================== RENDER FUNCTIONS =====================
+// ===================== RENDER FUNCTIONS - OPTIMIZED =====================
 
-function customerCard(c) {
+function customerCard(c, term = '') {
   const name = c.name || c.fullName || c.full_name || c["Full Name"] || c["NAME"] || c["Name"] || "";
   const father = c.father || c.fatherName || c.fathersName || c.father_name || c["Father Name"] || c["Father's Name"] || c["FATHER"] || c["Father"] || "";
   const mobile = c.mobile || c.phone || c.mobileNumber || c.phoneNumber || c["Mobile Number"] || c["Phone"] || c["MOBILE"] || "";
@@ -1148,13 +1187,20 @@ function customerCard(c) {
   const extraNo = c.extraNo || c.aadhaar || c.aadhaarNo || c.aadhaarNumber || c.aadhar || c["Aadhaar Number"] || c["AadhaarNo"] || c["AADHAAR"] || "";
   const password = c.password || c.Password || "";
 
+  // Highlight search term in name and father
+  const displayName = term ? highlightText(name, term) : escape(name);
+  const displayFather = term ? highlightText(father, term) : escape(father);
+  const displayMobile = term && mobile ? highlightText(mobile, term) : escape(mobile);
+  const displayService = term && serviceNo ? highlightText(serviceNo, term) : escape(serviceNo);
+  const displayExtra = term && extraNo ? highlightText(formatAadhaar(extraNo), term) : (extraNo ? formatAadhaar(extraNo) : '');
+
   return `<div class="customer-card" data-id="${c.id}">
       <div class="detail-row"><i class="fas fa-university"></i><b>SERVICE:</b><span>PNB Account</span></div>
-      <div class="detail-row"><i class="fas fa-user"></i><b>NAME:</b><span>${getDisplayValue(name)}</span></div>
-      <div class="detail-row"><i class="fas fa-users"></i><b>FATHER:</b><span>${getDisplayValue(father)}</span></div>
-      <div class="detail-row"><i class="fas fa-phone"></i><b>MOBILE:</b><span>${getDisplayValue(mobile)}</span></div>
-      <div class="detail-row"><i class="fas fa-id-card"></i><b>AADHAAR:</b><span>${extraNo ? getDisplayValue(formatAadhaar(extraNo)) : '<span class="empty-value">N/A</span>'}</span></div>
-      <div class="detail-row"><i class="fas fa-university"></i><b>ACCOUNT:</b><span>${getDisplayValue(serviceNo)}</span></div>
+      <div class="detail-row"><i class="fas fa-user"></i><b>NAME:</b><span>${name ? `<span class="has-value">${displayName}</span>` : '<span class="empty-value">N/A</span>'}</span></div>
+      <div class="detail-row"><i class="fas fa-users"></i><b>FATHER:</b><span>${father ? `<span class="has-value">${displayFather}</span>` : '<span class="empty-value">N/A</span>'}</span></div>
+      <div class="detail-row"><i class="fas fa-phone"></i><b>MOBILE:</b><span>${mobile ? `<span class="has-value">${displayMobile}</span>` : '<span class="empty-value">N/A</span>'}</span></div>
+      <div class="detail-row"><i class="fas fa-id-card"></i><b>AADHAAR:</b><span>${extraNo ? `<span class="has-value">${displayExtra}</span>` : '<span class="empty-value">N/A</span>'}</span></div>
+      <div class="detail-row"><i class="fas fa-university"></i><b>ACCOUNT:</b><span>${serviceNo ? `<span class="has-value">${displayService}</span>` : '<span class="empty-value">N/A</span>'}</span></div>
       ${password ? `<div class="detail-row"><i class="fas fa-key"></i><b>PASSWORD:</b><span>${getDisplayValue(password)}</span></div>` : ''}
       
       <div class="actions">
@@ -1181,17 +1227,11 @@ function customerCard(c) {
     </div>`;
 }
 
-// Debounced search to improve performance
-function debouncedSearch(fn, delay = 300) {
-  return function(...args) {
-    clearTimeout(searchTimeout);
-    searchTimeout = setTimeout(() => fn.apply(this, args), delay);
-  };
-}
-
 function renderHome() {
   const term = homeSearch.value || '';
-  let list = [];
+  currentSearchTerm = term;
+  
+  let list = customers;
   if (term.trim()) {
     list = customers.filter(c => matchSearch(c, term));
   }
@@ -1203,13 +1243,15 @@ function renderHome() {
   } else if (list.length === 0) {
     homeList.innerHTML = '<div class="no-data"><i class="fas fa-search"></i>No match found</div>';
   } else {
-    homeList.innerHTML = list.map(c => customerCard(c)).join('');
+    homeList.innerHTML = list.map(c => customerCard(c, term)).join('');
   }
   attachEvents();
 }
 
 function renderAllList() {
   const term = allSearch.value || '';
+  currentSearchTerm = term;
+  
   let list = customers;
   if (term.trim()) {
     list = list.filter(c => matchSearch(c, term));
@@ -1220,7 +1262,7 @@ function renderAllList() {
   } else if (list.length === 0) {
     allList.innerHTML = '<div class="no-data"><i class="fas fa-database"></i>No records</div>';
   } else {
-    allList.innerHTML = list.map(c => customerCard(c)).join('');
+    allList.innerHTML = list.map(c => customerCard(c, term)).join('');
   }
   attachEvents();
 }
@@ -1389,6 +1431,7 @@ function attachEvents() {
 async function initApp() {
   if (!loadFromSession()) {
     customers = getDefaultCustomers();
+    filteredCustomers = [...customers];
     saveToSession();
   }
 
@@ -1412,9 +1455,17 @@ async function initApp() {
     };
   });
 
-  // Debounced search for better performance
-  homeSearch.addEventListener('input', debouncedSearch(renderHome, 300));
-  allSearch.addEventListener('input', debouncedSearch(renderAllList, 300));
+  // Optimized search with debounce
+  const debounceSearch = (fn, delay = 200) => {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(this, args), delay);
+    };
+  };
+
+  homeSearch.addEventListener('input', debounceSearch(renderHome, 200));
+  allSearch.addEventListener('input', debounceSearch(renderAllList, 200));
   
   $('clearHome').onclick = function() { 
     homeSearch.value = ''; 
@@ -1592,7 +1643,7 @@ async function initApp() {
   console.log(`🔗 Firestore: ${isOnline ? 'Connected' : 'Offline'}`);
   console.log(`🔑 Default TPIN: 1234`);
   console.log(`🖐️ Fingerprint: ${fpEnabled ? 'Enabled' : 'Disabled'}`);
-  console.log(`🔐 Secure Context: ${isSecureContext() ? 'Yes' : 'No (HTTPS/localhost required)'}`);
+  console.log(`🔐 Secure Context: ${isSecureContext() ? 'Yes' : 'No'}`);
 }
 
 // ===================== EXIT =====================
