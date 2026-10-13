@@ -1262,7 +1262,7 @@
     return customers.filter(c=>{
       if(activeFilter!=='all'&&c.service!==activeFilter)return false;
       if(!q)return true;
-      const text=[c.name,c.father,c.mobile,c.application,c.pfNumber,c.aadhaar,c.account,c.status,serviceName(c.service)].join(' ').toLowerCase();
+      const text=[c.name,c.father,c.mobile,c.application,c.pfNumber,c.passwordNote,c.aadhaar,c.account,c.status,serviceName(c.service)].join(' ').toLowerCase();
       const digits=[c.mobile,c.application,c.pfNumber,c.aadhaar,c.account].join(' ').replace(/\D/g,'');
       return text.includes(q)||(qDigits&&digits.includes(qDigits));
     });
@@ -1286,6 +1286,7 @@
       ${detailRow('fa-building-columns','ACCOUNT',formatAccount(c.account),true,'nowrap')}
       ${detailRow('fa-file-lines','APPLICATION',c.application,true)}
       ${detailRow('fa-briefcase','PF NUMBER',c.pfNumber,true)}
+      ${['epfo','passport'].includes(c.service)?detailRow('fa-lock','PASSWORD',c.passwordNote):''}
       ${!['epfo','pnb_account'].includes(c.service)?detailRow('fa-circle-info','STATUS',c.status||'Pending'):''}
       ${['passport','pan','esarvish','license'].includes(c.service)?`<div class="payment-mini"><div><span>TOTAL</span><strong>${money(c.total)}</strong></div><div><span>PAID</span><strong>${money(c.paid)}</strong></div><div><span>PENDING</span><strong class="${Number(c.pending)>0?'pending':''}">${money(c.pending)}</strong></div></div>`:''}
       <div class="result-actions">
@@ -1450,7 +1451,7 @@
     }catch(err){console.error(err);showToast('Delete failed');setCloudStatus('Cloud Error','error')}
   }
 
-  function customerText(c){return [`SERVICE: ${serviceName(c.service)}`,`NAME: ${c.name||''}`,c.father?`FATHER: ${c.father}`:'',c.mobile?`MOBILE: ${c.mobile}`:'',c.aadhaar?`AADHAAR: ${formatAadhaar(c.aadhaar)}`:'',c.account?`ACCOUNT: ${formatAccount(c.account)}`:'',c.application?`APPLICATION: ${c.application}`:'',c.pfNumber?`PF NUMBER: ${c.pfNumber}`:'',`STATUS: ${c.status||'Pending'}`,`TOTAL: ${money(c.total)} | PAID: ${money(c.paid)} | PENDING: ${money(c.pending)}`].filter(Boolean).join('\n')}
+  function customerText(c){return [`SERVICE: ${serviceName(c.service)}`,`NAME: ${c.name||''}`,c.father?`FATHER: ${c.father}`:'',c.mobile?`MOBILE: ${c.mobile}`:'',c.aadhaar?`AADHAAR: ${formatAadhaar(c.aadhaar)}`:'',c.account?`ACCOUNT: ${formatAccount(c.account)}`:'',c.application?`APPLICATION: ${c.application}`:'',c.pfNumber?`PF NUMBER: ${c.pfNumber}`:'',c.passwordNote?`PASSWORD: ${c.passwordNote}`:'',`STATUS: ${c.status||'Pending'}`,`TOTAL: ${money(c.total)} | PAID: ${money(c.paid)} | PENDING: ${money(c.pending)}`].filter(Boolean).join('\n')}
   function copyCustomer(id){const c=customers.find(x=>x.id===id);if(!c)return;const text=customerText(c);if(navigator.clipboard?.writeText){navigator.clipboard.writeText(text).then(()=>showToast('Customer details copied')).catch(()=>fallbackCopy(text))}else fallbackCopy(text)}
   function fallbackCopy(text){const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();showToast('Customer details copied')}
   function callCustomer(id){const c=customers.find(x=>x.id===id);if(c?.mobile)location.href='tel:'+String(c.mobile).replace(/\D/g,'')}
@@ -2007,7 +2008,7 @@
     const data=customers.filter(c=>{
       if(allDataFilter!=='all'&&c.service!==allDataFilter)return false;
       if(!q)return true;
-      const text=[c.name,c.father,c.mobile,c.application,c.pfNumber,c.aadhaar,c.account,c.status,serviceName(c.service)].join(' ').toLowerCase();
+      const text=[c.name,c.father,c.mobile,c.application,c.pfNumber,c.passwordNote,c.aadhaar,c.account,c.status,serviceName(c.service)].join(' ').toLowerCase();
       const digits=[c.mobile,c.application,c.pfNumber,c.aadhaar,c.account].join(' ').replace(/\D/g,'');
       return text.includes(q)||(qDigits&&digits.includes(qDigits));
     }).slice().reverse();
@@ -2273,15 +2274,12 @@
     scheduleAutoBiometricUnlock(550);
   }
 
+  // Keep the app unlocked when the user switches to another app and returns.
+  // TPIN/fingerprint is still required on a fresh page load or after manual Lock Now.
   document.addEventListener('visibilitychange',()=>{
     if(document.visibilityState==='hidden'){
       securityHiddenAt=Date.now();
       return;
-    }
-    if(appSecurityUnlocked && securityHiddenAt && Date.now()-securityHiddenAt>5000){
-      lockAppNow();
-    }else if(!appSecurityUnlocked){
-      scheduleAutoBiometricUnlock(250);
     }
     securityHiddenAt=0;
   });
